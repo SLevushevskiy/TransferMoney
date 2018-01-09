@@ -7,6 +7,7 @@ import ua.nure.levushevskiy.SummaryTask4.service.impl.UserServiceImpl;
 import ua.nure.levushevskiy.SummaryTask4.util.EntityConstants;
 import ua.nure.levushevskiy.SummaryTask4.util.View;
 import ua.nure.levushevskiy.SummaryTask4.validation.MainValidator;
+import ua.nure.levushevskiy.SummaryTask4.validation.PasswordValidator;
 
 import javax.servlet.ServletContext;
 import javax.servlet.ServletException;
@@ -26,16 +27,6 @@ public class RegistrationServlet extends HttpServlet{
 	 */
 	private UserServiceImpl userService;
 
-	/**
-	 * Separator
-	 */
-	private static final char DOT = '.';
-
-	/**
-	 * Format separator.
-	 */
-	private static final char FORMAT_SEPARATOR = '/';
-
 	@Override
 	public final void init() throws ServletException {
 		super.init();
@@ -52,9 +43,11 @@ public class RegistrationServlet extends HttpServlet{
 	protected final void doPost(final HttpServletRequest req, final HttpServletResponse resp) throws ServletException, IOException {
 		HttpSession session = req.getSession();//создаем сессию
 		session.removeAttribute(EntityConstants.AUTHORIZATION_ERROR_CONTAINER_PARAM);
+
 		UserDTO userDTO = getUserFromRequest(req);
 		Map<String, String> errorContainer = new HashMap<>();
 		errorContainer = MainValidator.validate(userDTO, errorContainer);
+		errorContainer = PasswordValidator.validatePasswordAndConfirm(errorContainer, req.getParameter("password"), req.getParameter("confirm"));
 
 		if (!errorContainer.isEmpty()) {
 			session.setAttribute(EntityConstants.REGISTRATION_ERROR_CONTAINER_PARAM, errorContainer);

@@ -12,10 +12,17 @@
 </head>
 
 <body>
+
+<c:if test="${not(sessionScope.email eq null)}">
+    <script>
+        alert("${sessionScope.authorisationErrorContainer} ");
+    </script>
+</c:if>
+
 <div class="wrapper">
 
     <header>        <div class="wrapper">
-        <a href="#"><img src="assets/images/logo.jpg" class="logo" alt="" titl=""/><h1>Transfer Money - онлайн управление вашими деньгами!</h1></a>
+        <a href="#"><img src="assets/images/logo.jpg" class="logo" alt="" title=""/><h1>Transfer Money - онлайн управление вашими деньгами!</h1></a>
     </div>
     </header><!--  end header section  -->
 

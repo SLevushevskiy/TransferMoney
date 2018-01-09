@@ -21,16 +21,6 @@ public class MainValidator {
     private static final String SURNAME = "SURNAME";
 
     /**
-     * Country target.
-     */
-    private static final String COUNTRY = "COUNTRY";
-
-    /**
-     * City target.
-     */
-    private static final String CITY = "CITY";
-
-    /**
      * The main method that controls all other validators.
      *
      * @param userDTO        - user object (data).

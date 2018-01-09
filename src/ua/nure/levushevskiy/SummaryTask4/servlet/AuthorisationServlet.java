@@ -51,7 +51,7 @@ public class AuthorisationServlet extends HttpServlet {
         String email = req.getParameter(EntityConstants.EMAIL_PARAM);
         //валидация
         errorContainer = EmailValidator.validateEmail(errorContainer, email);
-       // errorContainer = PasswordValidator.validatePasswordAndConfirm(errorContainer, password, password);
+        errorContainer = PasswordValidator.validatePasswordAndConfirm(errorContainer, password, password);
         //устанавливаем сессию
         session.setAttribute(EntityConstants.EMAIL_PARAM, email);
         session.setAttribute(EntityConstants.PASSWORD_PARAM, password);
