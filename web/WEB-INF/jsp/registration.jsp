@@ -15,7 +15,7 @@
 <div class="wrapper">
 
     <header>        <div class="wrapper">
-            <a href="#"><img src="assets/images/logo.jpg" class="logo" alt="" titl=""/><h1>Transfer Money - онлайн управление вашими деньгами!</h1></a>
+            <a href="#"><img src="assets/images/logo.jpg" class="logo" alt="" title=""/><h1>Transfer Money - онлайн управление вашими деньгами!</h1></a>
         </div>
     </header><!--  end header section  -->
 
@@ -25,16 +25,15 @@
             <div id="login-form">
                 <h2>Регистрация</h2>
                 <fieldset>
-                    <form action="registration" method="post" >
+                    <form action="registration" method="post">
                         <input id="fstLine" type="text" placeholder="Введите ваше имя" name="name" required/>
                         <input type="text" name="surname" placeholder="Введите вашу фамилию" required/>
                         <input type="email" name="email" placeholder="Введите почту"  required/>
-                        <input type="password" name="password" required/>
+                        <input type="password" name="password" placeholder="Введите пароль" required/>
                         <input id="lstLine" type="password" placeholder="Подтвердите пароль" name="confirm"  required/>
-
                         <input type="submit" value="Зарегестрироваться"/>
                     </form>
-                    <p><a href="#">Забыли пароль?</a>  &nbsp;|&nbsp;<a href="#">Регистрация&nbsp;<span class="fontawesome-arrow-right"></span></a>
+                    <p><a href="#">Забыли пароль?</a>  &nbsp;|&nbsp;<a href="${pageContext.servletContext.contextPath}/authorisation">Войти&nbsp;<span class="fontawesome-arrow-right"></span></a>
 
                     </p>
                 </fieldset>

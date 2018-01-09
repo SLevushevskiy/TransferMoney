@@ -9,7 +9,7 @@ public class View {
     public static final String LOGIN_JSP = "WEB-INF/jsp/authorisation.jsp";
     public static final String ERROR_JSP = "WEB-INF/jsp/errorPage.jsp";
     public static final String FAQ_JSP = "WEB-INF/jsp/faqs.jsp";
-    public static final String HOME_JSP = "index.jsp";
+    public static final String MAIN_JSP = "WEB-INF/jsp/main.jsp";
     public static final String PERSONAL_AREA_JSP = "WEB-INF/jsp/personalArea.jsp";
     public static final String PRODUCT_DETAIL_JSP = "WEB-INF/jsp/productDetail.jsp";
     public static final String PRODUCTS_JSP = "WEB-INF/jsp/products.jsp";
