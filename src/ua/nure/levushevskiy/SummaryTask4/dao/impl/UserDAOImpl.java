@@ -73,7 +73,7 @@ public class UserDAOImpl implements UserDAO {
             throw new DAOException("Cannot get connection!", e);
         }
 
-        try (PreparedStatement preparedStatement = connection.prepareStatement(SQL_USER_INSERT)) {
+        try (PreparedStatement preparedStatement = connection.prepareStatement(SQL_USER_INSERT, Statement.RETURN_GENERATED_KEYS)) {
             preparedStatement.setString(1, user.getName());
             preparedStatement.setString(2, user.getSurname());
             preparedStatement.setString(3, user.getEmail());

@@ -18,7 +18,7 @@ public class UserStatusDAOImpl implements UserStatusDAO {
     /**
      * Request to retrieve all role objects by ID.
      */
-    private static final String SQL_SELECT_BY_ID = "SELECT * FROM st4db.user_role WHERE idUserRole = ?";
+    private static final String SQL_SELECT_BY_ID = "SELECT * FROM st4db.user_status WHERE idUser_status = ?";
 
     /**
      * Object of connection pool.
