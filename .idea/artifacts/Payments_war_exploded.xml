@@ -1,0 +1,20 @@
+<component name="ArtifactManager">
+  <artifact type="exploded-war" name="Payments:war exploded">
+    <output-path>$PROJECT_DIR$/out/artifacts/Payments_war_exploded</output-path>
+    <root id="root">
+      <element id="javaee-facet-resources" facet="Payments/web/Web" />
+      <element id="directory" name="WEB-INF">
+        <element id="directory" name="classes">
+          <element id="module-output" name="Payments" />
+        </element>
+        <element id="directory" name="lib">
+          <element id="library" level="project" name="log4j:log4j:1.2.17" />
+          <element id="library" level="project" name="jstl:jstl:1.2" />
+          <element id="library" level="project" name="commons-dbcp-1.4" />
+          <element id="library" level="project" name="commons-pool-1.5.4" />
+          <element id="library" level="project" name="mysql:mysql-connector-java:5.1.23" />
+        </element>
+      </element>
+    </root>
+  </artifact>
+</component>
