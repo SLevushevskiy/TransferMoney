@@ -2,6 +2,8 @@ package ua.nure.levushevskiy.SummaryTask4.dao.api;
 
 import ua.nure.levushevskiy.SummaryTask4.entity.AccountName;
 
+import java.util.List;
+
 public interface AccountNameDAO {
 
     /**
@@ -22,4 +24,12 @@ public interface AccountNameDAO {
      * @return - accountName object
      */
     AccountName setAccountName(int accountId, String name);
+
+    /**
+     *
+     * Gets the list name object by account name.
+     *
+     * @return - list of account Name object.
+     */
+    List<AccountName> getAll();
 }

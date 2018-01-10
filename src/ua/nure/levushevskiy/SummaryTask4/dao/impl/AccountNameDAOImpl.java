@@ -6,10 +6,7 @@ import ua.nure.levushevskiy.SummaryTask4.dao.exeption.DAOException;
 import ua.nure.levushevskiy.SummaryTask4.db.ConnectionPool;
 import ua.nure.levushevskiy.SummaryTask4.entity.AccountName;
 
-import java.sql.Connection;
-import java.sql.PreparedStatement;
-import java.sql.ResultSet;
-import java.sql.SQLException;
+import java.sql.*;
 import java.util.ArrayList;
 import java.util.List;
 
@@ -19,6 +16,11 @@ public class AccountNameDAOImpl implements AccountNameDAO {
      * Request to retrieve all role objects by ID.
      */
     private static final String SQL_SELECT_BY_ID = "SELECT * FROM st4db.account_name WHERE idAccount_name = ?";
+
+    /**
+     * Request to retrieve all account name objects.
+     */
+    public static final String SQL_SELECT_ALL = "SELECT * FROM st4db.account_name";
 
     /**
      * Object of connection pool.
@@ -86,6 +88,35 @@ public class AccountNameDAOImpl implements AccountNameDAO {
     @Override
     public AccountName setAccountName(int accountId, String name) {
         return null;
+    }
+
+    /**
+     * Gets the list name object by account name.
+     *
+     * @return - list of account Name object.
+     */
+    @Override
+    public List<AccountName> getAll() {
+        List<AccountName> accountNameList = null;
+        Connection connection = null;
+        try {
+            connection = dataSource.getConnection();
+        } catch (SQLException e) {
+            LOG.error(e);
+            throw new DAOException("Cannot get connection!", e);
+        }
+
+        try (Statement statement = connection.createStatement();
+             ResultSet rs = statement.executeQuery(SQL_SELECT_ALL)) {
+            accountNameList = extractResultSet(rs);
+
+        } catch (SQLException e) {
+            LOG.error(e);
+            throw new DAOException("Error while extraction result set!", e);
+        } finally {
+            closeConnection(connection);
+        }
+        return accountNameList;
     }
 
     /**

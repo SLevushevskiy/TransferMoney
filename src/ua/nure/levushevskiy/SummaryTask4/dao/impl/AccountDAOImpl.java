@@ -26,8 +26,8 @@ public class AccountDAOImpl implements AccountDAO {
     /**
      * Request for insert account.
      */
-    public static final String SQL_ACCOUNT_INSERT = "INSERT INTO st4db.account (amound, user_id, account_status_id, account_name_id) "
-            + "VALUES(?, ?, ?, ?)";
+    public static final String SQL_ACCOUNT_INSERT = "INSERT INTO st4db.account (amound, end_date, user_id, account_status_id, account_name_id) "
+            + "VALUES(?, ?, ?, ?, ?)";
     /**
      * Request to retrieve all accounts objects by user id.
      */
@@ -116,9 +116,10 @@ public class AccountDAOImpl implements AccountDAO {
 
         try (PreparedStatement preparedStatement = connection.prepareStatement(SQL_ACCOUNT_INSERT, Statement.RETURN_GENERATED_KEYS)) {
             preparedStatement.setDouble(1, account.getAmound());
-            preparedStatement.setLong(2, account.getAccountUserId());
-            preparedStatement.setLong(3, account.getAccountStatusId());
-            preparedStatement.setLong(4, account.getAccountNameId());
+            preparedStatement.setDate(2, account.getEndDate());
+            preparedStatement.setLong(3, account.getAccountUserId());
+            preparedStatement.setLong(4, account.getAccountStatusId());
+            preparedStatement.setLong(5, account.getAccountNameId());
 
             int affectedRows = preparedStatement.executeUpdate();
 
@@ -240,15 +241,16 @@ public class AccountDAOImpl implements AccountDAO {
      */
     private List<Account> extractResultSet(final ResultSet rs) throws SQLException {
         List<Account> accountList = new ArrayList<>();
-        Account user;
+        Account account;
         while (rs.next()) {
-            user = new Account();
-            user.setIdAccount(rs.getInt("idAccount"));
-            user.setAmound(rs.getDouble("amound"));
-            user.setAccountUserId(rs.getInt("user_id"));
-            user.setAccountStatusId(rs.getInt("account_status_id"));
-            user.setAccountNameId(rs.getInt("account_name_id"));
-            accountList.add(user);
+            account = new Account();
+            account.setIdAccount(rs.getInt("idAccount"));
+            account.setAmound(rs.getDouble("amound"));
+            account.setEndDate(rs.getDate("end_date"));
+            account.setAccountUserId(rs.getInt("user_id"));
+            account.setAccountStatusId(rs.getInt("account_status_id"));
+            account.setAccountNameId(rs.getInt("account_name_id"));
+            accountList.add(account);
         }
         return accountList;
     }

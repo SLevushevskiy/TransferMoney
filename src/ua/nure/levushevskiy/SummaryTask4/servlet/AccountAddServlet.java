@@ -1,8 +1,11 @@
 package ua.nure.levushevskiy.SummaryTask4.servlet;
 
 import ua.nure.levushevskiy.SummaryTask4.dto.AccountDTO;
+import ua.nure.levushevskiy.SummaryTask4.dto.AccountNameDTO;
 import ua.nure.levushevskiy.SummaryTask4.dto.UserDTO;
 import ua.nure.levushevskiy.SummaryTask4.exception.InitializationException;
+import ua.nure.levushevskiy.SummaryTask4.service.api.AccountNameService;
+import ua.nure.levushevskiy.SummaryTask4.service.impl.AccountNameServiceImpl;
 import ua.nure.levushevskiy.SummaryTask4.service.impl.AccountServiceImpl;
 import ua.nure.levushevskiy.SummaryTask4.service.impl.UserServiceImpl;
 import ua.nure.levushevskiy.SummaryTask4.util.EntityConstants;
@@ -16,6 +19,8 @@ import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 import javax.servlet.http.HttpSession;
 import java.io.IOException;
+import java.sql.Date;
+import java.util.List;
 
 import static ua.nure.levushevskiy.SummaryTask4.util.View.ACCOUNT_ADD_JSP;
 import static ua.nure.levushevskiy.SummaryTask4.util.View.ACCOUNT_LIST_JSP;
@@ -29,6 +34,11 @@ public class AccountAddServlet extends HttpServlet {
     private AccountServiceImpl accountService;
 
     /**
+     * An object that contains account name business logic.
+     */
+    private AccountNameServiceImpl accountNameService;
+
+    /**
      * An object that contains user business logic.
      */
     private UserServiceImpl userService;
@@ -38,12 +48,15 @@ public class AccountAddServlet extends HttpServlet {
         super.init();
         ServletContext context = getServletContext();
         initAccountService(context);
+        initAccountNameService(context);
         initUserService(context);
 
     }
 
     @Override
     protected void doGet(HttpServletRequest req, HttpServletResponse resp) throws ServletException, IOException {
+        List<AccountNameDTO> accountNameDTOList = accountNameService.getAll();
+        req.setAttribute(EntityConstants.ACCOUNT_NAME_LIST_PARAM, accountNameDTOList);
         req.getRequestDispatcher(ACCOUNT_ADD_JSP).forward(req, resp);
     }
 
@@ -62,7 +75,7 @@ public class AccountAddServlet extends HttpServlet {
                 return;
 
             }
-        req.getRequestDispatcher(ACCOUNT_LIST_JSP).forward(req, resp);
+        resp.sendRedirect(View.Mapping.ACCOUNT_LIST_JSP);//redirect
     }
 
     /**
@@ -73,11 +86,13 @@ public class AccountAddServlet extends HttpServlet {
      */
     private AccountDTO getAccountFromRequest(final HttpServletRequest req) {
         HttpSession session = req.getSession();
+        Date endDate = new Date(System.currentTimeMillis());
+        endDate.setYear(endDate.getYear()+4);
 
         AccountDTO accountDTO = new AccountDTO();
-
         accountDTO.setUserDTO((UserDTO) session.getAttribute(EntityConstants.USER_PARAM));
-        accountDTO.setAmound(Double.parseDouble(req.getParameter(EntityConstants.ACCOUNT_AMOUND_PARAM)));
+        accountDTO.setAccountNameDTO(accountNameService.getById(Integer.parseInt(req.getParameter(EntityConstants.ACCOUNT_NAME_PARAM))));
+        accountDTO.setEndDate(endDate);
        // Взять юзера из базы
        // accountDTO.setUserDTO(req.getParameter(EntityConstants.ACCOUNT_USER_ID_PARAM));
        // accountDTO.setAccountNameDTO(req.getParameter(EntityConstants.ACCOUNT_NAME_PARAM));
@@ -93,6 +108,18 @@ public class AccountAddServlet extends HttpServlet {
         accountService = (AccountServiceImpl) context.getAttribute(EntityConstants.ACCOUNT_SERVICE);
         if (accountService == null) {
             throw new InitializationException("Account service is not initialized!");
+        }
+    }
+
+    /**
+     * Method that initializes user service.
+     *
+     * @param context - servlet context.
+     */
+    private void initAccountNameService(final ServletContext context) {
+        accountNameService = (AccountNameServiceImpl) context.getAttribute(EntityConstants.ACCOUNT_NAME_SERVICE);
+        if (accountNameService == null) {
+            throw new InitializationException("Account name service is not initialized!");
         }
     }
 

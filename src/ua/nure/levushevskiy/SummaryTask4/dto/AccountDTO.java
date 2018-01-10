@@ -1,9 +1,13 @@
 package ua.nure.levushevskiy.SummaryTask4.dto;
 
+import java.sql.Date;
+
 public class AccountDTO {
     private long idAccount;
 
     private double amound;
+
+    private Date endDate;
 
     private UserDTO userDTO;
 
@@ -11,9 +15,10 @@ public class AccountDTO {
 
     private AccountNameDTO accountNameDTO;
 
-    public AccountDTO(final long idAccount,final double amound,final UserDTO userDTO,final AccountStatusDTO accountStatusDTO,final AccountNameDTO accountNameDTO) {
+    public AccountDTO(final long idAccount,final double amound,final Date endDate, final UserDTO userDTO,final AccountStatusDTO accountStatusDTO,final AccountNameDTO accountNameDTO) {
         this.idAccount = idAccount;
         this.amound = amound;
+        this.endDate = endDate;
         this.userDTO = userDTO;
         this.accountStatusDTO = accountStatusDTO;
         this.accountNameDTO = accountNameDTO;
@@ -29,6 +34,14 @@ public class AccountDTO {
     public AccountDTO(final UserDTO userDTO) {
         super();
         this.userDTO = userDTO;
+    }
+
+    public Date getEndDate() {
+        return endDate;
+    }
+
+    public void setEndDate(Date endDate) {
+        this.endDate = endDate;
     }
 
     public long getIdAccount() {
@@ -80,6 +93,7 @@ public class AccountDTO {
 
         if (idAccount != that.idAccount) return false;
         if (Double.compare(that.amound, amound) != 0) return false;
+        if (endDate != null ? !endDate.equals(that.endDate) : that.endDate != null) return false;
         if (userDTO != null ? !userDTO.equals(that.userDTO) : that.userDTO != null) return false;
         if (accountStatusDTO != null ? !accountStatusDTO.equals(that.accountStatusDTO) : that.accountStatusDTO != null)
             return false;
@@ -93,6 +107,7 @@ public class AccountDTO {
         result = (int) (idAccount ^ (idAccount >>> 32));
         temp = Double.doubleToLongBits(amound);
         result = 31 * result + (int) (temp ^ (temp >>> 32));
+        result = 31 * result + (endDate != null ? endDate.hashCode() : 0);
         result = 31 * result + (userDTO != null ? userDTO.hashCode() : 0);
         result = 31 * result + (accountStatusDTO != null ? accountStatusDTO.hashCode() : 0);
         result = 31 * result + (accountNameDTO != null ? accountNameDTO.hashCode() : 0);
@@ -104,6 +119,7 @@ public class AccountDTO {
         return "AccountDTO{" +
                 "idAccount=" + idAccount +
                 ", amound=" + amound +
+                ", endDate=" + endDate +
                 ", userDTO=" + userDTO +
                 ", accountStatusDTO=" + accountStatusDTO +
                 ", accountNameDTO=" + accountNameDTO +

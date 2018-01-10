@@ -54,7 +54,6 @@ public class AuthorisationServlet extends HttpServlet {
         errorContainer = PasswordValidator.validatePasswordAndConfirm(errorContainer, password, password);
         //устанавливаем сессию
         session.setAttribute(EntityConstants.EMAIL_PARAM, email);
-        session.getAttribute(EntityConstants.EMAIL_PARAM);
         session.setAttribute(EntityConstants.PASSWORD_PARAM, password);
         if (!errorContainer.isEmpty()) {
             session.setAttribute(EntityConstants.AUTHORIZATION_ERROR_CONTAINER_PARAM, errorContainer);
@@ -69,13 +68,14 @@ public class AuthorisationServlet extends HttpServlet {
                 return;
             }
             session.setAttribute(EntityConstants.USER_PARAM, userDTO);
+            session.setAttribute(EntityConstants.USER_ID_PARAM, userDTO.getIdUser());
         } catch (IllegalStateException e) {
             errorContainer.put(EntityConstants.ERROR_PARAM, e.getMessage());
             session.setAttribute(EntityConstants.AUTHORIZATION_ERROR_CONTAINER_PARAM, errorContainer);
             resp.sendRedirect(View.Mapping.AUTHORIZATION);
             return;
         }
-       req.getRequestDispatcher(View.MAIN_JSP).forward(req, resp);
+        resp.sendRedirect(View.Mapping.ACCOUNT_LIST_JSP);
     }
 
     /**

@@ -8,7 +8,7 @@
 
 <html>
 <head>
-    <title>Prologue by HTML5 UP</title>
+    <title>Transfer Money</title>
     <meta charset="utf-8" />
     <meta name="viewport" content="width=device-width, initial-scale=1" />
     <link rel="stylesheet" href="assets/css/main.css" />
@@ -62,14 +62,21 @@
     <!-- Intro -->
     <section id="top" class="one dark cover">
         <div class="container">
-            <form action="accountAdd" method="post">
-                <select name="accountName">
-                    <c:forEach items="${accountNameList}" var="accountN">
-                    <option value="${accountN.getIdAccountName()}">${accountN.getName()}</option>
-                    </c:forEach>
-                </select>
-                <input type="submit" value="Добавить счет "/>
-            </form>
+            <table>
+                <c:forEach items="${accountList}" var="account">
+                <tr>
+                    <td><span class="icon fa-credit-card-alt"></span></td>
+                    <td>${account.getAccountNameDTO().name}</td>
+                    <td>${account.getIdAccount()}</td>
+                    <td>${account.getAmound()}</td>
+                    <td>${account.getEndDate()}</td>
+                    <td>${account.getAccountStatusDTO().status}</td>
+                </tr>
+                </c:forEach>
+            </table>
+            <ul>
+                <li><a href="${pageContext.servletContext.contextPath}/accountAdd"><span class="icon fa-plus-circle"> Добавить счет   </span></a></li>
+            </ul>
         </div>
     </section>
 </div>

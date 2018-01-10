@@ -168,6 +168,7 @@ public class Transformer {
     public static Account accountDTO2Account(final AccountDTO accountDTO){
         Account account = new Account();
         account.setAmound(accountDTO.getAmound());
+        account.setEndDate(accountDTO.getEndDate());
         account.setAccountUserId(accountDTO.getUserDTO().getIdUser());
         account.setAccountNameId(accountDTO.getAccountNameDTO().getIdAccountName());
         account.setAccountStatusId(accountDTO.getAccountStatusDTO().getIdAcccountStatus());
@@ -184,6 +185,7 @@ public class Transformer {
         AccountDTO accountDTO = new AccountDTO();
         accountDTO.setIdAccount(account.getIdAccount());
         accountDTO.setAmound(account.getAmound());
+        accountDTO.setEndDate(account.getEndDate());
         accountDTO.setUserDTO(userService.getById((int) account.getAccountUserId()));//подумать!!!!!
         accountDTO.setAccountNameDTO(accountNameService.getById((int) account.getAccountNameId()));
         accountDTO.setAccountStatusDTO(accountStatusService.getById((int) account.getAccountStatusId()));
@@ -209,5 +211,32 @@ public class Transformer {
         return accountDTOList;
     }
 
+    /**
+     * A method that converts AccountName into a AccountNameDTO.
+     *
+     * @param accountName - Account name object.
+     * @return - AccountNameDTO object.
+     */
+    public static AccountNameDTO accountName2AccountNameDTO(final AccountName accountName){
+        AccountNameDTO accountNameDTO = new AccountNameDTO();
+        accountNameDTO.setIdAccountName(accountName.getIdAccountName());
+        accountNameDTO.setName(accountName.getName());
+       return accountNameDTO;
+    }
 
+    /**
+     *  A method that converts a list of AccountName into a AccountNameDTO list.
+     *
+     * @param accountNameList - list of accounts name.
+     * @return - list of accountNameDTO.
+     */
+    public static List<AccountNameDTO> accountNameList2AccountNameDTOList(final List<AccountName> accountNameList){
+        List<AccountNameDTO> accountNameDTOList = new ArrayList<>();
+
+        for (AccountName accountName : accountNameList) {
+            accountNameDTOList.add(accountName2AccountNameDTO(accountName));
+        }
+
+        return accountNameDTOList;
+    }
 }

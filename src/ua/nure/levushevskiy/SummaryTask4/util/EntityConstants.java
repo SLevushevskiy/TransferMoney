@@ -30,6 +30,9 @@ public class EntityConstants {
     public static final String ACCOUNT_USER_ID_PARAM = "accountUserId";
     public static final String ACCOUNT_NAME_PARAM = "accountName";
     public static final String ACCOUNT_STATUS_PARAM = "accountStatus";
+    public static final String ACCOUNT_LIST_PARAM = "accountList";
+    public static final String ACCOUNT_NAME_LIST_PARAM = "accountNameList";
+
 
 
     private EntityConstants() {}
