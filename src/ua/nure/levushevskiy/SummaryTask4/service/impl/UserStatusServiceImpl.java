@@ -17,7 +17,7 @@ public class UserStatusServiceImpl implements UserStatusService {
      */
     private final UserStatusDAO userStatusDAO;
 
-    public  UserStatusServiceImpl(final UserStatusDAO userStatusDAO) {
+    public UserStatusServiceImpl(final UserStatusDAO userStatusDAO) {
         this.userStatusDAO = userStatusDAO;
     }
 

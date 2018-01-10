@@ -5,6 +5,8 @@ import ua.nure.levushevskiy.SummaryTask4.dao.api.*;
 import ua.nure.levushevskiy.SummaryTask4.dao.factory.MySQLDAOFactory;
 import ua.nure.levushevskiy.SummaryTask4.dao.factory.api.DAOFactory;
 import ua.nure.levushevskiy.SummaryTask4.db.ConnectionPool;
+import ua.nure.levushevskiy.SummaryTask4.entity.Account;
+import ua.nure.levushevskiy.SummaryTask4.entity.AccountStatus;
 import ua.nure.levushevskiy.SummaryTask4.service.api.*;
 import ua.nure.levushevskiy.SummaryTask4.service.impl.*;
 import ua.nure.levushevskiy.SummaryTask4.util.EntityConstants;
@@ -54,7 +56,6 @@ public class InitApplicationListener implements ServletContextListener {
     private void initServices(final ServletContext servletContext, final ConnectionPool dataSource) {
         DAOFactory mySQLDAOFactory = new MySQLDAOFactory(dataSource);
 
-
         UserRoleDAO roleDAO = mySQLDAOFactory.getUserRoleDAO();
         UserDAO userDAO = mySQLDAOFactory.getUserDAO();
         UserStatusDAO userStatusDAO = mySQLDAOFactory.getUserStatusDAO();
@@ -63,10 +64,21 @@ public class InitApplicationListener implements ServletContextListener {
         UserStatusService userStatusService = new UserStatusServiceImpl(userStatusDAO);
         UserService userService = new UserServiceImpl(userDAO, roleService, userStatusService);
 
+        AccountNameDAO accountNameDAO = mySQLDAOFactory.getAccountNameDAO();
+        AccountStatusDAO accountStatusDAO = mySQLDAOFactory.getAccountStatusDAO();
+        AccountDAO accountDAO = mySQLDAOFactory.getAccountDAO();
+
+        AccountNameService accountNameService = new AccountNameServiceImpl(accountNameDAO);
+        AccountStatusService accountStatusService = new AccountStatusServiceImpl(accountStatusDAO);
+        AccountService accountService = new AccountServiceImpl(accountDAO,userService,accountStatusService,accountNameService);
 
         servletContext.setAttribute(EntityConstants.ROLE_SERVICE, roleService);
         servletContext.setAttribute(EntityConstants.USER_SERVICE, userService);
         servletContext.setAttribute(EntityConstants.USER_STATUS_SERVICE, userStatusService);
+
+        servletContext.setAttribute(EntityConstants.ACCOUNT_SERVICE, accountService);
+        servletContext.setAttribute(EntityConstants.ACCOUNT_NAME_SERVICE, accountNameService);
+        servletContext.setAttribute(EntityConstants.ACCOUNT_STATUS_SERVICE, accountStatusService);
     }
 
     @Override

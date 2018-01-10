@@ -31,7 +31,7 @@
                         <input id="lstLine" type="password" name="password" required/>
                         <input type="submit" value="Войти"/>
                     </form>
-                    <p><a href="#">Забыли пароль?</a>  &nbsp;|&nbsp;<a href="#">Регистрация&nbsp;<span class="fontawesome-arrow-right"></span></a>
+                    <p><a href="#">Забыли пароль?</a>  &nbsp;|&nbsp;<a href="${pageContext.servletContext.contextPath}/registration">Регистрация&nbsp;<span class="fontawesome-arrow-right"></span></a>
 
                     </p>
                 </fieldset>

@@ -3,7 +3,9 @@ package ua.nure.levushevskiy.SummaryTask4.service.api;
 import ua.nure.levushevskiy.SummaryTask4.dto.UserDTO;
 
 import java.util.List;
-
+/**
+ * The interface that defines the logic of working with the entity User.
+ */
 public interface UserService {
     /**
      * Saving user.

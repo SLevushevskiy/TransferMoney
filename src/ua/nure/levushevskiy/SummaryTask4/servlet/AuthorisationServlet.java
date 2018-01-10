@@ -54,6 +54,7 @@ public class AuthorisationServlet extends HttpServlet {
         errorContainer = PasswordValidator.validatePasswordAndConfirm(errorContainer, password, password);
         //устанавливаем сессию
         session.setAttribute(EntityConstants.EMAIL_PARAM, email);
+        session.getAttribute(EntityConstants.EMAIL_PARAM);
         session.setAttribute(EntityConstants.PASSWORD_PARAM, password);
         if (!errorContainer.isEmpty()) {
             session.setAttribute(EntityConstants.AUTHORIZATION_ERROR_CONTAINER_PARAM, errorContainer);

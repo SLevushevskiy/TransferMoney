@@ -146,5 +146,68 @@ public class Transformer {
         return userStatusDTO;
     }
 
+    /**
+     * A method that converts AccountStatus into a AccountStatusDTO.
+     *
+     * @param accountStatus - AccountStatus object.
+     * @return - AccountStatusDTO object.
+     */
+    public static AccountStatusDTO accountStatus2AccountStatusDTO(final AccountStatus accountStatus){
+        AccountStatusDTO accountStatusDTO = new AccountStatusDTO();
+        accountStatusDTO.setIdAcccountStatus(accountStatus.getIdAccountStatus());
+        accountStatusDTO.setStatus(accountStatus.getStatus());
+        return accountStatusDTO;
+    }
+
+    /**
+     * A method that converts AccountDTO into a Account.
+     *
+     * @param accountDTO - AccountDTO object.
+     * @return - Account object.
+     */
+    public static Account accountDTO2Account(final AccountDTO accountDTO){
+        Account account = new Account();
+        account.setAmound(accountDTO.getAmound());
+        account.setAccountUserId(accountDTO.getUserDTO().getIdUser());
+        account.setAccountNameId(accountDTO.getAccountNameDTO().getIdAccountName());
+        account.setAccountStatusId(accountDTO.getAccountStatusDTO().getIdAcccountStatus());
+        return account;
+    }
+
+    /**
+     * A method that converts Account into a AccountDTO.
+     *
+     * @param account - Account object.
+     * @return - AccountDTO object.
+     */
+    public static AccountDTO account2AccountDTO(final Account account,final UserService userService,final AccountNameService accountNameService,final AccountStatusService accountStatusService){
+        AccountDTO accountDTO = new AccountDTO();
+        accountDTO.setIdAccount(account.getIdAccount());
+        accountDTO.setAmound(account.getAmound());
+        accountDTO.setUserDTO(userService.getById((int) account.getAccountUserId()));//подумать!!!!!
+        accountDTO.setAccountNameDTO(accountNameService.getById((int) account.getAccountNameId()));
+        accountDTO.setAccountStatusDTO(accountStatusService.getById((int) account.getAccountStatusId()));
+        return accountDTO;
+    }
+
+    /**
+     *  A method that converts a list of Account into a AccountDTO list.
+     *
+     * @param accountList - list of account.
+     * @param userService - service for obtaining a user object by its ID.
+     * @param accountNameService - service for obtaining a account name object by its ID.
+     * @param accountStatusService - service for obtaining a account status object by its ID.
+     * @return - list of accountDTO.
+     */
+    public static List<AccountDTO> accountList2AccountDTOList(final List<Account> accountList,final UserService userService,final AccountNameService accountNameService,final AccountStatusService accountStatusService){
+        List<AccountDTO> accountDTOList = new ArrayList<>();
+
+        for (Account account : accountList) {
+            accountDTOList.add(account2AccountDTO(account, userService, accountNameService, accountStatusService ));
+        }
+
+        return accountDTOList;
+    }
+
 
 }

@@ -1,12 +1,8 @@
 package ua.nure.levushevskiy.SummaryTask4.dao.factory;
 
-import ua.nure.levushevskiy.SummaryTask4.dao.api.UserDAO;
-import ua.nure.levushevskiy.SummaryTask4.dao.api.UserRoleDAO;
-import ua.nure.levushevskiy.SummaryTask4.dao.api.UserStatusDAO;
+import ua.nure.levushevskiy.SummaryTask4.dao.api.*;
 import ua.nure.levushevskiy.SummaryTask4.dao.factory.api.DAOFactory;
-import ua.nure.levushevskiy.SummaryTask4.dao.impl.UserDAOImpl;
-import ua.nure.levushevskiy.SummaryTask4.dao.impl.UserRoleDAOImpl;
-import ua.nure.levushevskiy.SummaryTask4.dao.impl.UserStatusDAOImpl;
+import ua.nure.levushevskiy.SummaryTask4.dao.impl.*;
 import ua.nure.levushevskiy.SummaryTask4.db.ConnectionPool;
 
 public class MySQLDAOFactory implements DAOFactory {
@@ -43,5 +39,35 @@ public class MySQLDAOFactory implements DAOFactory {
      */
     @Override
     public UserRoleDAO getUserRoleDAO() {  return new UserRoleDAOImpl(dataSource); }
+
+    /**
+     * Returns AccountDAO object.
+     *
+     * @return - object.
+     */
+    @Override
+    public AccountDAO getAccountDAO() {
+        return new AccountDAOImpl(dataSource);
+    }
+
+    /**
+     * Returns AccountNameDAO object.
+     *
+     * @return - object.
+     */
+    @Override
+    public AccountNameDAO getAccountNameDAO() {
+        return new AccountNameDAOImpl(dataSource);
+    }
+
+    /**
+     * Returns AccountStatusDAO object.
+     *
+     * @return - object.
+     */
+    @Override
+    public AccountStatusDAO getAccountStatusDAO() {
+        return new AccountStatusDAOImpl(dataSource);
+    }
 
 }

@@ -22,8 +22,8 @@ public class AccountDTO {
     public AccountDTO() {
         accountNameDTO = new AccountNameDTO();
         accountNameDTO.setIdAccountName(1);
-        accountNameDTO = new AccountNameDTO();
-        accountNameDTO.setIdAccountName(1);
+        accountStatusDTO = new AccountStatusDTO();
+        accountStatusDTO.setIdAcccountStatus(1);
     }
 
     public AccountDTO(final UserDTO userDTO) {

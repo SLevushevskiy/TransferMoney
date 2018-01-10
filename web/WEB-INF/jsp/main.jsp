@@ -11,6 +11,7 @@
     <input type="text" value="${sessionScope.user.email}" >
     <input type="text" value="${sessionScope.user.userRoleDTO.rank}" >
     <input type="text" value="${sessionScope.user.userStatusDTO.status}" >
+    <a href="${pageContext.servletContext.contextPath}/accountAdd">Зарегестрировать счет</a>
 </form>
 </body>
 </html>

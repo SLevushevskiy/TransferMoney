@@ -1,8 +1,6 @@
 package ua.nure.levushevskiy.SummaryTask4.dao.factory.api;
 
-import ua.nure.levushevskiy.SummaryTask4.dao.api.UserDAO;
-import ua.nure.levushevskiy.SummaryTask4.dao.api.UserRoleDAO;
-import ua.nure.levushevskiy.SummaryTask4.dao.api.UserStatusDAO;
+import ua.nure.levushevskiy.SummaryTask4.dao.api.*;
 
 public interface DAOFactory {
     /**
@@ -25,4 +23,25 @@ public interface DAOFactory {
      * @return - object.
      */
     UserRoleDAO getUserRoleDAO();
+
+    /**
+     * Returns AccountDAO object.
+     *
+     * @return - object.
+     */
+    AccountDAO getAccountDAO();
+
+    /**
+     * Returns AccountNameDAO object.
+     *
+     * @return - object.
+     */
+    AccountNameDAO getAccountNameDAO();
+
+    /**
+     * Returns AccountStatusDAO object.
+     *
+     * @return - object.
+     */
+    AccountStatusDAO getAccountStatusDAO();
 }
