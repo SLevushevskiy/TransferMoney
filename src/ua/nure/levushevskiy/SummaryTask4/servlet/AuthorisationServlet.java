@@ -63,7 +63,8 @@ public class AuthorisationServlet extends HttpServlet {
         try {
             UserDTO userDTO = userService.getByEmailAndPassword(email, password);
             if (userDTO.getUserStatusDTO().getStatus().equals("blocked")) {
-                req.getRequestDispatcher(View.REGISTRATION_JSP).forward(req, resp);
+                session.setAttribute("blocked", true);
+                resp.sendRedirect(View.Mapping.ERROR);
                 return;
             }
             session.setAttribute(EntityConstants.USER_PARAM, userDTO);

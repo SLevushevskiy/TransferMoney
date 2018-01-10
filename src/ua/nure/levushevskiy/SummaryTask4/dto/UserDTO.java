@@ -40,7 +40,7 @@ public class UserDTO {
         return idUser;
     }
 
-    public void setIdUser(long idUser) {
+    public void setIdUser(final long idUser) {
         this.idUser = idUser;
     }
 
@@ -48,7 +48,7 @@ public class UserDTO {
         return name;
     }
 
-    public void setName(String name) {
+    public void setName(final String name) {
         this.name = name;
     }
 
@@ -56,7 +56,7 @@ public class UserDTO {
         return surname;
     }
 
-    public void setSurname(String surname) {
+    public void setSurname(final String surname) {
         this.surname = surname;
     }
 
@@ -64,7 +64,7 @@ public class UserDTO {
         return email;
     }
 
-    public void setEmail(String email) {
+    public void setEmail(final String email) {
         this.email = email;
     }
 
@@ -72,7 +72,7 @@ public class UserDTO {
         return password;
     }
 
-    public void setPassword(String password) {
+    public void setPassword(final String password) {
         this.password = password;
     }
 
@@ -80,7 +80,7 @@ public class UserDTO {
         return userRoleDTO;
     }
 
-    public void setUserRoleDTO(UserRoleDTO userRoleDTO) {
+    public void setUserRoleDTO(final UserRoleDTO userRoleDTO) {
         this.userRoleDTO = userRoleDTO;
     }
 
@@ -88,7 +88,7 @@ public class UserDTO {
         return userStatusDTO;
     }
 
-    public void setUserStatusDTO(UserStatusDTO userStatusDTO) {
+    public void setUserStatusDTO(final UserStatusDTO userStatusDTO) {
         this.userStatusDTO = userStatusDTO;
     }
 

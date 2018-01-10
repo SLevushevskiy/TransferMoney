@@ -13,12 +13,6 @@
 
 <body>
 
-<c:if test="${not(sessionScope.email eq null)}">
-    <script>
-        alert("${sessionScope.authorisationErrorContainer} ");
-    </script>
-</c:if>
-
 <div class="wrapper">
 
     <header>        <div class="wrapper">

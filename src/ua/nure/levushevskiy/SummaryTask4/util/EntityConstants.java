@@ -44,30 +44,14 @@ public class EntityConstants {
     public static final String TRUE_PARAM = "true";
     public static final String KEY_PARAM = "key";
     public static final String INVALID_USER_PARAM = "invalidUser";
-    public static final String PHOTO_PARAM = "photo";
     public static final String NAME_PARAM = "name";
     public static final String SURNAME_PARM = "surname";
-    public static final String COUNTRY_PARAM = "country";
-    public static final String CITY_PARAM = "city";
-    public static final String CONFIRM_PARAM = "confirm";
-    public static final String PHONE_PARAM = "phone";
-    public static final String PRODUCT_SIZE_ID_PARAM = "productSizeId";
-    public static final String ID_PRODUCT_PARAM = "idProduct";
-    public static final String SIZES_PARAM = "sizes";
-    public static final String SELECTED_CATEGORY_PARAM = "selectedCategory";
-    public static final String SELECTED_BRAND_PARAM = "selectedBrand";
-    public static final String MODEL_PARAM = "model";
-    public static final String DESCRIPTION_PARAM = "description";
-    public static final String PRICE_PARAM = "price";
-    public static final String IS_NEW_PARAM = "isNew";
-    public static final String PRODUCT_LIST_PARAM = "productList";
-    public static final String USERS_PARAM = "users";
-    public static final String STATUS_PARAM = "status";
-    public static final String COLORS_CONTAINER_PARAM = "colorsContainer";
-    public static final String USER_ORDERS_PARAM = "userOrders";
-    public static final String USER_ORDER_ID_PARAM = "userOrderId";
-    public static final String ORDER_STATUS_PARAM = "orderStatus";
-    public static final String ID_PROD_PARAM = "idProd";
+    public static final String ACCOUNT_ID_PARAM = "idAccount";
+    public static final String ACCOUNT_AMOUND_PARAM = "amound";
+    public static final String ACCOUNT_USER_ID_PARAM = "accountUserId";
+    public static final String ACCOUNT_NAME_PARAM = "accountName";
+    public static final String ACCOUNT_STATUS_PARAM = "accountStatus";
+
 
     private EntityConstants() {}
 
