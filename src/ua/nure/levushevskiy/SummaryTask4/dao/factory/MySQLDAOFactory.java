@@ -70,4 +70,34 @@ public class MySQLDAOFactory implements DAOFactory {
         return new AccountStatusDAOImpl(dataSource);
     }
 
+    /**
+     * Returns PaymentDAO object.
+     *
+     * @return - object.
+     */
+    @Override
+    public PaymentDAO getPaymentDAO() {
+        return new PaymentDAOImpl(dataSource);
+    }
+
+    /**
+     * Returns PaymentStatusDAO object.
+     *
+     * @return - object.
+     */
+    @Override
+    public PaymentStatusDAO getPaymentStatusDAO() {
+        return new PaymentStatusDAOImpl(dataSource);
+    }
+
+    /**
+     * Returns PaymentTypeDAO object.
+     *
+     * @return - object.
+     */
+    @Override
+    public PaymentTypeDAO getPaymentTypeDAO() {
+        return new PaymentTypeDAOImpl(dataSource);
+    }
+
 }

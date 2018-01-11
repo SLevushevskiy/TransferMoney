@@ -44,4 +44,25 @@ public interface DAOFactory {
      * @return - object.
      */
     AccountStatusDAO getAccountStatusDAO();
+
+    /**
+     * Returns PaymentDAO object.
+     *
+     * @return - object.
+     */
+    PaymentDAO getPaymentDAO();
+
+    /**
+     * Returns PaymentStatusDAO object.
+     *
+     * @return - object.
+     */
+    PaymentStatusDAO getPaymentStatusDAO();
+
+    /**
+     * Returns PaymentTypeDAO object.
+     *
+     * @return - object.
+     */
+    PaymentTypeDAO getPaymentTypeDAO();
 }
