@@ -2,6 +2,8 @@ package ua.nure.levushevskiy.SummaryTask4.dao.api;
 
 import ua.nure.levushevskiy.SummaryTask4.entity.PaymentType;
 
+import java.util.List;
+
 public interface PaymentTypeDAO {
 
     /**
@@ -21,4 +23,10 @@ public interface PaymentTypeDAO {
      */
     PaymentType setPaymentType(int paymentId, String type);
 
+    /**
+     * Gets the list type object by payment type.
+     *
+     * @return - list of payment type object.
+     */
+    List<PaymentType> getAll();
 }

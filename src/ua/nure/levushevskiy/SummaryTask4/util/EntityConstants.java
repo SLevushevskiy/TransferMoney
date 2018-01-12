@@ -33,6 +33,9 @@ public class EntityConstants {
     public static final String ACCOUNT_LIST_PARAM = "accountList";
     public static final String ACCOUNT_NAME_LIST_PARAM = "accountNameList";
 
+    public static final String PAYMENT_LIST_PARAM = "paymentList";
+    public static final String PAYMENT_TYPE_LIST_PARAM = "paymentTypeList";
+
 
 
     private EntityConstants() {}

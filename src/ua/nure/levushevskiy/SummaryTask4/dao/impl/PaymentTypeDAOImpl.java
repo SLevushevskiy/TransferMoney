@@ -6,10 +6,7 @@ import ua.nure.levushevskiy.SummaryTask4.dao.exeption.DAOException;
 import ua.nure.levushevskiy.SummaryTask4.db.ConnectionPool;
 import ua.nure.levushevskiy.SummaryTask4.entity.PaymentType;
 
-import java.sql.Connection;
-import java.sql.PreparedStatement;
-import java.sql.ResultSet;
-import java.sql.SQLException;
+import java.sql.*;
 import java.util.ArrayList;
 import java.util.List;
 
@@ -19,6 +16,11 @@ public class PaymentTypeDAOImpl implements PaymentTypeDAO {
      * Request to retrieve payment type objects by ID.
      */
     private static final String SQL_SELECT_BY_ID = "SELECT * FROM st4db.payment_type WHERE idPayment_type = ?";
+
+    /**
+     * Request to retrieve all payment type objects.
+     */
+    public static final String SQL_SELECT_ALL = "SELECT * FROM st4db.payment_type";
 
     /**
      * Object of connection pool.
@@ -87,6 +89,35 @@ public class PaymentTypeDAOImpl implements PaymentTypeDAO {
     @Override
     public PaymentType setPaymentType(int paymentId, String type) {
         return null;
+    }
+
+    /**
+     * Gets the list type object by payment type.
+     *
+     * @return - list of payment type object.
+     */
+    @Override
+    public List<PaymentType> getAll() {
+        List<PaymentType> paymentTypeList = null;
+        Connection connection = null;
+        try {
+            connection = dataSource.getConnection();
+        } catch (SQLException e) {
+            LOG.error(e);
+            throw new DAOException("Cannot get connection!", e);
+        }
+
+        try (Statement statement = connection.createStatement();
+             ResultSet rs = statement.executeQuery(SQL_SELECT_ALL)) {
+            paymentTypeList = extractResultSet(rs);
+
+        } catch (SQLException e) {
+            LOG.error(e);
+            throw new DAOException("Error while extraction result set!", e);
+        } finally {
+            closeConnection(connection);
+        }
+        return paymentTypeList;
     }
 
     /**

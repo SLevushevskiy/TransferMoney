@@ -6,6 +6,8 @@ import ua.nure.levushevskiy.SummaryTask4.entity.PaymentType;
 import ua.nure.levushevskiy.SummaryTask4.service.api.PaymentTypeService;
 import ua.nure.levushevskiy.SummaryTask4.util.Transformer;
 
+import java.util.List;
+
 public class PaymentTypeServiceImpl implements PaymentTypeService {
 
     /**
@@ -27,5 +29,15 @@ public class PaymentTypeServiceImpl implements PaymentTypeService {
     public PaymentTypeDTO getById(int id) {
         PaymentType paymentType = paymentTypeDAO.getPaymentType(id);
         return Transformer.paymentType2PaymentTypeDTO(paymentType);
+    }
+
+    /**
+     * Getting all payment type.
+     *
+     * @return list of payment type.
+     */
+    @Override
+    public List<PaymentTypeDTO> getAll() {
+        return Transformer.paymentTypeList2PaymentTypeDTOList(paymentTypeDAO.getAll());
     }
 }

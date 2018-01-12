@@ -34,7 +34,7 @@
             <ul>
                 <li><a href="#top" id="top-link" class="skel-layers-ignoreHref"><span class="icon fa-home">Главная</span></a></li>
                 <li><a href="${pageContext.servletContext.contextPath}/accountList" id="accounts-link" class="skel-layers-ignoreHref"><span class="icon fa-credit-card">Счета</span></a></li>
-                <li><a href="#payments" id="about-link" class="skel-layers-ignoreHref"><span class="icon fa-money">Платежи</span></a></li>
+                <li><a href="${pageContext.servletContext.contextPath}/paymentList" id="about-link" class="skel-layers-ignoreHref"><span class="icon fa-money">Платежи</span></a></li>
                 <li><a href="${pageContext.servletContext.contextPath}/main" id="contact-link" class="skel-layers-ignoreHref"><span class="icon fa-user">Личный кабинет</span></a></li>
             </ul>
         </nav>

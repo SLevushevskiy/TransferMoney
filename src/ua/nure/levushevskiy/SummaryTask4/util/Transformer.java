@@ -279,7 +279,7 @@ public class Transformer {
         paymentDTO.setTotal(payment.getTotal());
         paymentDTO.setDescription(payment.getDescription());
         paymentDTO.setAccountDTO(accountService.getById((int) payment.getAccountId()));
-        paymentDTO.setPaymentStatusDTO(paymentStatusService.getById((int) payment.getIdPayment()));
+        paymentDTO.setPaymentStatusDTO(paymentStatusService.getById((int) payment.getStatusId()));
         paymentDTO.setPaymentTypeDTO(paymentTypeService.getById((int) payment.getTypeId()));
         return paymentDTO;
     }
@@ -321,4 +321,18 @@ public class Transformer {
         return paymentDTOList;
     }
 
+    /**
+     *  A method that converts a list of PaymentType into a PaymentTypeDTO list.
+     *
+     * @param paymentTypeList - list of payments type.
+     * @return - list of PaymentTypeDTO.
+     */
+    public static List<PaymentTypeDTO> paymentTypeList2PaymentTypeDTOList(final List<PaymentType> paymentTypeList){
+        List<PaymentTypeDTO> paymentTypeDTOList = new ArrayList<>();
+
+        for (PaymentType paymentType : paymentTypeList) {
+            paymentTypeDTOList.add(paymentType2PaymentTypeDTO(paymentType));
+        }
+        return paymentTypeDTOList;
+    }
 }
