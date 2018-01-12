@@ -186,7 +186,7 @@ public class Transformer {
         accountDTO.setIdAccount(account.getIdAccount());
         accountDTO.setAmound(account.getAmound());
         accountDTO.setEndDate(account.getEndDate());
-        accountDTO.setUserDTO(userService.getById((int) account.getAccountUserId()));//подумать!!!!!
+        accountDTO.setUserDTO(userService.getById((int) account.getAccountUserId()));
         accountDTO.setAccountNameDTO(accountNameService.getById((int) account.getAccountNameId()));
         accountDTO.setAccountStatusDTO(accountStatusService.getById((int) account.getAccountStatusId()));
         return accountDTO;
@@ -239,4 +239,86 @@ public class Transformer {
 
         return accountNameDTOList;
     }
+
+    /**
+     * A method that converts PaymentStatus into a PaymentStatusDTO.
+     *
+     * @param paymentStatus - PaymentStatus object.
+     * @return - PaymentStatusDTO object.
+     */
+    public static PaymentStatusDTO paymentStatus2PaymentStatusDTO(final PaymentStatus paymentStatus){
+        PaymentStatusDTO paymentStatusDTO = new PaymentStatusDTO();
+        paymentStatusDTO.setIdPaymentStatus(paymentStatus.getIdPaymentStatus());
+        paymentStatusDTO.setStatus(paymentStatus.getStatus());
+        return paymentStatusDTO;
+    }
+
+    /**
+     * A method that converts PaymentType into a PaymentTypeDTO.
+     *
+     * @param paymentType - PaymentStatus object.
+     * @return - PaymentTypeDTO object.
+     */
+    public static PaymentTypeDTO paymentType2PaymentTypeDTO(final PaymentType paymentType){
+        PaymentTypeDTO paymentTypeDTO = new PaymentTypeDTO();
+        paymentTypeDTO.setIdPaymentType(paymentType.getIdPaymentType());
+        paymentTypeDTO.setType(paymentType.getType());
+        return paymentTypeDTO;
+    }
+
+    /**
+     * A method that converts Payment into a PaymentDTO.
+     *
+     * @param payment - Payment object.
+     * @return - PaymentDTO object.
+     */
+    public static PaymentDTO payment2PaymentDTO(final Payment payment,final AccountService accountService,final PaymentStatusService paymentStatusService,final PaymentTypeService paymentTypeService){
+        PaymentDTO paymentDTO = new PaymentDTO();
+        paymentDTO.setIdPayment(payment.getIdPayment());
+        paymentDTO.setDatePayment(payment.getDatePayment());
+        paymentDTO.setTotal(payment.getTotal());
+        paymentDTO.setDescription(payment.getDescription());
+        paymentDTO.setAccountDTO(accountService.getById((int) payment.getAccountId()));
+        paymentDTO.setPaymentStatusDTO(paymentStatusService.getById((int) payment.getIdPayment()));
+        paymentDTO.setPaymentTypeDTO(paymentTypeService.getById((int) payment.getTypeId()));
+        return paymentDTO;
+    }
+
+    /**
+     * A method that converts PaymentDTO into a Payment.
+     *
+     * @param paymentDTO - PaymentDTO object.
+     * @return - payment object.
+     */
+    public  static Payment paymentDTO2Payment(final PaymentDTO paymentDTO){
+        Payment payment = new Payment();
+        payment.setIdPayment(paymentDTO.getIdPayment());
+        payment.setDatePayment(paymentDTO.getDatePayment());
+        payment.setTotal(paymentDTO.getTotal());
+        payment.setDescription(paymentDTO.getDescription());
+        payment.setAccountId(paymentDTO.getAccountDTO().getIdAccount());
+        payment.setStatusId(paymentDTO.getPaymentStatusDTO().getIdPaymentStatus());
+        payment.setTypeId(paymentDTO.getPaymentTypeDTO().getIdPaymentType());
+        return payment;
+    }
+
+    /**
+     * A method that converts a list of Payment into a PaymentDTO list.
+     *
+     * @param paymentList - list of payment.
+     * @param accountService - service for obtaining a account object by its ID.
+     * @param paymentStatusService - service for obtaining a payment status object by its ID.
+     * @param paymentTypeService - service for obtaining a payment type object by its ID.
+     * @return - list of paymentDTO.
+     */
+    public static List<PaymentDTO> paymentList2PaymentDTOList(final List<Payment> paymentList,final AccountService accountService,final PaymentStatusService paymentStatusService,final PaymentTypeService paymentTypeService){
+        List<PaymentDTO> paymentDTOList = new ArrayList<>();
+
+        for (Payment payment : paymentList) {
+            paymentDTOList.add(payment2PaymentDTO(payment, accountService, paymentStatusService, paymentTypeService));
+        }
+
+        return paymentDTOList;
+    }
+
 }

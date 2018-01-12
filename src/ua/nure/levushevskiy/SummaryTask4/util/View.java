@@ -38,6 +38,7 @@ public class View {
         public static final String ACCOUNT = "account";
         public static final String REGISTRATION = "registration";
         public static final String ACCOUNT_LIST_JSP = "accountList";
+        public static final String PAYMENT_LIST_JSP = "paymentList";
 
 
         private Mapping() { }

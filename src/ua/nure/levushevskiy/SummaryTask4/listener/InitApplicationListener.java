@@ -72,6 +72,14 @@ public class InitApplicationListener implements ServletContextListener {
         AccountStatusService accountStatusService = new AccountStatusServiceImpl(accountStatusDAO);
         AccountService accountService = new AccountServiceImpl(accountDAO,userService,accountStatusService,accountNameService);
 
+        PaymentTypeDAO paymentTypeDAO = mySQLDAOFactory.getPaymentTypeDAO();
+        PaymentStatusDAO paymentStatusDAO = mySQLDAOFactory.getPaymentStatusDAO();
+        PaymentDAO paymentDAO = mySQLDAOFactory.getPaymentDAO();
+
+        PaymentTypeService paymentTypeService = new PaymentTypeServiceImpl(paymentTypeDAO);
+        PaymentStatusService paymentStatusService = new PaymentStatusServiceImpl(paymentStatusDAO);
+        PaymentService paymentService = new PaymentServiceImpl(paymentDAO,accountService,paymentStatusService,paymentTypeService);
+
         servletContext.setAttribute(EntityConstants.ROLE_SERVICE, roleService);
         servletContext.setAttribute(EntityConstants.USER_SERVICE, userService);
         servletContext.setAttribute(EntityConstants.USER_STATUS_SERVICE, userStatusService);
@@ -79,6 +87,11 @@ public class InitApplicationListener implements ServletContextListener {
         servletContext.setAttribute(EntityConstants.ACCOUNT_SERVICE, accountService);
         servletContext.setAttribute(EntityConstants.ACCOUNT_NAME_SERVICE, accountNameService);
         servletContext.setAttribute(EntityConstants.ACCOUNT_STATUS_SERVICE, accountStatusService);
+
+        servletContext.setAttribute(EntityConstants.PAYMENT_SERVICE, paymentService);
+        servletContext.setAttribute(EntityConstants.PAYMENT_TYPE_SERVICE, paymentTypeService);
+        servletContext.setAttribute(EntityConstants.PAYMENT_STATUS_SERVICE, paymentStatusService);
+
     }
 
     @Override

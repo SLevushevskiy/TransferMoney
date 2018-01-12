@@ -37,24 +37,14 @@ public class EntityConstants {
 
     private EntityConstants() {}
 
-    public static final String BRAND_SERVICE = "brandService";
-    public static final String CATEGORY_SERVICE = "categoryService";
-    public static final String PRODUCT_COLOR_SERVICE = "productColorService";
-    public static final String ORDER_PRODUCT_SERVICE = "orderProductService";
-    public static final String PRODUCT_SERVICE = "productService";
     public static final String ROLE_SERVICE = "roleService";
     public static final String USER_SERVICE = "userService";
     public static final String USER_STATUS_SERVICE = "userStatusService";
     public static final String ACCOUNT_SERVICE = "accountService";
     public static final String ACCOUNT_NAME_SERVICE = "accountNameService";
     public static final String ACCOUNT_STATUS_SERVICE = "accountStatusService";
+    public static final String PAYMENT_SERVICE = "paymentService";
+    public static final String PAYMENT_TYPE_SERVICE = "paymentNameService";
+    public static final String PAYMENT_STATUS_SERVICE = "paymentStatusService";
 
-    public static final String ORDER_STATUS_SERVICE = "orderStatusService";
-    public static final String USER_PHOTOS_PATH = "userPhotosFolder";
-    public static final String DEFAULT_USER_PHOTO_PATH = "defaultUserPhotosPath";
-    public static final String PROJECT_USER_PHOTO_PATH = "projectUserPhotosPath";
-    public static final String PRODUCT_PHOTOS_PATH = "productPhotosFolder";
-    public static final String DEFAULT_PRODUCT_PHOTO_PATH = "defaultProductPhotosPath";
-    public static final String PROJECT_PRODUCT_PHOTO_PATH = "projectProductPhotosPath";
-    public static final String ALLOWABLE_FORMATS = "allowableFormats";
 }
