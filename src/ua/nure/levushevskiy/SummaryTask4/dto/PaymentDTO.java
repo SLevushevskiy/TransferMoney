@@ -32,8 +32,6 @@ public class PaymentDTO {
     public PaymentDTO() {
         paymentStatusDTO = new PaymentStatusDTO();
         paymentStatusDTO.setIdPaymentStatus(1);
-        paymentTypeDTO = new PaymentTypeDTO();
-        paymentTypeDTO.setIdPaymentType(1);
     }
 
     public PaymentDTO(AccountDTO accountDTO) {

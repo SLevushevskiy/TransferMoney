@@ -1,14 +1,10 @@
 package ua.nure.levushevskiy.SummaryTask4.servlet;
 
-import ua.nure.levushevskiy.SummaryTask4.dto.AccountDTO;
-import ua.nure.levushevskiy.SummaryTask4.dto.PaymentDTO;
-import ua.nure.levushevskiy.SummaryTask4.dto.PaymentStatusDTO;
-import ua.nure.levushevskiy.SummaryTask4.dto.PaymentTypeDTO;
+import ua.nure.levushevskiy.SummaryTask4.dto.*;
+import ua.nure.levushevskiy.SummaryTask4.entity.PaymentType;
 import ua.nure.levushevskiy.SummaryTask4.exception.InitializationException;
 import ua.nure.levushevskiy.SummaryTask4.service.api.PaymentStatusService;
-import ua.nure.levushevskiy.SummaryTask4.service.impl.PaymentServiceImpl;
-import ua.nure.levushevskiy.SummaryTask4.service.impl.PaymentStatusServiceImpl;
-import ua.nure.levushevskiy.SummaryTask4.service.impl.PaymentTypeServiceImpl;
+import ua.nure.levushevskiy.SummaryTask4.service.impl.*;
 import ua.nure.levushevskiy.SummaryTask4.util.EntityConstants;
 import ua.nure.levushevskiy.SummaryTask4.util.View;
 
@@ -21,9 +17,10 @@ import javax.servlet.http.HttpServletResponse;
 import javax.servlet.http.HttpSession;
 import java.io.IOException;
 import java.sql.Date;
+import java.util.ArrayList;
 import java.util.List;
 
-import static ua.nure.levushevskiy.SummaryTask4.util.View.Mapping.PAYMENT_LIST_JSP;
+
 import static ua.nure.levushevskiy.SummaryTask4.util.View.PAYMENT_ADD_JSP;
 
 @WebServlet("/paymentAdd")
@@ -39,10 +36,21 @@ public class PaymentAddServlet extends HttpServlet {
      */
     PaymentTypeServiceImpl paymentTypeService;
 
+    /**
+     * An object that contains account business logic.
+     */
+    private AccountServiceImpl accountService;
+
     @Override
     protected void doGet(HttpServletRequest req, HttpServletResponse resp) throws ServletException, IOException {
         List<PaymentTypeDTO> paymentTypeDTOList = paymentTypeService.getAll();
         req.setAttribute(EntityConstants.PAYMENT_TYPE_LIST_PARAM, paymentTypeDTOList);
+
+        HttpSession session = req.getSession();
+        List<AccountDTO> accountDTOList = accountService.getAll();
+        accountDTOList = removeAccount(accountDTOList, Integer.parseInt(session.getAttribute(EntityConstants.USER_ID_PARAM).toString()));
+        req.setAttribute(EntityConstants.ACCOUNT_LIST_PARAM, accountDTOList);
+
         req.getRequestDispatcher(PAYMENT_ADD_JSP).forward(req, resp);
     }
 
@@ -54,14 +62,14 @@ public class PaymentAddServlet extends HttpServlet {
         PaymentDTO paymentDTO = getPaymentFromRequest(req);
 
         try {
-        //    accountDTO = accountService.saveAccount(accountDTO);
+            paymentDTO = paymentService.savePayment(paymentDTO);
         } catch (IllegalStateException e) {
-       //     session.setAttribute(EntityConstants.INVALID_ACCOUNT_PARAM, accountDTO);
-            resp.sendRedirect(View.Mapping.REGISTRATION);
+            //session.setAttribute(EntityConstants.INVALID_ACCOUNT_PARAM, accountDTO);
+            resp.sendRedirect(View.Mapping.ERROR);
             return;
 
         }
-        resp.sendRedirect(View.Mapping.ACCOUNT_LIST_JSP);//redirect
+        resp.sendRedirect(View.Mapping.PAYMENT_LIST);//redirect
     }
 
     @Override
@@ -69,6 +77,8 @@ public class PaymentAddServlet extends HttpServlet {
         super.init();
         ServletContext context = getServletContext();
         initPaymentService(context);
+        initPaymentTypeService(context);
+        initAccountService(context);
     }
 
     /**
@@ -78,17 +88,16 @@ public class PaymentAddServlet extends HttpServlet {
      * @return - formed object with the received data.
      */
     private PaymentDTO getPaymentFromRequest(final HttpServletRequest req) {
-        HttpSession session = req.getSession();
-        Date endDate = new Date(System.currentTimeMillis());
+        Date datePayment = new Date(System.currentTimeMillis());
 
         PaymentDTO paymentDTO = new PaymentDTO();
         //ВЫБОР СЧЕТА НА ВИЮХЕ ДЛЯ ОПЛАТЫ
-      //  paymentDTO.setAccountDTO((AccountDTO) session.getAttribute(EntityConstants.ACCOUNT_PARAM));
-     //   paymentDTO.setAccountNameDTO(accountNameService.getById(Integer.parseInt(req.getParameter(EntityConstants.ACCOUNT_NAME_PARAM))));
-      //  paymentDTO.setEndDate(endDate);
-        // Взять юзера из базы
-        // accountDTO.setUserDTO(req.getParameter(EntityConstants.ACCOUNT_USER_ID_PARAM));
-        // accountDTO.setAccountNameDTO(req.getParameter(EntityConstants.ACCOUNT_NAME_PARAM));
+        paymentDTO.setPaymentTypeDTO(paymentTypeService.getById(Integer.parseInt(req.getParameter(EntityConstants.PAYMENT_TYPE_PARAM))));
+        paymentDTO.setAccountDTO(accountService.getById(Integer.parseInt(req.getParameter(EntityConstants.ACCOUNT_LIST_PARAM))));
+        Double num = Double.parseDouble(req.getParameter(EntityConstants.PAYMENT_TOTAL_PARAM).toString());
+        paymentDTO.setTotal(Double.parseDouble(req.getParameter(EntityConstants.PAYMENT_TOTAL_PARAM).toString()));
+        paymentDTO.setDescription((String) req.getParameter(EntityConstants.PAYMENT_DESCRIPTION_PARAM));
+        paymentDTO.setDatePayment(datePayment);
         return paymentDTO;
     }
 
@@ -102,6 +111,47 @@ public class PaymentAddServlet extends HttpServlet {
         if (paymentService == null) {
             throw new InitializationException("Account service is not initialized!");
         }
+    }
+
+    /**
+     * Method that initializes payment type service.
+     *
+     * @param context - servlet context.
+     */
+    private void initPaymentTypeService(final ServletContext context) {
+        paymentTypeService = (PaymentTypeServiceImpl) context.getAttribute(EntityConstants.PAYMENT_TYPE_SERVICE);
+        if (paymentTypeService == null) {
+            throw new InitializationException("Payment Type service is not initialized!");
+        }
+    }
+
+    /**
+     * Method that initializes user service.
+     *
+     * @param context - servlet context.
+     */
+    private void initAccountService(final ServletContext context) {
+        accountService = (AccountServiceImpl) context.getAttribute(EntityConstants.ACCOUNT_SERVICE);
+        if (accountService == null) {
+            throw new InitializationException("Account service is not initialized!");
+        }
+    }
+
+    /**
+     *  The method that removes the accounts not of user from the list.
+     *
+     * @param accountDTOList - account.
+     * @param userId - user id.
+     * @return - list accounts.
+     */
+    private List<AccountDTO> removeAccount(final List<AccountDTO> accountDTOList,int userId) {
+        List<AccountDTO> modifiedList = new ArrayList<>();
+        for (AccountDTO accountDTO : accountDTOList) {
+            if (accountDTO.getUserDTO().getIdUser()==userId) {
+                modifiedList.add(accountDTO);
+            }
+        }
+        return modifiedList;
     }
 
 }

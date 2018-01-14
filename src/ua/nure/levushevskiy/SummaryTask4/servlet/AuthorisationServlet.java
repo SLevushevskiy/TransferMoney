@@ -75,7 +75,7 @@ public class AuthorisationServlet extends HttpServlet {
             resp.sendRedirect(View.Mapping.AUTHORIZATION);
             return;
         }
-        resp.sendRedirect(View.Mapping.ACCOUNT_LIST_JSP);
+        resp.sendRedirect(View.Mapping.ACCOUNT_LIST);
     }
 
     /**

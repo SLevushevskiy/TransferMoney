@@ -75,7 +75,7 @@ public class AccountAddServlet extends HttpServlet {
                 return;
 
             }
-        resp.sendRedirect(View.Mapping.ACCOUNT_LIST_JSP);//redirect
+        resp.sendRedirect(View.Mapping.ACCOUNT_LIST);//redirect
     }
 
     /**

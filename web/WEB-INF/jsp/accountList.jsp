@@ -71,6 +71,15 @@
                     <td>${account.getAmound()}</td>
                     <td>${account.getEndDate()}</td>
                     <td>${account.getAccountStatusDTO().status}</td>
+                    <td>
+                        <form action="/paymentList" method="post">
+                            <input type="hidden" name="accountChoose" value="${account.getIdAccount()}">
+                            <input type="hidden" name="accountName" value="${account.getAccountNameDTO().name}">
+                            <input type="hidden" name="amound" value="${account.getAmound()}">
+                            <input type="submit" value="История платежей" >
+                        </form>
+                    </td>
+
                 </tr>
                 </c:forEach>
             </table>

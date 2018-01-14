@@ -65,7 +65,15 @@
             <ul>
             <li><a href="${pageContext.servletContext.contextPath}/paymentAdd"><span class="icon fa-plus-circle"> Совершить операцию   </span></a></li>
             </ul>
+
             <table>
+                <tr>
+                    <td><span class="icon fa-credit-card-alt"></span></td>
+                    <td>${accountName}</td>
+                    <td>${accountChoose}</td>
+                    <td>${amound}</td>
+                </tr>
+                <tr></tr>
                 <c:forEach items="${paymentList}" var="payment">
                     <tr>
                         <td><span class="icon fa-credit-card-alt"></span></td>
@@ -74,6 +82,7 @@
                         <td>${payment.getDescription()}</td>
                         <td>${payment.getTotal()}</td>
                         <td>${payment.getAccountDTO().amound}</td>
+                        <td>${payment.getDatePayment()}</td>
                         <td>${payment.getPaymentStatusDTO().status}</td>
                     </tr>
                 </c:forEach>

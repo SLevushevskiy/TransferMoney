@@ -231,7 +231,7 @@ public class PaymentDAOImpl implements PaymentDAO {
         Payment payment;
         while (rs.next()) {
             payment = new Payment();
-            payment.setAccountId(rs.getInt("idPayment"));
+            payment.setIdPayment(rs.getInt("idPayment"));
             payment.setDatePayment(rs.getDate("date"));
             payment.setTotal(rs.getDouble("total"));
             payment.setDescription(rs.getString("description"));

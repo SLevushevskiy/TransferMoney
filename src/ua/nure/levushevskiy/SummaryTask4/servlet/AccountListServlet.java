@@ -47,7 +47,7 @@ public class AccountListServlet extends HttpServlet {
     protected void doPost(HttpServletRequest req, HttpServletResponse resp) throws ServletException, IOException {
         HttpSession session = req.getSession();//создаем сессию
         // session.removeAttribute(EntityConstants.CARD_ERROR_CONTAINER_PARAM);
-        resp.sendRedirect(View.Mapping.ACCOUNT_LIST_JSP);
+        resp.sendRedirect(View.Mapping.ACCOUNT_LIST);
     }
 
     /**

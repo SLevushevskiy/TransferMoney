@@ -1,8 +1,10 @@
 package ua.nure.levushevskiy.SummaryTask4.servlet;
 
+import ua.nure.levushevskiy.SummaryTask4.dto.AccountDTO;
 import ua.nure.levushevskiy.SummaryTask4.dto.PaymentDTO;
 import ua.nure.levushevskiy.SummaryTask4.exception.InitializationException;
 import ua.nure.levushevskiy.SummaryTask4.service.api.PaymentService;
+import ua.nure.levushevskiy.SummaryTask4.service.impl.AccountServiceImpl;
 import ua.nure.levushevskiy.SummaryTask4.service.impl.PaymentServiceImpl;
 import ua.nure.levushevskiy.SummaryTask4.util.EntityConstants;
 
@@ -39,14 +41,26 @@ public class PaymentListServlet extends HttpServlet {
     protected void doGet(HttpServletRequest req, HttpServletResponse resp) throws ServletException, IOException {
         HttpSession session = req.getSession();
         List<PaymentDTO> paymentDTOList = paymentService.getAll();
-       // paymentDTOList = removePayment(paymentDTOList, Integer.parseInt(session.getAttribute(EntityConstants.ACCOUNT_ID_PARAM).toString()));
+
+        paymentDTOList = removePayment(paymentDTOList, Integer.parseInt(req.getParameter(EntityConstants.ACCOUNT_CHOOSE_PARAM).toString()));
+        req.setAttribute(EntityConstants.ACCOUNT_CHOOSE_PARAM, Integer.parseInt(req.getParameter(EntityConstants.ACCOUNT_CHOOSE_PARAM).toString()));
+        req.setAttribute(EntityConstants.ACCOUNT_NAME_PARAM, req.getParameter(EntityConstants.ACCOUNT_NAME_PARAM).toString());
+        req.setAttribute(EntityConstants.ACCOUNT_AMOUND_PARAM, req.getParameter(EntityConstants.ACCOUNT_AMOUND_PARAM).toString());
         req.setAttribute(EntityConstants.PAYMENT_LIST_PARAM, paymentDTOList);
         req.getRequestDispatcher(PAYMENT_LIST_JSP).forward(req, resp);
     }
 
     @Override
     protected void doPost(HttpServletRequest req, HttpServletResponse resp) throws ServletException, IOException {
-        super.doPost(req, resp);
+        HttpSession session = req.getSession();
+        List<PaymentDTO> paymentDTOList = paymentService.getAll();
+
+        paymentDTOList = removePayment(paymentDTOList, Integer.parseInt(req.getParameter(EntityConstants.ACCOUNT_CHOOSE_PARAM).toString()));
+        req.setAttribute(EntityConstants.ACCOUNT_CHOOSE_PARAM, Integer.parseInt(req.getParameter(EntityConstants.ACCOUNT_CHOOSE_PARAM).toString()));
+        req.setAttribute(EntityConstants.ACCOUNT_NAME_PARAM, req.getParameter(EntityConstants.ACCOUNT_NAME_PARAM).toString());
+        req.setAttribute(EntityConstants.ACCOUNT_AMOUND_PARAM, req.getParameter(EntityConstants.ACCOUNT_AMOUND_PARAM).toString());
+        req.setAttribute(EntityConstants.PAYMENT_LIST_PARAM, paymentDTOList);
+        req.getRequestDispatcher(PAYMENT_LIST_JSP).forward(req, resp);
     }
 
     /**
