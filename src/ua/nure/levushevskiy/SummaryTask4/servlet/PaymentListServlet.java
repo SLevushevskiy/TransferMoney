@@ -30,22 +30,29 @@ public class PaymentListServlet extends HttpServlet {
      */
     PaymentServiceImpl paymentService;
 
+    /**
+     * An object that contains account business logic.
+     */
+    private AccountServiceImpl accountService;
+
     @Override
     public final void init() throws ServletException {
         super.init();
         ServletContext context = getServletContext();
         initPaymentService(context);
+        initAccountService(context);
     }
 
     @Override
     protected void doGet(HttpServletRequest req, HttpServletResponse resp) throws ServletException, IOException {
         HttpSession session = req.getSession();
         List<PaymentDTO> paymentDTOList = paymentService.getAll();
+        int accountId =  Integer.parseInt(req.getParameter(EntityConstants.ACCOUNT_CHOOSE_PARAM).toString());
+        paymentDTOList = removePayment(paymentDTOList, accountId);
 
-        paymentDTOList = removePayment(paymentDTOList, Integer.parseInt(req.getParameter(EntityConstants.ACCOUNT_CHOOSE_PARAM).toString()));
-        req.setAttribute(EntityConstants.ACCOUNT_CHOOSE_PARAM, Integer.parseInt(req.getParameter(EntityConstants.ACCOUNT_CHOOSE_PARAM).toString()));
-        req.setAttribute(EntityConstants.ACCOUNT_NAME_PARAM, req.getParameter(EntityConstants.ACCOUNT_NAME_PARAM).toString());
-        req.setAttribute(EntityConstants.ACCOUNT_AMOUND_PARAM, req.getParameter(EntityConstants.ACCOUNT_AMOUND_PARAM).toString());
+        req.setAttribute(EntityConstants.ACCOUNT_CHOOSE_PARAM, accountId);
+        req.setAttribute(EntityConstants.ACCOUNT_NAME_PARAM, accountService.getById(accountId).getAccountNameDTO().getName());
+        req.setAttribute(EntityConstants.ACCOUNT_AMOUND_PARAM, accountService.getById(accountId).getAmound());
         req.setAttribute(EntityConstants.PAYMENT_LIST_PARAM, paymentDTOList);
         req.getRequestDispatcher(PAYMENT_LIST_JSP).forward(req, resp);
     }
@@ -55,10 +62,12 @@ public class PaymentListServlet extends HttpServlet {
         HttpSession session = req.getSession();
         List<PaymentDTO> paymentDTOList = paymentService.getAll();
 
-        paymentDTOList = removePayment(paymentDTOList, Integer.parseInt(req.getParameter(EntityConstants.ACCOUNT_CHOOSE_PARAM).toString()));
-        req.setAttribute(EntityConstants.ACCOUNT_CHOOSE_PARAM, Integer.parseInt(req.getParameter(EntityConstants.ACCOUNT_CHOOSE_PARAM).toString()));
-        req.setAttribute(EntityConstants.ACCOUNT_NAME_PARAM, req.getParameter(EntityConstants.ACCOUNT_NAME_PARAM).toString());
-        req.setAttribute(EntityConstants.ACCOUNT_AMOUND_PARAM, req.getParameter(EntityConstants.ACCOUNT_AMOUND_PARAM).toString());
+        int accountId =  Integer.parseInt(req.getParameter(EntityConstants.ACCOUNT_CHOOSE_PARAM).toString());
+        paymentDTOList = removePayment(paymentDTOList, accountId);
+
+        req.setAttribute(EntityConstants.ACCOUNT_CHOOSE_PARAM, accountId);
+        req.setAttribute(EntityConstants.ACCOUNT_NAME_PARAM, accountService.getById(accountId).getAccountNameDTO().getName());
+        req.setAttribute(EntityConstants.ACCOUNT_AMOUND_PARAM, accountService.getById(accountId).getAmound());
         req.setAttribute(EntityConstants.PAYMENT_LIST_PARAM, paymentDTOList);
         req.getRequestDispatcher(PAYMENT_LIST_JSP).forward(req, resp);
     }
@@ -71,6 +80,18 @@ public class PaymentListServlet extends HttpServlet {
     private void initPaymentService(final ServletContext context) {
         paymentService = (PaymentServiceImpl) context.getAttribute(EntityConstants.PAYMENT_SERVICE);
         if (paymentService == null) {
+            throw new InitializationException("Account service is not initialized!");
+        }
+    }
+
+    /**
+     * Method that initializes user service.
+     *
+     * @param context - servlet context.
+     */
+    private void initAccountService(final ServletContext context) {
+        accountService = (AccountServiceImpl) context.getAttribute(EntityConstants.ACCOUNT_SERVICE);
+        if (accountService == null) {
             throw new InitializationException("Account service is not initialized!");
         }
     }

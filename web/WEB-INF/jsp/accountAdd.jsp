@@ -7,7 +7,7 @@
 <fmt:requestEncoding value="UTF-8" />
 <html>
 <head>
-    <title>Prologue by HTML5 UP</title>
+    <title>Transfer Money</title>
     <meta charset="utf-8" />
     <meta name="viewport" content="width=device-width, initial-scale=1" />
     <link rel="stylesheet" href="assets/css/main.css" />
