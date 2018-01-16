@@ -1,19 +1,19 @@
 CREATE SCHEMA `st4db` DEFAULT CHARACTER SET utf8 COLLATE utf8_bin ;
 
 CREATE TABLE `st4db`.`user_role` (
-  `idUserRole` INT NOT NULL,
+  `idUserRole` INT NOT NULL auto_increment,
   `rank` VARCHAR(45) NOT NULL,
   PRIMARY KEY (`idUserRole`),
   UNIQUE INDEX `rank_UNIQUE` (`rank` ASC));
 
 CREATE TABLE `st4db`.`user_status` (
-  `idUser_status` INT NOT NULL,
+  `idUser_status` INT NOT NULL auto_increment,
   `status` VARCHAR(45) NOT NULL,
   PRIMARY KEY (`idUser_status`),
   UNIQUE INDEX `status_UNIQUE` (`status` ASC));
 
 CREATE TABLE `st4db`.`user` (
-  `idUser` INT NOT NULL,
+  `idUser` INT NOT NULL auto_increment,
   `Name` VARCHAR(45) NOT NULL,
   `Surname` VARCHAR(45) NOT NULL,
   `email` VARCHAR(45) NOT NULL,
@@ -36,21 +36,22 @@ CREATE TABLE `st4db`.`user` (
     ON UPDATE NO ACTION);
 
 CREATE TABLE `st4db`.`acccount_status` (
-  `idAcccount_status` INT NOT NULL,
+  `idAcccount_status` INT NOT NULL auto_increment,
   `status` VARCHAR(45) NOT NULL,
   PRIMARY KEY (`idAcccount_status`),
   UNIQUE INDEX `status_UNIQUE` (`status` ASC));
 
 CREATE TABLE `st4db`.`account_name` (
-  `idAccount_name` INT NOT NULL,
+  `idAccount_name` INT NOT NULL auto_increment,
   `name` VARCHAR(45) NOT NULL,
   PRIMARY KEY (`idAccount_name`),
   UNIQUE INDEX `name_UNIQUE` (`name` ASC));
 
 CREATE TABLE `st4db`.`account` (
-  `idAccount` INT NOT NULL,
+  `idAccount` INT NOT NULL auto_increment,
   `amound` DECIMAL NOT NULL,
-  `client_id` INT NOT NULL,
+  `end_date` DATE NOT NULL,
+  `user_id` INT NOT NULL,
   `account_status_id` INT NOT NULL,
   `account_name_id` INT NOT NULL,
   PRIMARY KEY (`idAccount`),
@@ -74,18 +75,18 @@ CREATE TABLE `st4db`.`account` (
     ON UPDATE NO ACTION);
 
 CREATE TABLE `st4db`.`payment_status` (
-  `idPayment_status` INT NOT NULL,
+  `idPayment_status` INT NOT NULL auto_increment,
   `status` VARCHAR(45) NOT NULL,
   PRIMARY KEY (`idPayment_status`),
   UNIQUE INDEX `status_UNIQUE` (`status` ASC));
 
 CREATE TABLE `st4db`.`payment_type` (
-  `idPayment_type` INT NOT NULL,
+  `idPayment_type` INT NOT NULL auto_increment,
   `type` VARCHAR(45) NOT NULL,
   PRIMARY KEY (`idPayment_type`));
 
 CREATE TABLE `st4db`.`payment` (
-  `idPayment` INT NOT NULL,
+  `idPayment` INT NOT NULL auto_increment,
   `date` DATETIME NOT NULL,
   `total` DECIMAL NOT NULL,
   `description` VARCHAR(45) NOT NULL,

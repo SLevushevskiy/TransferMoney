@@ -93,7 +93,7 @@ public class PaymentAddServlet extends HttpServlet {
         PaymentDTO paymentDTO = new PaymentDTO();
         //ВЫБОР СЧЕТА НА ВИЮХЕ ДЛЯ ОПЛАТЫ
         paymentDTO.setPaymentTypeDTO(paymentTypeService.getById(Integer.parseInt(req.getParameter(EntityConstants.PAYMENT_TYPE_PARAM))));
-        paymentDTO.setAccountDTO(accountService.getById(Integer.parseInt(req.getParameter(EntityConstants.ACCOUNT_LIST_PARAM))));
+        paymentDTO.setAccountDTO(accountService.getById(Integer.parseInt(req.getParameter(EntityConstants.ACCOUNT_CHOOSE_PARAM))));
         Double num = Double.parseDouble(req.getParameter(EntityConstants.PAYMENT_TOTAL_PARAM).toString());
         paymentDTO.setTotal(Double.parseDouble(req.getParameter(EntityConstants.PAYMENT_TOTAL_PARAM).toString()));
         paymentDTO.setDescription((String) req.getParameter(EntityConstants.PAYMENT_DESCRIPTION_PARAM));

@@ -116,7 +116,7 @@ public class PaymentDAOImpl implements PaymentDAO {
 
             try (ResultSet generatedKeys = preparedStatement.getGeneratedKeys()) {
                 if (generatedKeys.next()) {
-                    payment.setAccountId(generatedKeys.getInt(1));
+                    payment.setIdPayment(generatedKeys.getInt(1));
                 } else {
                     throw new SQLException("Creating user failed, no ID obtained.");
                 }

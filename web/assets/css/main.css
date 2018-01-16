@@ -1863,7 +1863,6 @@
 
 		table.default {
 			width: 100%;
-			text-align: left;
 		}
 
 			table.default tbody tr:nth-child(2n+2) {
@@ -1888,6 +1887,14 @@
 
 			table.default tfoot {
 				background: #eee;
+			}
+			table #list tr th{
+				line-height: normal !important;
+				vertical-align: middle !important;
+			}
+			table #list tr td{
+				line-height: normal !important;
+				vertical-align: middle !important;
 			}
 
 /* Button */

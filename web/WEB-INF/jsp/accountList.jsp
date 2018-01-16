@@ -1,10 +1,10 @@
-<%@ page contentType="text/html;charset=UTF-8" language="java" %>
+<%@ page contentType="text/html;charset=UTF-8" pageEncoding="UTF-8" language="java" %>
 <%@ page isELIgnored="false" %>
 <%@ taglib uri="http://java.sun.com/jsp/jstl/core" prefix="c" %>
 <%@ taglib prefix="fmt" uri="http://java.sun.com/jsp/jstl/fmt" %>
 <%@ taglib prefix="t" tagdir="/WEB-INF/tags" %>
 
-<!DOCTYPE HTML>
+<fmt:requestEncoding value="UTF-8" />
 
 <html>
 <head>
@@ -34,7 +34,7 @@
             <ul>
                 <li><a href="#top" id="top-link" class="skel-layers-ignoreHref"><span class="icon fa-home">Главная</span></a></li>
                 <li><a href="${pageContext.servletContext.contextPath}/accountList" id="accounts-link" class="skel-layers-ignoreHref"><span class="icon fa-credit-card">Счета</span></a></li>
-                <li><a href="${pageContext.servletContext.contextPath}/paymentList" id="about-link" class="skel-layers-ignoreHref"><span class="icon fa-money">Платежи</span></a></li>
+                <li><a href="${pageContext.servletContext.contextPath}/paymentAdd" id="about-link" class="skel-layers-ignoreHref"><span class="icon fa-money">Операции</span></a></li>
                 <li><a href="${pageContext.servletContext.contextPath}/main" id="contact-link" class="skel-layers-ignoreHref"><span class="icon fa-user">Личный кабинет</span></a></li>
             </ul>
         </nav>
@@ -62,7 +62,15 @@
     <!-- Intro -->
     <section id="top" class="one dark cover">
         <div class="container">
-            <table>
+            <table id="list">
+                <tr>
+                    <th></th>
+                    <th>Имя карты</th>
+                    <th>Номер карты</th>
+                    <th>Остаток</th>
+                    <th>Срок действия</th>
+                    <th>Статус карты</th>
+                </tr>
                 <c:forEach items="${accountList}" var="account">
                 <tr>
                     <td><span class="icon fa-credit-card-alt"></span></td>
@@ -79,7 +87,6 @@
                             <input type="submit" value="История платежей" >
                         </form>
                     </td>
-
                 </tr>
                 </c:forEach>
             </table>

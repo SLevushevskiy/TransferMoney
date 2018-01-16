@@ -74,8 +74,8 @@ public class UserDAOImpl implements UserDAO {
         }
 
         try (PreparedStatement preparedStatement = connection.prepareStatement(SQL_USER_INSERT, Statement.RETURN_GENERATED_KEYS)) {
-            preparedStatement.setString(1, user.getName());
-            preparedStatement.setString(2, user.getSurname());
+            preparedStatement.setNString(1, user.getName());
+            preparedStatement.setNString(2, user.getSurname());
             preparedStatement.setString(3, user.getEmail());
             preparedStatement.setString(4, user.getPassword());
             preparedStatement.setInt(5, (int) user.getRoleId());

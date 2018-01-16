@@ -1,8 +1,11 @@
-<%@ page contentType="text/html;charset=UTF-8" language="java" %>
+<%@ page contentType="text/html;charset=UTF-8" pageEncoding="UTF-8" language="java" %>
 <%@ page isELIgnored="false" %>
 <%@ taglib uri="http://java.sun.com/jsp/jstl/core" prefix="c" %>
 <%@ taglib prefix="fmt" uri="http://java.sun.com/jsp/jstl/fmt" %>
 <%@ taglib prefix="t" tagdir="/WEB-INF/tags" %>
+
+<fmt:requestEncoding value="UTF-8" />
+
 
 <html>
 <head>
@@ -25,6 +28,10 @@
 
         <div id="okno">
             <ul>
+                <c:forEach items="${registrationErrorContainer}" var="errorContainer">
+                    <li>${errorContainer.value}</li>
+                </c:forEach>
+                <li></li>
                 <li>
                     Для регистрации на сайте вам нужно ввести имя и фамилию с большой буквы.
                 </li>
@@ -43,17 +50,19 @@
         </div>
     </div>
 
-    <div class="middle">
+    <div class="middle clearfix">
         <aside class="right-sidebar">
             <div id="login-form">
                 <h2>Регистрация</h2>
                 <fieldset>
                     <form action="registration" onsubmit=" return passwordmatch(this);" method="post">
                         <input id="fstLine" type="text" name="name" placeholder="Введите ваше имя" pattern="^[А-ЯЁA-Z]{1}[а-яёa-z]+$"
-                               oninvalid="this.setCustomValidity('Invalid name! This should start with a capital letter and not contain extraneous characters! Example: John, Игорь')" oninput="this.setCustomValidity('')" required/>
+                               oninvalid="this.setCustomValidity('Invalid name! This should start with a capital letter and not contain extraneous characters! Example: John, Игорь')"
+                               oninput="this.setCustomValidity('')" value="${invalidUser.getName()}" required/>
                         <input type="text" name="surname" placeholder="Введите вашу фамилию" pattern="^[А-ЯЁA-Z]{1}[а-яёa-z]+$"
-                               oninvalid="this.setCustomValidity('Invalid surname! This should start with a capital letter and not contain extraneous characters! Example: Carter, Иванов')" oninput="this.setCustomValidity('')" required/>
-                        <input type="email" name="email" placeholder="Введите почту"  required/>
+                               oninvalid="this.setCustomValidity('Invalid surname! This should start with a capital letter and not contain extraneous characters! Example: Carter, Иванов')"
+                               oninput="this.setCustomValidity('')" value="${invalidUser.getSurname()}" required/>
+                        <input type="email" name="email" placeholder="Введите почту" value="${invalidUser.getEmail()}" required/>
                         <input type="password" name="password" placeholder="Введите пароль" pattern="^[a-zA-Z0-9]{6,15}$"
                                oninvalid="this.setCustomValidity('Invalid password format! The password contains invalid characters OR length! Example: 123qwe, qwerty1')" oninput="this.setCustomValidity('')" required/>
                         <input id="lstLine" type="password" name="confirm" placeholder="Подтвердите пароль" pattern="^[a-zA-Z0-9]{6,15}$"

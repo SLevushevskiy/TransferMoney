@@ -1,8 +1,10 @@
-<%@ page contentType="text/html;charset=UTF-8" language="java" %>
+<%@ page contentType="text/html;charset=UTF-8" pageEncoding="UTF-8" language="java" %>
 <%@ page isELIgnored="false" %>
 <%@ taglib uri="http://java.sun.com/jsp/jstl/core" prefix="c" %>
 <%@ taglib prefix="fmt" uri="http://java.sun.com/jsp/jstl/fmt" %>
 <%@ taglib prefix="t" tagdir="/WEB-INF/tags" %>
+
+<fmt:requestEncoding value="UTF-8" />
 
 <html>
 <head>
@@ -16,7 +18,7 @@
 <div class="wrapper">
 
     <header>        <div class="wrapper">
-        <a href="#"><img src="assets/images/logo.jpg" class="logo" alt="" title=""/><h1>Transfer Money - онлайн управление вашими деньгами!</h1></a>
+        <a href="#"><img src="assets/images/logo.jpg" class="logo" alt="" title=""/><h1>Transfer Money</h1></a>
     </div>
     </header><!--  end header section  -->
 
@@ -31,7 +33,7 @@
                         <input id="lstLine" type="password" name="password" required/>
                         <input type="submit" value="Войти"/>
                     </form>
-                    <p><a href="#">Забыли пароль?</a>  &nbsp;|&nbsp;<a href="${pageContext.servletContext.contextPath}/registration">Регистрация&nbsp;<span class="fontawesome-arrow-right"></span></a>
+                    <p><a href="${pageContext.servletContext.contextPath}/registration">Регистрация&nbsp;<span class="fontawesome-arrow-right"></span></a>
 
                     </p>
                 </fieldset>

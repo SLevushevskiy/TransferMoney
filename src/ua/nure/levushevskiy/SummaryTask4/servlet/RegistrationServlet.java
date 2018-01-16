@@ -43,6 +43,7 @@ public class RegistrationServlet extends HttpServlet{
 	protected final void doPost(final HttpServletRequest req, final HttpServletResponse resp) throws ServletException, IOException {
 		HttpSession session = req.getSession();//создаем сессию
 		session.removeAttribute(EntityConstants.AUTHORIZATION_ERROR_CONTAINER_PARAM);
+		req.setCharacterEncoding("UTF-8");
 
 		UserDTO userDTO = getUserFromRequest(req);
 		Map<String, String> errorContainer = new HashMap<>();
@@ -52,7 +53,7 @@ public class RegistrationServlet extends HttpServlet{
 		if (!errorContainer.isEmpty()) {
 			session.setAttribute(EntityConstants.REGISTRATION_ERROR_CONTAINER_PARAM, errorContainer);
 			session.setAttribute(EntityConstants.INVALID_USER_PARAM, userDTO);
-			resp.sendRedirect(View.Mapping.REGISTRATION);
+			resp.sendRedirect(View.Mapping.REGISTRATION + "#zatemnenie");
 			return;
 		} else {
 			try {
@@ -62,7 +63,7 @@ public class RegistrationServlet extends HttpServlet{
 				errorContainer.put(EntityConstants.ERROR_PARAM, e.getMessage());
 				session.setAttribute(EntityConstants.INVALID_USER_PARAM, userDTO);
 				session.setAttribute(EntityConstants.REGISTRATION_ERROR_CONTAINER_PARAM, errorContainer);
-				resp.sendRedirect(View.Mapping.REGISTRATION);
+				resp.sendRedirect(View.Mapping.REGISTRATION + "#zatemnenie");
 				return;
 			}
 		}

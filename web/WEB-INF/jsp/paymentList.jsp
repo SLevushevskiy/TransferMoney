@@ -1,11 +1,10 @@
-<%@ page contentType="text/html;charset=UTF-8" language="java" %>
+<%@ page contentType="text/html;charset=UTF-8" pageEncoding="UTF-8" language="java" %>
 <%@ page isELIgnored="false" %>
 <%@ taglib uri="http://java.sun.com/jsp/jstl/core" prefix="c" %>
 <%@ taglib prefix="fmt" uri="http://java.sun.com/jsp/jstl/fmt" %>
 <%@ taglib prefix="t" tagdir="/WEB-INF/tags" %>
 
-<!DOCTYPE HTML>
-
+<fmt:requestEncoding value="UTF-8" />
 <html>
 <head>
     <title>Transfer Money</title>
@@ -16,45 +15,7 @@
 <body>
 
 <!-- Header -->
-<div id="header">
-
-    <div class="top">
-
-        <!-- Logo -->
-        <div id="logo">
-            <a href="${pageContext.servletContext.contextPath}/logOut"><span id="outSign" class="icon fa-sign-out"></span></a>
-
-            <h1 id="title">${sessionScope.user.name} ${sessionScope.user.surname}</h1></br>
-            <p>${sessionScope.user.email}</p>
-        </div>
-
-        <!-- Nav -->
-        <nav id="nav">
-
-            <ul>
-                <li><a href="#top" id="top-link" class="skel-layers-ignoreHref"><span class="icon fa-home">Главная</span></a></li>
-                <li><a href="${pageContext.servletContext.contextPath}/accountList" id="accounts-link" class="skel-layers-ignoreHref"><span class="icon fa-credit-card">Счета</span></a></li>
-                <li><a href="#payments" id="about-link" class="skel-layers-ignoreHref"><span class="icon fa-money">Платежи</span></a></li>
-                <li><a href="${pageContext.servletContext.contextPath}/main" id="contact-link" class="skel-layers-ignoreHref"><span class="icon fa-user">Личный кабинет</span></a></li>
-            </ul>
-        </nav>
-
-    </div>
-
-    <div class="bottom">
-
-        <!-- Social Icons -->
-        <ul class="icons">
-            <li><a href="#" class="icon fa-twitter"><span class="label">Twitter</span></a></li>
-            <li><a href="#" class="icon fa-facebook"><span class="label">Facebook</span></a></li>
-            <li><a href="#" class="icon fa-github"><span class="label">Github</span></a></li>
-            <li><a href="#" class="icon fa-dribbble"><span class="label">Dribbble</span></a></li>
-            <li><a href="#" class="icon fa-envelope"><span class="label">Email</span></a></li>
-        </ul>
-
-    </div>
-
-</div>
+<%@ include file="/WEB-INF/tags/header.jspf" %>
 
 <!-- Main -->
 <div id="main">
@@ -69,14 +30,24 @@
             <table>
                 <tr>
                     <td><span class="icon fa-credit-card-alt"></span></td>
-                    <td>${accountName}</td>
-                    <td>${accountChoose}</td>
-                    <td>${amound}</td>
+                    <th>${accountName}</th>
+                    <th>${accountChoose}</th>
+                    <th>${amound}</th>
                 </tr>
-                <tr></tr>
+                <br>
+                <tr>
+                    <th></th>
+                    <th>Номер платежа</th>
+                    <th>Тип</th>
+                    <th>Описание</th>
+                    <th>Сумма</th>
+                    <th>Остаток</th>
+                    <th>Дата</th>
+                    <th>Статус</th>
+                </tr>
                 <c:forEach items="${paymentList}" var="payment">
                     <tr>
-                        <td><span class="icon fa-credit-card-alt"></span></td>
+                        <td><span class="icon fa-money"></span></td>
                         <td>${payment.getIdPayment()}</td>
                         <td>${payment.getPaymentTypeDTO().type}</td>
                         <td>${payment.getDescription()}</td>

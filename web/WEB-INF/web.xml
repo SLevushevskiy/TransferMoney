@@ -7,8 +7,12 @@
     <display-name>SummaryTask4</display-name>
 
     <welcome-file-list>
-        <welcome-file>index.jsp</welcome-file>
+        <welcome-file>WEB-INF\jsp\registration.jsp</welcome-file>
     </welcome-file-list>
 
+    <context-param>
+        <param-name>encoding</param-name>
+        <param-value>UTF-8</param-value>
+    </context-param>
 
 </web-app>
