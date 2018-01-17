@@ -35,11 +35,10 @@ public class EntityConstants {
     public static final String ACCOUNT_CHOOSE_PARAM = "accountChoose";
 
     public static final String PAYMENT_LIST_PARAM = "paymentList";
-    public static final String PAYMENT_TYPE_LIST_PARAM = "paymentTypeList";
-    public static final String PAYMENT_TYPE_PARAM = "paymentType";
+    public static final String PAYMENT_NAME_PARAM = "paymentName";
     public static final String PAYMENT_TOTAL_PARAM = "paymentTotal";
     public static final String PAYMENT_DESCRIPTION_PARAM = "paymentDescription";
-
+    public static final String PAYMENT_NAME_LIST_PARAM = "paymentNameList";
 
     private EntityConstants() {}
 

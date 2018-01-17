@@ -80,7 +80,7 @@ public class InitApplicationListener implements ServletContextListener {
         PaymentTypeService paymentTypeService = new PaymentTypeServiceImpl(paymentTypeDAO);
         PaymentNameService paymentNameService = new PaymentNameServiceImpl(paymentNameDAO,paymentTypeService);
         PaymentStatusService paymentStatusService = new PaymentStatusServiceImpl(paymentStatusDAO);
-        PaymentService paymentService = new PaymentServiceImpl(paymentDAO,accountService,paymentStatusService,paymentTypeService);
+        PaymentService paymentService = new PaymentServiceImpl(paymentDAO,accountService,paymentStatusService,paymentNameService);
 
         servletContext.setAttribute(EntityConstants.ROLE_SERVICE, roleService);
         servletContext.setAttribute(EntityConstants.USER_SERVICE, userService);

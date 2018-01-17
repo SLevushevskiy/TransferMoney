@@ -12,10 +12,9 @@ public class PaymentName {
     }
 
     public PaymentName(long idPaymentName, String paymentName, long paymentTypeId) {
-
         this.idPaymentName = idPaymentName;
         this.paymentName = paymentName;
-        paymentTypeId = paymentTypeId;
+        this.paymentTypeId = paymentTypeId;
     }
 
     public long getIdPaymentName() {
@@ -40,7 +39,7 @@ public class PaymentName {
     }
 
     public void setPaymentTypeId(long paymentTypeId) {
-        paymentTypeId = paymentTypeId;
+        this.paymentTypeId = paymentTypeId;
     }
 
     @Override

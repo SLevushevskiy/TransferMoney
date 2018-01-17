@@ -55,6 +55,12 @@ public class AccountAddServlet extends HttpServlet {
 
     @Override
     protected void doGet(HttpServletRequest req, HttpServletResponse resp) throws ServletException, IOException {
+        HttpSession session = req.getSession();
+        if(session.getAttribute(EntityConstants.USER_PARAM)== null){
+            resp.sendRedirect(View.Mapping.AUTHORIZATION);
+            return;
+        }
+
         List<AccountNameDTO> accountNameDTOList = accountNameService.getAll();
         req.setAttribute(EntityConstants.ACCOUNT_NAME_LIST_PARAM, accountNameDTOList);
         req.getRequestDispatcher(ACCOUNT_ADD_JSP).forward(req, resp);

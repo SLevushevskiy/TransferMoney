@@ -4,10 +4,7 @@ import org.apache.log4j.Logger;
 import ua.nure.levushevskiy.SummaryTask4.dao.api.PaymentDAO;
 import ua.nure.levushevskiy.SummaryTask4.dto.PaymentDTO;
 import ua.nure.levushevskiy.SummaryTask4.entity.Payment;
-import ua.nure.levushevskiy.SummaryTask4.service.api.AccountService;
-import ua.nure.levushevskiy.SummaryTask4.service.api.PaymentService;
-import ua.nure.levushevskiy.SummaryTask4.service.api.PaymentStatusService;
-import ua.nure.levushevskiy.SummaryTask4.service.api.PaymentTypeService;
+import ua.nure.levushevskiy.SummaryTask4.service.api.*;
 import ua.nure.levushevskiy.SummaryTask4.util.Transformer;
 
 import java.util.List;
@@ -35,15 +32,15 @@ public class PaymentServiceImpl implements PaymentService {
     private final PaymentStatusService paymentStatusService;
 
     /**
-     * Object to Convert PaymentTypeService to PaymentTypeServicesDTO.
+     * Object to Convert PaymentNameService to PaymentNameServiceDTO.
      */
-    private final PaymentTypeService paymentTypeService;
+    private final PaymentNameService paymentNameService;
 
-    public PaymentServiceImpl(final PaymentDAO paymentDAO,final AccountService accountService,final PaymentStatusService paymentStatusService,final PaymentTypeService paymentTypeService) {
+    public PaymentServiceImpl(final PaymentDAO paymentDAO,final AccountService accountService,final PaymentStatusService paymentStatusService,final PaymentNameService paymentNameService) {
         this.paymentDAO = paymentDAO;
         this.accountService = accountService;
         this.paymentStatusService = paymentStatusService;
-        this.paymentTypeService = paymentTypeService;
+        this.paymentNameService = paymentNameService;
     }
 
     /**
@@ -55,7 +52,7 @@ public class PaymentServiceImpl implements PaymentService {
     @Override
     public PaymentDTO savePayment(PaymentDTO paymentDTO) {
         Payment account = Transformer.paymentDTO2Payment(paymentDTO);
-        paymentDTO =  Transformer.payment2PaymentDTO(paymentDAO.save(account),accountService, paymentStatusService, paymentTypeService);
+        paymentDTO =  Transformer.payment2PaymentDTO(paymentDAO.save(account),accountService, paymentStatusService, paymentNameService);
         LOG.info("New account was added!");
         //LOG.info("Sending confirmation letter.");
         return paymentDTO;
@@ -69,7 +66,7 @@ public class PaymentServiceImpl implements PaymentService {
      */
     @Override
     public PaymentDTO getById(int id) {
-        return Transformer.payment2PaymentDTO(paymentDAO.getById(id),accountService, paymentStatusService, paymentTypeService);
+        return Transformer.payment2PaymentDTO(paymentDAO.getById(id),accountService, paymentStatusService, paymentNameService);
     }
 
     /**
@@ -79,7 +76,7 @@ public class PaymentServiceImpl implements PaymentService {
      */
     @Override
     public List<PaymentDTO> getAll() {
-        return Transformer.paymentList2PaymentDTOList(paymentDAO.getAll(),accountService, paymentStatusService, paymentTypeService);
+        return Transformer.paymentList2PaymentDTOList(paymentDAO.getAll(),accountService, paymentStatusService, paymentNameService);
     }
 
     /**

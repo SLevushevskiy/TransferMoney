@@ -33,9 +33,9 @@ public class PaymentAddServlet extends HttpServlet {
     PaymentServiceImpl paymentService;
 
     /**
-     * An object that contains payment type logic.
+     * An object that contains payment name logic.
      */
-    PaymentTypeServiceImpl paymentTypeService;
+    PaymentNameServiceImpl paymentNameService;
 
     /**
      * An object that contains account business logic.
@@ -44,10 +44,15 @@ public class PaymentAddServlet extends HttpServlet {
 
     @Override
     protected void doGet(HttpServletRequest req, HttpServletResponse resp) throws ServletException, IOException {
-        List<PaymentTypeDTO> paymentTypeDTOList = paymentTypeService.getAll();
-        req.setAttribute(EntityConstants.PAYMENT_TYPE_LIST_PARAM, paymentTypeDTOList);
-
         HttpSession session = req.getSession();
+        if(session.getAttribute(EntityConstants.USER_PARAM)== null){
+            resp.sendRedirect(View.Mapping.AUTHORIZATION);
+            return;
+        }
+
+        List<PaymentNameDTO> paymentNameDTOList = paymentNameService.getAll();
+        req.setAttribute(EntityConstants.PAYMENT_NAME_LIST_PARAM, paymentNameDTOList);
+
         List<AccountDTO> accountDTOList = accountService.getAll();
         accountDTOList = removeAccount(accountDTOList, Integer.parseInt(session.getAttribute(EntityConstants.USER_ID_PARAM).toString()));
         req.setAttribute(EntityConstants.ACCOUNT_LIST_PARAM, accountDTOList);
@@ -93,9 +98,8 @@ public class PaymentAddServlet extends HttpServlet {
 
         PaymentDTO paymentDTO = new PaymentDTO();
         //ВЫБОР СЧЕТА НА ВИЮХЕ ДЛЯ ОПЛАТЫ
-        paymentDTO.setPaymentTypeDTO(paymentTypeService.getById(Integer.parseInt(req.getParameter(EntityConstants.PAYMENT_TYPE_PARAM))));
+        paymentDTO.setPaymentNameDTO(paymentNameService.getById(Integer.parseInt(req.getParameter(EntityConstants.PAYMENT_NAME_PARAM))));
         paymentDTO.setAccountDTO(accountService.getById(Integer.parseInt(req.getParameter(EntityConstants.ACCOUNT_CHOOSE_PARAM))));
-        Double num = Double.parseDouble(req.getParameter(EntityConstants.PAYMENT_TOTAL_PARAM).toString());
         paymentDTO.setTotal(Double.parseDouble(req.getParameter(EntityConstants.PAYMENT_TOTAL_PARAM).toString()));
         paymentDTO.setDescription((String) req.getParameter(EntityConstants.PAYMENT_DESCRIPTION_PARAM));
         paymentDTO.setDatePayment(datePayment);
@@ -120,8 +124,8 @@ public class PaymentAddServlet extends HttpServlet {
      * @param context - servlet context.
      */
     private void initPaymentTypeService(final ServletContext context) {
-        paymentTypeService = (PaymentTypeServiceImpl) context.getAttribute(EntityConstants.PAYMENT_TYPE_SERVICE);
-        if (paymentTypeService == null) {
+        paymentNameService = (PaymentNameServiceImpl) context.getAttribute(EntityConstants.PAYMENT_NAME_SERVICE);
+        if (paymentNameService == null) {
             throw new InitializationException("Payment Type service is not initialized!");
         }
     }

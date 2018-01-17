@@ -350,6 +350,21 @@ public class Transformer {
         return paymentNameDTO;
     }
 
+    /**
+     * A method that converts a list of PaymentName into a PaymentNameDTO list.
+     *
+     * @param paymentNameList - list of payment name.
+     * @param paymentTypeService - service for obtaining a payment type object by its ID.
+     * @return - list of paymentNameDTO.
+     */
+    public static List<PaymentNameDTO> paymentNameList2PaymentNameDTOList(List<PaymentName> paymentNameList, PaymentTypeService paymentTypeService) {
+        List<PaymentNameDTO> paymentNameDTOList = new ArrayList<>();
 
+        for (PaymentName paymentName : paymentNameList) {
+            paymentNameDTOList.add(paymentName2PaymentNameDTO(paymentName, paymentTypeService));
+        }
 
+        return paymentNameDTOList;
+
+    }
 }

@@ -62,6 +62,10 @@
     <!-- Intro -->
     <section id="top" class="one dark cover">
         <div class="container">
+            <c:if test="${empty accountList}">
+                Еще нет счета? 
+            </c:if>
+            <c:if test="${not empty accountList}">
             <table>
                 <tr>
                     <th></th>
@@ -82,14 +86,13 @@
                     <td>
                         <form action="/paymentList" method="post">
                             <input type="hidden" name="accountChoose" value="${account.getIdAccount()}">
-                            <input type="hidden" name="accountName" value="${account.getAccountNameDTO().name}">
-                            <input type="hidden" name="amound" value="${account.getAmound()}">
                             <input type="submit" value="История платежей" >
                         </form>
                     </td>
                 </tr>
                 </c:forEach>
             </table>
+            </c:if>
             <ul>
                 <li><a href="${pageContext.servletContext.contextPath}/accountAdd"><span class="icon fa-plus-circle"> Добавить счет   </span></a></li>
             </ul>

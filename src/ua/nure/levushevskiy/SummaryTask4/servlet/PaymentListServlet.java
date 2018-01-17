@@ -7,6 +7,7 @@ import ua.nure.levushevskiy.SummaryTask4.service.api.PaymentService;
 import ua.nure.levushevskiy.SummaryTask4.service.impl.AccountServiceImpl;
 import ua.nure.levushevskiy.SummaryTask4.service.impl.PaymentServiceImpl;
 import ua.nure.levushevskiy.SummaryTask4.util.EntityConstants;
+import ua.nure.levushevskiy.SummaryTask4.util.View;
 
 import javax.servlet.ServletContext;
 import javax.servlet.ServletException;
@@ -46,6 +47,10 @@ public class PaymentListServlet extends HttpServlet {
     @Override
     protected void doGet(HttpServletRequest req, HttpServletResponse resp) throws ServletException, IOException {
         HttpSession session = req.getSession();
+        if(session.getAttribute(EntityConstants.USER_PARAM)== null){
+            resp.sendRedirect(View.Mapping.AUTHORIZATION);
+            return;
+        }
         List<PaymentDTO> paymentDTOList = paymentService.getAll();
         int accountId =  Integer.parseInt(req.getParameter(EntityConstants.ACCOUNT_CHOOSE_PARAM).toString());
         paymentDTOList = removePayment(paymentDTOList, accountId);

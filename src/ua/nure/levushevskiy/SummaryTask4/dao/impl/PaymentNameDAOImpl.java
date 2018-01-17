@@ -132,7 +132,7 @@ public class PaymentNameDAOImpl implements PaymentNameDAO {
         while (rs.next()) {
             paymentName = new PaymentName();
             paymentName.setIdPaymentName(rs.getInt("idpayment_name"));
-            paymentName.setPaymentName(rs.getString("type"));
+            paymentName.setPaymentName(rs.getString("payment_name"));
             paymentName.setPaymentTypeId(rs.getInt("payment_type_id"));
             statusList.add(paymentName);
         }

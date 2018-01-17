@@ -35,7 +35,10 @@
                     <th>${accountChoose}</th>
                     <th>${amound}</th>
                 </tr>
-                <br>
+                <c:if test="${empty paymentList}">
+                    Операции еще не выполнялись.
+                </c:if>
+                <c:if test="${not empty paymentList}">
                 <tr>
                     <th></th>
                     <th>Номер платежа</th>
@@ -50,7 +53,7 @@
                     <tr>
                         <td><span class="icon fa-money"></span></td>
                         <td>${payment.getIdPayment()}</td>
-                        <td>${payment.getPaymentTypeDTO().type}</td>
+                        <td>${payment.getPaymentNameDTO().paymentName}</td>
                         <td>${payment.getDescription()}</td>
                         <td>${payment.getTotal()}</td>
                         <td>${payment.getAccountDTO().amound}</td>
@@ -58,6 +61,7 @@
                         <td>${payment.getPaymentStatusDTO().status}</td>
                     </tr>
                 </c:forEach>
+                </c:if>
             </table>
         </div>
     </section>

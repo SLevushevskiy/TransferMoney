@@ -35,10 +35,10 @@ CREATE TABLE `st4db`.`user` (
     ON DELETE NO ACTION
     ON UPDATE NO ACTION);
 
-CREATE TABLE `st4db`.`acccount_status` (
-  `idAcccount_status` INT NOT NULL auto_increment,
+CREATE TABLE `st4db`.`account_status` (
+  `idAccount_status` INT NOT NULL auto_increment,
   `status` VARCHAR(45) NOT NULL,
-  PRIMARY KEY (`idAcccount_status`),
+  PRIMARY KEY (`idAccount_status`),
   UNIQUE INDEX `status_UNIQUE` (`status` ASC));
 
 CREATE TABLE `st4db`.`account_name` (
@@ -65,7 +65,7 @@ CREATE TABLE `st4db`.`account` (
     ON UPDATE NO ACTION,
   CONSTRAINT `fk_account_status_id`
     FOREIGN KEY (`account_status_id`)
-    REFERENCES `st4db`.`acccount_status` (`idAcccount_status`)
+    REFERENCES `st4db`.`account_status` (`idAccount_status`)
     ON DELETE NO ACTION
     ON UPDATE NO ACTION,
   CONSTRAINT `fk_account_name_id`

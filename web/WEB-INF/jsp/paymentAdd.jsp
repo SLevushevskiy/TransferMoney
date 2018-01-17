@@ -26,9 +26,9 @@
     <section id="top" class="one dark cover">
         <div class="container">
             <form action="paymentAdd" method="post">
-                <select name="paymentType">
-                    <c:forEach items="${paymentTypeList}" var="paymentT">
-                        <option value="${paymentT.getIdPaymentType()}">${paymentT.getType()}</option>
+                <select name="paymentName">
+                    <c:forEach items="${paymentNameList}" var="paymentN">
+                        <option value="${paymentN.getIdPaymentName()}">${paymentN.getPaymentName()}</option>
                     </c:forEach>
                 </select>
                 <select name="accountChoose">

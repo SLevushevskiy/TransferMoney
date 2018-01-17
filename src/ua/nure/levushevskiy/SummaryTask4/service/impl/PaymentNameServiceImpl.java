@@ -46,6 +46,6 @@ public class PaymentNameServiceImpl implements PaymentNameService{
      */
     @Override
     public List<PaymentNameDTO> getAll() {
-        return  null;//Transformer.paymentTypeList2PaymentTypeDTOList(paymentNameDAO.getAll());
+        return  Transformer.paymentNameList2PaymentNameDTOList(paymentNameDAO.getAll(),paymentTypeService);
     }
 }

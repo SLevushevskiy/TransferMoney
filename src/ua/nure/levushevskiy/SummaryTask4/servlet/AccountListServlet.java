@@ -37,6 +37,11 @@ public class AccountListServlet extends HttpServlet {
     @Override
     protected void doGet(HttpServletRequest req, HttpServletResponse resp) throws ServletException, IOException {
         HttpSession session = req.getSession();
+       if(session.getAttribute(EntityConstants.USER_PARAM)== null){
+           resp.sendRedirect(View.Mapping.AUTHORIZATION);
+           return;
+       }
+
         List<AccountDTO> accountDTOList = accountService.getAll();
         accountDTOList = removeAccount(accountDTOList, Integer.parseInt(session.getAttribute(EntityConstants.USER_ID_PARAM).toString()));
         req.setAttribute(EntityConstants.ACCOUNT_LIST_PARAM, accountDTOList);

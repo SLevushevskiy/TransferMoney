@@ -9,6 +9,8 @@ public class PaymentNameDTO {
     private PaymentTypeDTO paymentTypeDTO;
 
     public PaymentNameDTO() {
+        paymentTypeDTO = new PaymentTypeDTO();
+        paymentTypeDTO.setIdPaymentType(1);
     }
 
     public PaymentNameDTO(long idPaymentName, String paymentName, PaymentTypeDTO paymentTypeDTO) {
