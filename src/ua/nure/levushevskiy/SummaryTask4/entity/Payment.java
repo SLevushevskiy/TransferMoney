@@ -16,19 +16,28 @@ public class Payment {
 
     private long statusId;
 
-    private long typeId;
+    private long paymentNameId;
 
     public Payment() {
     }
 
-    public Payment(long idPayment, Date datePayment, double total, String description, long accountId, long statusId, long typeId) {
+    public long getPaymentNameId() {
+        return paymentNameId;
+    }
+
+    public void setPaymentNameId(long paymentNameId) {
+        this.paymentNameId = paymentNameId;
+    }
+
+    public Payment(long idPayment, Date datePayment, double total, String description, long accountId, long statusId, long paymentNameId) {
+
         this.idPayment = idPayment;
         this.datePayment = datePayment;
         this.total = total;
         this.description = description;
         this.accountId = accountId;
         this.statusId = statusId;
-        this.typeId = typeId;
+        this.paymentNameId = paymentNameId;
     }
 
     public long getIdPayment() {
@@ -79,14 +88,6 @@ public class Payment {
         this.statusId = statusId;
     }
 
-    public long getTypeId() {
-        return typeId;
-    }
-
-    public void setTypeId(long typeId) {
-        this.typeId = typeId;
-    }
-
     @Override
     public boolean equals(Object o) {
         if (this == o) return true;
@@ -98,7 +99,7 @@ public class Payment {
         if (Double.compare(payment.total, total) != 0) return false;
         if (accountId != payment.accountId) return false;
         if (statusId != payment.statusId) return false;
-        if (typeId != payment.typeId) return false;
+        if (paymentNameId != payment.paymentNameId) return false;
         if (datePayment != null ? !datePayment.equals(payment.datePayment) : payment.datePayment != null) return false;
         return description != null ? description.equals(payment.description) : payment.description == null;
     }
@@ -114,7 +115,7 @@ public class Payment {
         result = 31 * result + (description != null ? description.hashCode() : 0);
         result = 31 * result + (int) (accountId ^ (accountId >>> 32));
         result = 31 * result + (int) (statusId ^ (statusId >>> 32));
-        result = 31 * result + (int) (typeId ^ (typeId >>> 32));
+        result = 31 * result + (int) (paymentNameId ^ (paymentNameId >>> 32));
         return result;
     }
 
@@ -127,7 +128,7 @@ public class Payment {
                 ", description='" + description + '\'' +
                 ", accountId=" + accountId +
                 ", statusId=" + statusId +
-                ", typeId=" + typeId +
+                ", paymentNameId=" + paymentNameId +
                 '}';
     }
 }

@@ -99,5 +99,11 @@ public class MySQLDAOFactory implements DAOFactory {
     public PaymentTypeDAO getPaymentTypeDAO() {
         return new PaymentTypeDAOImpl(dataSource);
     }
-
+    /**
+     * Returns PaymentNameDAO object.
+     *
+     * @return - object.
+     */
+    @Override
+    public PaymentNameDAO getPaymentNameDAO(){return new PaymentNameDAOImpl(dataSource);}
 }

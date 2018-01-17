@@ -55,11 +55,11 @@ CREATE TABLE `st4db`.`account` (
   `account_status_id` INT NOT NULL,
   `account_name_id` INT NOT NULL,
   PRIMARY KEY (`idAccount`),
-  INDEX `fk_client_id_idx` (`client_id` ASC),
+  INDEX `fk_user_id_idx` (`user_id` ASC),
   INDEX `fk_account_status_id_idx` (`account_status_id` ASC),
   INDEX `fk_account_name_id_idx` (`account_name_id` ASC),
-  CONSTRAINT `fk_client_id`
-    FOREIGN KEY (`client_id`)
+  CONSTRAINT `fk_user_id`
+    FOREIGN KEY (`user_id`)
     REFERENCES `st4db`.`user` (`idUser`)
     ON DELETE NO ACTION
     ON UPDATE NO ACTION,
@@ -85,6 +85,19 @@ CREATE TABLE `st4db`.`payment_type` (
   `type` VARCHAR(45) NOT NULL,
   PRIMARY KEY (`idPayment_type`));
 
+CREATE TABLE `st4db`.`payment_name` (
+  `idpayment_name` INT NOT NULL AUTO_INCREMENT,
+  `payment_name` VARCHAR(45) NOT NULL,
+  `payment_type_id` INT NOT NULL,
+  PRIMARY KEY (`idpayment_name`),
+  UNIQUE INDEX `payment_name_UNIQUE` (`payment_name` ASC),
+  INDEX `fk_payment_type_id_idx` (`payment_type_id` ASC),
+  CONSTRAINT `fk_payment_type_id`
+    FOREIGN KEY (`payment_type_id`)
+    REFERENCES `st4db`.`payment_type` (`idPayment_type`)
+    ON DELETE NO ACTION
+    ON UPDATE NO ACTION);
+
 CREATE TABLE `st4db`.`payment` (
   `idPayment` INT NOT NULL auto_increment,
   `date` DATETIME NOT NULL,
@@ -92,11 +105,11 @@ CREATE TABLE `st4db`.`payment` (
   `description` VARCHAR(45) NOT NULL,
   `account_id` INT NOT NULL,
   `status_id` INT NOT NULL,
-  `type_id` INT NOT NULL,
+  `payment_name_id` INT NOT NULL,
   PRIMARY KEY (`idPayment`),
   INDEX `fk_account_id_idx` (`account_id` ASC),
   INDEX `fk_status_id_idx` (`status_id` ASC),
-  INDEX `fk_type_id_idx` (`type_id` ASC),
+  INDEX `fk_payment_name_id_idx` (`payment_name_id` ASC),
   CONSTRAINT `fk_account_id`
     FOREIGN KEY (`account_id`)
     REFERENCES `st4db`.`account` (`idAccount`)
@@ -107,9 +120,9 @@ CREATE TABLE `st4db`.`payment` (
     REFERENCES `st4db`.`payment_status` (`idPayment_status`)
     ON DELETE NO ACTION
     ON UPDATE NO ACTION,
-  CONSTRAINT `fk_type_id`
-    FOREIGN KEY (`type_id`)
-    REFERENCES `st4db`.`payment_type` (`idPayment_type`)
+  CONSTRAINT `fk_payment_name_id`
+    FOREIGN KEY (`payment_name_id`)
+    REFERENCES `st4db`.`payment_name` (`idpayment_name`)
     ON DELETE NO ACTION
     ON UPDATE NO ACTION);
 

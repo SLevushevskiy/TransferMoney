@@ -1888,14 +1888,7 @@
 			table.default tfoot {
 				background: #eee;
 			}
-			table #list tr th{
-				line-height: normal !important;
-				vertical-align: middle !important;
-			}
-			table #list tr td{
-				line-height: normal !important;
-				vertical-align: middle !important;
-			}
+
 
 /* Button */
 

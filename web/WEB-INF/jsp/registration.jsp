@@ -6,7 +6,7 @@
 
 <fmt:requestEncoding value="UTF-8" />
 
-
+<!DOCTYPE HTML>
 <html>
 <head>
     <title>Transfer Money</title>

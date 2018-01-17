@@ -22,6 +22,7 @@ import java.util.List;
 
 
 import static ua.nure.levushevskiy.SummaryTask4.util.View.PAYMENT_ADD_JSP;
+import static ua.nure.levushevskiy.SummaryTask4.util.View.PAYMENT_LIST_JSP;
 
 @WebServlet("/paymentAdd")
 public class PaymentAddServlet extends HttpServlet {
@@ -60,7 +61,7 @@ public class PaymentAddServlet extends HttpServlet {
         // session.removeAttribute(EntityConstants.AUTHORIZATION_ERROR_CONTAINER_PARAM);
 
         PaymentDTO paymentDTO = getPaymentFromRequest(req);
-
+        session.setAttribute(EntityConstants.ACCOUNT_CHOOSE_PARAM,Integer.parseInt(req.getParameter(EntityConstants.ACCOUNT_CHOOSE_PARAM)));
         try {
             paymentDTO = paymentService.savePayment(paymentDTO);
         } catch (IllegalStateException e) {
@@ -69,7 +70,7 @@ public class PaymentAddServlet extends HttpServlet {
             return;
 
         }
-        resp.sendRedirect(View.Mapping.PAYMENT_LIST);//redirect
+        resp.sendRedirect(View.Mapping.ACCOUNT_LIST);//redirect
     }
 
     @Override

@@ -272,7 +272,7 @@ public class Transformer {
      * @param payment - Payment object.
      * @return - PaymentDTO object.
      */
-    public static PaymentDTO payment2PaymentDTO(final Payment payment,final AccountService accountService,final PaymentStatusService paymentStatusService,final PaymentTypeService paymentTypeService){
+    public static PaymentDTO payment2PaymentDTO(final Payment payment,final AccountService accountService,final PaymentStatusService paymentStatusService,final PaymentNameService paymentNameService){
         PaymentDTO paymentDTO = new PaymentDTO();
         paymentDTO.setIdPayment(payment.getIdPayment());
         paymentDTO.setDatePayment(payment.getDatePayment());
@@ -280,7 +280,7 @@ public class Transformer {
         paymentDTO.setDescription(payment.getDescription());
         paymentDTO.setAccountDTO(accountService.getById((int) payment.getAccountId()));
         paymentDTO.setPaymentStatusDTO(paymentStatusService.getById((int) payment.getStatusId()));
-        paymentDTO.setPaymentTypeDTO(paymentTypeService.getById((int) payment.getTypeId()));
+        paymentDTO.setPaymentNameDTO(paymentNameService.getById((int) payment.getPaymentNameId()));
         return paymentDTO;
     }
 
@@ -298,7 +298,7 @@ public class Transformer {
         payment.setDescription(paymentDTO.getDescription());
         payment.setAccountId(paymentDTO.getAccountDTO().getIdAccount());
         payment.setStatusId(paymentDTO.getPaymentStatusDTO().getIdPaymentStatus());
-        payment.setTypeId(paymentDTO.getPaymentTypeDTO().getIdPaymentType());
+        payment.setPaymentNameId(paymentDTO.getPaymentNameDTO().getIdPaymentName());
         return payment;
     }
 
@@ -308,14 +308,14 @@ public class Transformer {
      * @param paymentList - list of payment.
      * @param accountService - service for obtaining a account object by its ID.
      * @param paymentStatusService - service for obtaining a payment status object by its ID.
-     * @param paymentTypeService - service for obtaining a payment type object by its ID.
+     * @param paymentNameService - service for obtaining a payment name object by its ID.
      * @return - list of paymentDTO.
      */
-    public static List<PaymentDTO> paymentList2PaymentDTOList(final List<Payment> paymentList,final AccountService accountService,final PaymentStatusService paymentStatusService,final PaymentTypeService paymentTypeService){
+    public static List<PaymentDTO> paymentList2PaymentDTOList(final List<Payment> paymentList,final AccountService accountService,final PaymentStatusService paymentStatusService,final PaymentNameService paymentNameService){
         List<PaymentDTO> paymentDTOList = new ArrayList<>();
 
         for (Payment payment : paymentList) {
-            paymentDTOList.add(payment2PaymentDTO(payment, accountService, paymentStatusService, paymentTypeService));
+            paymentDTOList.add(payment2PaymentDTO(payment, accountService, paymentStatusService, paymentNameService));
         }
 
         return paymentDTOList;
@@ -335,4 +335,21 @@ public class Transformer {
         }
         return paymentTypeDTOList;
     }
+
+    /**
+     * A method that converts PaymentName into a PaymentNameDTO.
+     *
+     * @param paymentName - paymentName object.
+     * @return - PaymentNameDTO object.
+     */
+    public static PaymentNameDTO paymentName2PaymentNameDTO(final PaymentName paymentName,final PaymentTypeService paymentTypeService){
+        PaymentNameDTO paymentNameDTO = new PaymentNameDTO();
+        paymentNameDTO.setIdPaymentName(paymentName.getIdPaymentName());
+        paymentNameDTO.setPaymentName(paymentName.getPaymentName());
+        paymentNameDTO.setPaymentTypeDTO(paymentTypeService.getById((int) paymentName.getPaymentTypeId()));
+        return paymentNameDTO;
+    }
+
+
+
 }

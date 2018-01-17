@@ -5,7 +5,7 @@
 <%@ taglib prefix="t" tagdir="/WEB-INF/tags" %>
 
 <fmt:requestEncoding value="UTF-8" />
-
+<!DOCTYPE HTML>
 <html>
 <head>
     <title>Transfer Money</title>
@@ -62,7 +62,7 @@
     <!-- Intro -->
     <section id="top" class="one dark cover">
         <div class="container">
-            <table id="list">
+            <table>
                 <tr>
                     <th></th>
                     <th>Имя карты</th>

@@ -73,10 +73,12 @@ public class InitApplicationListener implements ServletContextListener {
         AccountService accountService = new AccountServiceImpl(accountDAO,userService,accountStatusService,accountNameService);
 
         PaymentTypeDAO paymentTypeDAO = mySQLDAOFactory.getPaymentTypeDAO();
+        PaymentNameDAO paymentNameDAO = mySQLDAOFactory.getPaymentNameDAO();
         PaymentStatusDAO paymentStatusDAO = mySQLDAOFactory.getPaymentStatusDAO();
         PaymentDAO paymentDAO = mySQLDAOFactory.getPaymentDAO();
 
         PaymentTypeService paymentTypeService = new PaymentTypeServiceImpl(paymentTypeDAO);
+        PaymentNameService paymentNameService = new PaymentNameServiceImpl(paymentNameDAO,paymentTypeService);
         PaymentStatusService paymentStatusService = new PaymentStatusServiceImpl(paymentStatusDAO);
         PaymentService paymentService = new PaymentServiceImpl(paymentDAO,accountService,paymentStatusService,paymentTypeService);
 
@@ -90,6 +92,7 @@ public class InitApplicationListener implements ServletContextListener {
 
         servletContext.setAttribute(EntityConstants.PAYMENT_SERVICE, paymentService);
         servletContext.setAttribute(EntityConstants.PAYMENT_TYPE_SERVICE, paymentTypeService);
+        servletContext.setAttribute(EntityConstants.PAYMENT_NAME_SERVICE, paymentNameService);
         servletContext.setAttribute(EntityConstants.PAYMENT_STATUS_SERVICE, paymentStatusService);
 
     }

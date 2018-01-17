@@ -23,7 +23,7 @@ public class PaymentDAOImpl implements PaymentDAO {
     /**
      * Request for insert account.
      */
-    public static final String SQL_PAYMENT_INSERT = "INSERT INTO st4db.payment (date, total, description, account_id, status_id, type_id) "
+    public static final String SQL_PAYMENT_INSERT = "INSERT INTO st4db.payment (date, total, description, account_id, status_id, payment_name_id) "
             + "VALUES(?, ?, ?, ?, ?, ?)";
 
     /**
@@ -106,7 +106,7 @@ public class PaymentDAOImpl implements PaymentDAO {
             preparedStatement.setString(3, payment.getDescription());
             preparedStatement.setLong(4, payment.getAccountId());
             preparedStatement.setLong(5, payment.getStatusId());
-            preparedStatement.setLong(6, payment.getTypeId());
+            preparedStatement.setLong(6, payment.getPaymentNameId());
 
             int affectedRows = preparedStatement.executeUpdate();
 
@@ -237,7 +237,7 @@ public class PaymentDAOImpl implements PaymentDAO {
             payment.setDescription(rs.getString("description"));
             payment.setAccountId(rs.getLong("account_id"));
             payment.setStatusId(rs.getLong("status_id"));
-            payment.setTypeId(rs.getLong("type_id"));
+            payment.setPaymentNameId(rs.getLong("payment_name_id"));
             statusList.add(payment);
         }
         return statusList;

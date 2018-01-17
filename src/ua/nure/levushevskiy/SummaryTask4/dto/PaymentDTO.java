@@ -16,17 +16,16 @@ public class PaymentDTO {
 
     private PaymentStatusDTO paymentStatusDTO;
 
-    private PaymentTypeDTO paymentTypeDTO;
+    private PaymentNameDTO paymentNameDTO;
 
-    public PaymentDTO(final long idPayment,final Date datePayment,final Double total,
-                      final String description,final AccountDTO accountDTO,final PaymentStatusDTO paymentStatusDTO,final PaymentTypeDTO paymentTypeDTO) {
+    public PaymentDTO(long idPayment, Date datePayment, Double total, String description, AccountDTO accountDTO, PaymentStatusDTO paymentStatusDTO, PaymentNameDTO paymentNameDTO) {
         this.idPayment = idPayment;
         this.datePayment = datePayment;
         this.total = total;
         this.description = description;
         this.accountDTO = accountDTO;
         this.paymentStatusDTO = paymentStatusDTO;
-        this.paymentTypeDTO = paymentTypeDTO;
+        this.paymentNameDTO = paymentNameDTO;
     }
 
     public PaymentDTO() {
@@ -87,16 +86,15 @@ public class PaymentDTO {
         this.paymentStatusDTO = paymentStatusDTO;
     }
 
-    public PaymentTypeDTO getPaymentTypeDTO() {
-        return paymentTypeDTO;
+    public PaymentNameDTO getPaymentNameDTO() {
+        return paymentNameDTO;
     }
 
-    public void setPaymentTypeDTO(PaymentTypeDTO paymentTypeDTO) {
-        this.paymentTypeDTO = paymentTypeDTO;
+    public void setPaymentNameDTO(PaymentNameDTO paymentNameDTO) {
+        this.paymentNameDTO = paymentNameDTO;
     }
 
     @Override
-
     public boolean equals(Object o) {
         if (this == o) return true;
         if (o == null || getClass() != o.getClass()) return false;
@@ -110,7 +108,7 @@ public class PaymentDTO {
         if (accountDTO != null ? !accountDTO.equals(that.accountDTO) : that.accountDTO != null) return false;
         if (paymentStatusDTO != null ? !paymentStatusDTO.equals(that.paymentStatusDTO) : that.paymentStatusDTO != null)
             return false;
-        return paymentTypeDTO != null ? paymentTypeDTO.equals(that.paymentTypeDTO) : that.paymentTypeDTO == null;
+        return paymentNameDTO != null ? paymentNameDTO.equals(that.paymentNameDTO) : that.paymentNameDTO == null;
     }
 
     @Override
@@ -121,7 +119,7 @@ public class PaymentDTO {
         result = 31 * result + (description != null ? description.hashCode() : 0);
         result = 31 * result + (accountDTO != null ? accountDTO.hashCode() : 0);
         result = 31 * result + (paymentStatusDTO != null ? paymentStatusDTO.hashCode() : 0);
-        result = 31 * result + (paymentTypeDTO != null ? paymentTypeDTO.hashCode() : 0);
+        result = 31 * result + (paymentNameDTO != null ? paymentNameDTO.hashCode() : 0);
         return result;
     }
 
@@ -134,7 +132,7 @@ public class PaymentDTO {
                 ", description='" + description + '\'' +
                 ", accountDTO=" + accountDTO +
                 ", paymentStatusDTO=" + paymentStatusDTO +
-                ", paymentTypeDTO=" + paymentTypeDTO +
+                ", paymentNameDTO=" + paymentNameDTO +
                 '}';
     }
 }

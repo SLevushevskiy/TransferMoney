@@ -50,7 +50,8 @@ public class EntityConstants {
     public static final String ACCOUNT_NAME_SERVICE = "accountNameService";
     public static final String ACCOUNT_STATUS_SERVICE = "accountStatusService";
     public static final String PAYMENT_SERVICE = "paymentService";
-    public static final String PAYMENT_TYPE_SERVICE = "paymentNameService";
+    public static final String PAYMENT_TYPE_SERVICE = "paymentNameService";//найти что за дичь
+    public static final String PAYMENT_NAME_SERVICE = "paymentNameService";
     public static final String PAYMENT_STATUS_SERVICE = "paymentStatusService";
 
 }

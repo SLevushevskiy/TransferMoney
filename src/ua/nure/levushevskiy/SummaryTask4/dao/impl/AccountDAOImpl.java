@@ -45,6 +45,14 @@ public class AccountDAOImpl implements AccountDAO {
      */
     public static final String SQL_UPDATE_ACCOUNT_STATUS = "UPDATE st4db.account SET account_status_id = "
             + "(SELECT idAccount_status FROM st4db.account_status WHERE status = ?) WHERE idAccount = ?";
+    /**
+     * Request to debit the account amound in the database.
+     */
+    public static final String SQL_UPDATE_ACCOUNT_AMOUND = "UPDATE st4db.account SET amound = ? WHERE idAccount = ?";
+     /**
+     * Request to retrieve amound ny account id.
+     */
+    public static final String SQL_SELECT_AMOUND_BY_ACCOUNT_ID = "SELECT amound FROM st4db.account WHERE idAccount = ?";
 
     /**
      * Object of connection pool.
@@ -96,6 +104,100 @@ public class AccountDAOImpl implements AccountDAO {
             closeConnection(connection);
         }
         return false;
+    }
+
+    /**
+     * Updates the account amound.
+     *
+     * @param accountId     - account ID.
+     * @param debit - debit.
+     * @return - true (if status was updated).
+     */
+    @Override
+    public boolean debitAccountAmound(int accountId, double debit) {
+        double amound = getAmoundByAccountId(accountId);
+
+        amound += debit;
+
+        Connection connection = null;
+        try {
+            connection = dataSource.getConnection();
+        } catch (SQLException e) {
+            LOG.error(e);
+            throw new DAOException("Cannot get connection!", e);
+        }
+
+        try (PreparedStatement preparedStatement = connection.prepareStatement(SQL_UPDATE_ACCOUNT_AMOUND)) {
+            preparedStatement.setDouble(1, amound);
+            preparedStatement.setLong(2, accountId);
+            int changes = preparedStatement.executeUpdate();
+            if (changes > 0) {
+                return true;
+            }
+        } catch (SQLException e) {
+            LOG.error(e);
+            throw new DAOException("Error while extraction result set!", e);
+        } finally {
+            closeConnection(connection);
+        }
+        return false;
+    }
+
+    /**
+     * Updates the account credit.
+     *
+     * @param accountId     - account ID.
+     * @param credit - credit.
+     * @return - true (if status was updated).
+     */
+    @Override
+    public boolean creditAccountAmound(int accountId, double credit) {
+        Connection connection = null;
+        try {
+            connection = dataSource.getConnection();
+        } catch (SQLException e) {
+            LOG.error(e);
+            throw new DAOException("Cannot get connection!", e);
+        }
+
+        try (PreparedStatement preparedStatement = connection.prepareStatement(SQL_UPDATE_ACCOUNT_AMOUND)) {
+            preparedStatement.setDouble(1, credit);
+            preparedStatement.setLong(2, accountId);
+            int changes = preparedStatement.executeUpdate();
+            if (changes > 0) {
+                return true;
+            }
+        } catch (SQLException e) {
+            LOG.error(e);
+            throw new DAOException("Error while extraction result set!", e);
+        } finally {
+            closeConnection(connection);
+        }
+        return false;
+    }
+
+    public double getAmoundByAccountId(int accountId){
+        Connection connection = null;
+        ResultSet rs = null;
+        double amound;
+        try {
+            connection = dataSource.getConnection();
+        } catch (SQLException e) {
+            LOG.error(e);
+            throw new DAOException("Cannot get connection!", e);
+        }
+
+        try (PreparedStatement preparedStatement = connection.prepareStatement(SQL_SELECT_AMOUND_BY_ACCOUNT_ID)) {
+            preparedStatement.setLong(1, accountId);
+            rs = preparedStatement.executeQuery();
+            amound = rs.getDouble("amound");
+        } catch (SQLException e) {
+            LOG.error(e);
+            throw new DAOException("Error while extraction result set!", e);
+        } finally {
+            closeConnection(connection);
+        }
+        return amound;
     }
 
     /**
