@@ -37,4 +37,13 @@ public interface AccountService {
      */
     boolean updateAccountStatusById(int id,String status);
 
+    /**
+     * Change account amound by id.
+     *
+     * @param id - account id.
+     * @param paymentTotal - payment total.
+     * @return - true (if object was updated).
+     */
+    boolean changeAccountAmound(int id, double paymentTotal);
+
 }

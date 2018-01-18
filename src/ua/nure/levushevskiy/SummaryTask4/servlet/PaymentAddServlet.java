@@ -64,16 +64,20 @@ public class PaymentAddServlet extends HttpServlet {
     protected void doPost(HttpServletRequest req, HttpServletResponse resp) throws ServletException, IOException {
         HttpSession session = req.getSession();//создаем сессию
         // session.removeAttribute(EntityConstants.AUTHORIZATION_ERROR_CONTAINER_PARAM);
-
-        PaymentDTO paymentDTO = getPaymentFromRequest(req);
-        session.setAttribute(EntityConstants.ACCOUNT_CHOOSE_PARAM,Integer.parseInt(req.getParameter(EntityConstants.ACCOUNT_CHOOSE_PARAM)));
         try {
+        int accountId = Integer.parseInt(req.getParameter(EntityConstants.ACCOUNT_CHOOSE_PARAM));
+        PaymentDTO paymentDTO = getPaymentFromRequest(req);
+        session.setAttribute(EntityConstants.ACCOUNT_CHOOSE_PARAM,accountId);
+        if(!accountService.changeAccountAmound(accountId,paymentDTO.getTotal())){
+             throw new IllegalStateException();
+        }
+
+
             paymentDTO = paymentService.savePayment(paymentDTO);
-        } catch (IllegalStateException e) {
+        } catch (Exception e) {
             //session.setAttribute(EntityConstants.INVALID_ACCOUNT_PARAM, accountDTO);
             resp.sendRedirect(View.Mapping.ERROR);
             return;
-
         }
         resp.sendRedirect(View.Mapping.ACCOUNT_LIST);//redirect
     }

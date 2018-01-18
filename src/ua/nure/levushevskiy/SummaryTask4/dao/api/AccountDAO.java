@@ -21,17 +21,9 @@ public interface AccountDAO extends DAO<Account, Integer> {
      * Updates the account amound.
      *
      * @param accountId     - account ID.
-     * @param debit - debit.
+     * @param paymentTotal - payment total.
      * @return - true (if status was updated).
      */
-    boolean debitAccountAmound(int accountId, double debit);
+    boolean changeAccountAmound(int accountId, double paymentTotal);
 
-    /**
-     * Updates the account credit.
-     *
-     * @param accountId     - account ID.
-     * @param credit - credit.
-     * @return - true (if status was updated).
-     */
-    boolean creditAccountAmound(int accountId, double credit);
 }

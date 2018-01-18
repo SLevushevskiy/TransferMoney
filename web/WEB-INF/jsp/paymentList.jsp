@@ -45,7 +45,6 @@
                     <th>Тип</th>
                     <th>Описание</th>
                     <th>Сумма</th>
-                    <th>Остаток</th>
                     <th>Дата</th>
                     <th>Статус</th>
                 </tr>
@@ -56,7 +55,6 @@
                         <td>${payment.getPaymentNameDTO().paymentName}</td>
                         <td>${payment.getDescription()}</td>
                         <td>${payment.getTotal()}</td>
-                        <td>${payment.getAccountDTO().amound}</td>
                         <td>${payment.getDatePayment()}</td>
                         <td>${payment.getPaymentStatusDTO().status}</td>
                     </tr>

@@ -54,8 +54,14 @@ public class PaymentDTO {
         this.datePayment = datePayment;
     }
 
-    public Double getTotal() {
-        return total;
+    public Double getTotal()
+    {
+        if(getPaymentNameDTO().getPaymentTypeDTO().getType().equals("debit")) {
+            return total;
+        }
+        else {
+            return -total;
+        }
     }
 
     public void setTotal(Double total) {

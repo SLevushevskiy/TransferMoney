@@ -110,14 +110,17 @@ public class AccountDAOImpl implements AccountDAO {
      * Updates the account amound.
      *
      * @param accountId     - account ID.
-     * @param debit - debit.
+     * @param paymentTotal - payment total.
      * @return - true (if status was updated).
      */
     @Override
-    public boolean debitAccountAmound(int accountId, double debit) {
+    public boolean changeAccountAmound(int accountId, double paymentTotal) {
         double amound = getAmoundByAccountId(accountId);
 
-        amound += debit;
+        amound += paymentTotal;
+        if(amound < 0){
+            throw new DAOException("Account amound insufficient!");
+        }
 
         Connection connection = null;
         try {
@@ -143,39 +146,7 @@ public class AccountDAOImpl implements AccountDAO {
         return false;
     }
 
-    /**
-     * Updates the account credit.
-     *
-     * @param accountId     - account ID.
-     * @param credit - credit.
-     * @return - true (if status was updated).
-     */
-    @Override
-    public boolean creditAccountAmound(int accountId, double credit) {
-        Connection connection = null;
-        try {
-            connection = dataSource.getConnection();
-        } catch (SQLException e) {
-            LOG.error(e);
-            throw new DAOException("Cannot get connection!", e);
-        }
-
-        try (PreparedStatement preparedStatement = connection.prepareStatement(SQL_UPDATE_ACCOUNT_AMOUND)) {
-            preparedStatement.setDouble(1, credit);
-            preparedStatement.setLong(2, accountId);
-            int changes = preparedStatement.executeUpdate();
-            if (changes > 0) {
-                return true;
-            }
-        } catch (SQLException e) {
-            LOG.error(e);
-            throw new DAOException("Error while extraction result set!", e);
-        } finally {
-            closeConnection(connection);
-        }
-        return false;
-    }
-
+////разобраться
     public double getAmoundByAccountId(int accountId){
         Connection connection = null;
         ResultSet rs = null;
@@ -190,7 +161,8 @@ public class AccountDAOImpl implements AccountDAO {
         try (PreparedStatement preparedStatement = connection.prepareStatement(SQL_SELECT_AMOUND_BY_ACCOUNT_ID)) {
             preparedStatement.setLong(1, accountId);
             rs = preparedStatement.executeQuery();
-            amound = rs.getDouble("amound");
+            rs.next();
+                amound = rs.getDouble("amound");
         } catch (SQLException e) {
             LOG.error(e);
             throw new DAOException("Error while extraction result set!", e);

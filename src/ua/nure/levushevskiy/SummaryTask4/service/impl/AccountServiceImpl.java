@@ -93,4 +93,16 @@ public class AccountServiceImpl implements AccountService{
     public boolean updateAccountStatusById(int id, String status) {
         return accountDAO.updateAccountStatus(id, status);
     }
+
+    /**
+     * Change account amound by id.
+     *
+     * @param id - account id.
+     * @param paymentTotal - payment total.
+     * @return - true (if object was updated).
+     */
+    @Override
+    public boolean changeAccountAmound(int id, double paymentTotal) {
+        return accountDAO.changeAccountAmound(id, paymentTotal);
+    }
 }
