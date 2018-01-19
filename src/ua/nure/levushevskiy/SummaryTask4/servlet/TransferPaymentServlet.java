@@ -1,10 +1,12 @@
 package ua.nure.levushevskiy.SummaryTask4.servlet;
 
-import ua.nure.levushevskiy.SummaryTask4.dto.*;
-import ua.nure.levushevskiy.SummaryTask4.entity.PaymentType;
+import ua.nure.levushevskiy.SummaryTask4.dto.AccountDTO;
+import ua.nure.levushevskiy.SummaryTask4.dto.PaymentDTO;
+import ua.nure.levushevskiy.SummaryTask4.dto.PaymentNameDTO;
 import ua.nure.levushevskiy.SummaryTask4.exception.InitializationException;
-import ua.nure.levushevskiy.SummaryTask4.service.api.PaymentStatusService;
-import ua.nure.levushevskiy.SummaryTask4.service.impl.*;
+import ua.nure.levushevskiy.SummaryTask4.service.impl.AccountServiceImpl;
+import ua.nure.levushevskiy.SummaryTask4.service.impl.PaymentNameServiceImpl;
+import ua.nure.levushevskiy.SummaryTask4.service.impl.PaymentServiceImpl;
 import ua.nure.levushevskiy.SummaryTask4.util.EntityConstants;
 import ua.nure.levushevskiy.SummaryTask4.util.View;
 
@@ -20,13 +22,11 @@ import java.sql.Date;
 import java.util.ArrayList;
 import java.util.List;
 
+import static ua.nure.levushevskiy.SummaryTask4.util.View.PAYMENT_RECHARGE_JSP;
+import static ua.nure.levushevskiy.SummaryTask4.util.View.PAYMENT_TRANSFER_JSP;
 
-import static ua.nure.levushevskiy.SummaryTask4.util.View.PAYMENT_ADD_JSP;
-import static ua.nure.levushevskiy.SummaryTask4.util.View.PAYMENT_LIST_JSP;
-
-@WebServlet("/paymentAdd")
-public class PaymentAddServlet extends HttpServlet {
-
+@WebServlet("/trasferPayment")
+public class TransferPaymentServlet extends HttpServlet {
     /**
      * An object that contains payment business logic.
      */
@@ -57,7 +57,7 @@ public class PaymentAddServlet extends HttpServlet {
         accountDTOList = removeAccount(accountDTOList, Integer.parseInt(session.getAttribute(EntityConstants.USER_ID_PARAM).toString()));
         req.setAttribute(EntityConstants.ACCOUNT_LIST_PARAM, accountDTOList);
 
-        req.getRequestDispatcher(PAYMENT_ADD_JSP).forward(req, resp);
+        req.getRequestDispatcher(PAYMENT_TRANSFER_JSP).forward(req, resp);
     }
 
     @Override
@@ -65,21 +65,34 @@ public class PaymentAddServlet extends HttpServlet {
         HttpSession session = req.getSession();//создаем сессию
         // session.removeAttribute(EntityConstants.AUTHORIZATION_ERROR_CONTAINER_PARAM);
         try {
-        int accountId = Integer.parseInt(req.getParameter(EntityConstants.ACCOUNT_CHOOSE_PARAM));
-        PaymentDTO paymentDTO = getPaymentFromRequest(req);
-        session.setAttribute(EntityConstants.ACCOUNT_CHOOSE_PARAM,accountId);
-        if(!accountService.changeAccountAmound(accountId,paymentDTO.getTotal())){
-             throw new IllegalStateException();
-        }
+            int accountId = Integer.parseInt(req.getParameter(EntityConstants.ACCOUNT_CHOOSE_PARAM));
+            PaymentDTO paymentDTO = getPaymentFromRequest(req);
+            session.setAttribute(EntityConstants.ACCOUNT_CHOOSE_PARAM,accountId);
+            if(accountService.getById(Integer.parseInt(req.getParameter(EntityConstants.ACCOUNT_ID_PARAM))) == null){
+                throw new IllegalStateException();
+            }
+            else {
+                if(!accountService.changeAccountAmound(accountId,paymentDTO.getTotal())){
+                    throw new IllegalStateException();
+                }
+                paymentDTO = paymentService.savePayment(paymentDTO);
+                session.setAttribute(EntityConstants.PAYMENT_PARAM, paymentDTO);
+                paymentDTO.setPaymentNameDTO(paymentNameService.getById(1));
+                paymentDTO.setAccountDTO(accountService.getById(Integer.parseInt(req.getParameter(EntityConstants.ACCOUNT_ID_PARAM))));
+                paymentDTO.setTotal(Math.abs(paymentDTO.getTotal()));
+                if(!accountService.changeAccountAmound(Integer.parseInt(req.getParameter(EntityConstants.ACCOUNT_ID_PARAM)),paymentDTO.getTotal())){
+                    throw new IllegalStateException();
+                }
+                paymentDTO = paymentService.savePayment(paymentDTO);
+            }
 
-
-            paymentDTO = paymentService.savePayment(paymentDTO);
+            session.setAttribute(EntityConstants.ACCOUNT_ID_PARAM, req.getParameter(EntityConstants.ACCOUNT_ID_PARAM));
         } catch (Exception e) {
             //session.setAttribute(EntityConstants.INVALID_ACCOUNT_PARAM, accountDTO);
             resp.sendRedirect(View.Mapping.ERROR);
             return;
         }
-        resp.sendRedirect(View.Mapping.ACCOUNT_LIST);//redirect
+        resp.sendRedirect(View.Mapping.REPORT_PAYMENT);//redirect
     }
 
     @Override

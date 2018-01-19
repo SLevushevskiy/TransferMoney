@@ -56,16 +56,16 @@ public class PaymentDTO {
 
     public Double getTotal()
     {
-        if(getPaymentNameDTO().getPaymentTypeDTO().getType().equals("debit")) {
             return total;
-        }
-        else {
-            return -total;
-        }
     }
 
     public void setTotal(Double total) {
-        this.total = total;
+        if(getPaymentNameDTO().getPaymentTypeDTO().getType().equals("debit")) {
+            this.total = total;
+        }
+        else {
+            this.total = -Math.abs(total);
+        }
     }
 
     public String getDescription() {

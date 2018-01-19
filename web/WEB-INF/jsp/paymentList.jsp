@@ -24,10 +24,6 @@
     <!-- Intro -->
     <section id="top" class="one dark cover">
         <div class="container">
-            <ul>
-            <li><a href="${pageContext.servletContext.contextPath}/paymentAdd"><span class="icon fa-plus-circle"> Совершить операцию   </span></a></li>
-            </ul>
-
             <table>
                 <tr>
                     <td><span class="icon fa-credit-card-alt"></span></td>

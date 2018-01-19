@@ -25,17 +25,16 @@
     <!-- Intro -->
     <section id="top" class="one dark cover">
         <div class="container">
-            <form action="paymentAdd" method="post">
-                <select name="paymentName">
-                    <c:forEach items="${paymentNameList}" var="paymentN">
-                        <option value="${paymentN.getIdPaymentName()}">${paymentN.getPaymentName()}</option>
-                    </c:forEach>
-                </select>
+            <form action="trasferPayment" method="post">
+                <input type="hidden" name="paymentName" value="2" />
+                <input type="text" value="Перевод на карту" disabled/>
+
                 <select name="accountChoose">
                     <c:forEach items="${accountList}" var="accountN">
                         <option value="${accountN.getIdAccount()}">${accountN.getAccountNameDTO().name} (${accountN.getIdAccount()})  ${accountN.getAmound()}</option>
                     </c:forEach>
                 </select>
+                <input type="text" name="accountId" placeholder="Введите номер счета" />
                 <input type="text" name="paymentTotal" placeholder="Сумма" />
                 <input type="text" name="paymentDescription" placeholder="Описание" />
                 <input type="submit" value="Готово "/>

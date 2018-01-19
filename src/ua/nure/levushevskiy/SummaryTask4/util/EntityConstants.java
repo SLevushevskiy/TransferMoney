@@ -25,7 +25,7 @@ public class EntityConstants {
     public static final String NAME_PARAM = "name";
     public static final String SURNAME_PARM = "surname";
 
-    public static final String ACCOUNT_ID_PARAM = "idAccount";
+    public static final String ACCOUNT_ID_PARAM = "accountId";
     public static final String ACCOUNT_AMOUND_PARAM = "amound";
     public static final String ACCOUNT_USER_ID_PARAM = "accountUserId";
     public static final String ACCOUNT_NAME_PARAM = "accountName";
@@ -39,6 +39,8 @@ public class EntityConstants {
     public static final String PAYMENT_TOTAL_PARAM = "paymentTotal";
     public static final String PAYMENT_DESCRIPTION_PARAM = "paymentDescription";
     public static final String PAYMENT_NAME_LIST_PARAM = "paymentNameList";
+    public static final String PAYMENT_MOBILE_PARAM = "mobileNum";
+    public static final String PAYMENT_PARAM = "payment";
 
     private EntityConstants() {}
 

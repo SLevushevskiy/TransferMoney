@@ -276,11 +276,11 @@ public class Transformer {
         PaymentDTO paymentDTO = new PaymentDTO();
         paymentDTO.setIdPayment(payment.getIdPayment());
         paymentDTO.setDatePayment(payment.getDatePayment());
+        paymentDTO.setPaymentNameDTO(paymentNameService.getById((int) payment.getPaymentNameId()));
         paymentDTO.setTotal(payment.getTotal());
         paymentDTO.setDescription(payment.getDescription());
         paymentDTO.setAccountDTO(accountService.getById((int) payment.getAccountId()));
         paymentDTO.setPaymentStatusDTO(paymentStatusService.getById((int) payment.getStatusId()));
-        paymentDTO.setPaymentNameDTO(paymentNameService.getById((int) payment.getPaymentNameId()));
         return paymentDTO;
     }
 

@@ -8,6 +8,8 @@ public class View {
     public static final String ABOUT_JSP = "WEB-INF/jsp/about.jsp";
     public static final String LOGIN_JSP = "WEB-INF/jsp/authorisation.jsp";
     public static final String ERROR_JSP = "WEB-INF/jsp/errorPage.jsp";
+    public static final String REPORT_JSP = "WEB-INF/jsp/reportPayment.jsp";
+
     public static final String FAQ_JSP = "WEB-INF/jsp/faqs.jsp";
     public static final String MAIN_JSP = "WEB-INF/jsp/main.jsp";
     public static final String PERSONAL_AREA_JSP = "WEB-INF/jsp/personalArea.jsp";
@@ -15,7 +17,9 @@ public class View {
     public static final String PAYMENT_LIST_JSP = "WEB-INF/jsp/paymentList.jsp";
     public static final String ACCOUNT_LIST_JSP = "WEB-INF/jsp/accountList.jsp";
     public static final String ACCOUNT_ADD_JSP = "WEB-INF/jsp/accountAdd.jsp";
-    public static final String PAYMENT_ADD_JSP = "WEB-INF/jsp/paymentAdd.jsp";
+    public static final String PAYMENT_RECHARGE_JSP = "WEB-INF/jsp/rechargePayment.jsp";
+    public static final String PAYMENT_TRANSFER_JSP = "WEB-INF/jsp/transferPayment.jsp";
+    public static final String PAYMENT_MOBILE_JSP = "WEB-INF/jsp/mobilePayment.jsp";
     public static final String REGISTRATION_CONFIRMATION_JSP = "WEB-INF/jsp/registrationConfirmation.jsp";
     public static final String REGISTRATION_JSP = "WEB-INF/jsp/registration.jsp";
     public static final String SHOPPING_CART_JSP = "WEB-INF/jsp/shoppingCart.jsp";
@@ -40,7 +44,7 @@ public class View {
         public static final String ACCOUNT = "account";
         public static final String REGISTRATION = "registration";
         public static final String ACCOUNT_LIST = "accountList";
-        public static final String PAYMENT_LIST = "paymentList";
+        public static final String REPORT_PAYMENT = "reportPayment";
 
         private Mapping() { }
     }
