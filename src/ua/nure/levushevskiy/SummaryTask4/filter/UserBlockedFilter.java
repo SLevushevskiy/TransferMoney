@@ -3,6 +3,7 @@ package ua.nure.levushevskiy.SummaryTask4.filter;
 import org.apache.log4j.Logger;
 import ua.nure.levushevskiy.SummaryTask4.dto.UserDTO;
 import ua.nure.levushevskiy.SummaryTask4.util.EntityConstants;
+import ua.nure.levushevskiy.SummaryTask4.util.View;
 
 import javax.servlet.*;
 import javax.servlet.annotation.WebFilter;
@@ -43,13 +44,13 @@ public class UserBlockedFilter implements Filter {
         HttpServletResponse resp = (HttpServletResponse) servletResponse;
         HttpSession session = req.getSession();
 
-        if (!req.getServletPath().equals(EXCLUDE_MAPPING)) {
+        if (!req.getServletPath().equals(View.Mapping.ERROR)) {
             UserDTO userDTO = null;
             if (session.getAttribute(EntityConstants.USER_PARAM) != null) {
                 userDTO = (UserDTO) session.getAttribute(EntityConstants.USER_PARAM);
                 if (userDTO.getUserStatusDTO().getStatus().equals("blocked")) {
                     req.setAttribute(ERROR_PARAM, "You was blocked by admin.");
-                    resp.sendRedirect(ERROR_JSP);
+                    resp.sendRedirect(View.Mapping.ERROR);
                     return;
                 }
             }

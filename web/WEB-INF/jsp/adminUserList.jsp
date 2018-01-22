@@ -18,26 +18,14 @@
 
 <!-- Header -->
 <%@ include file="/WEB-INF/tags/header.jspf" %>
-
-
+<!-- WindowError -->
+<%@ include file="/WEB-INF/tags/windowError.jspf" %>
 <!-- Main -->
 <div id="main">
 
     <!-- Intro -->
     <section id="top" class="one dark cover">
         <div class="container">
-
-            <c:if test="${not empty operationSuccessful}">
-                <div id="zatemnenie">
-
-                    <div id="okno">
-                        <c:if test="${operationSuccessful eq true}">Операция успешна!</c:if>
-                        <c:if test="${not operationSuccessful eq false}">Повторите попытку.</c:if>
-                        <a href="#" class="close">Ок</a>
-                    </div>
-                </div>
-            </c:if>
-
             <c:if test="${empty userList}">
                 Еще нет пользователей...
             </c:if>

@@ -45,26 +45,21 @@ public class AdminUserListServlet extends HttpServlet {
     @Override
     protected void doGet(HttpServletRequest req, HttpServletResponse resp) throws ServletException, IOException {
         List<UserDTO> userDTOList = userService.getAll();
-        //accountDTOList = removeAccount(accountDTOList, Integer.parseInt(session.getAttribute(EntityConstants.USER_ID_PARAM).toString()));
         req.setAttribute(EntityConstants.USER_LIST_PARAM, userDTOList);
-
         req.getRequestDispatcher(ADMIN_USER_LIST_JSP).forward(req, resp);
     }
 
     @Override
     protected void doPost(HttpServletRequest req, HttpServletResponse resp) throws ServletException, IOException {
+        HttpSession session = req.getSession();
         int userId = Integer.parseInt(req.getParameter(EntityConstants.USER_CHOOSE_PARAM));
-       // UserDTO userDTO = userService.getById(userId);
         if(userService.updateUserStatus(userId,req.getParameter(EntityConstants.STATUS_PARAM)))
         {
-            req.setAttribute(EntityConstants.OPERATION_SUCCESSFUL, true);
+            session.setAttribute(EntityConstants.OPERATION_SUCCESSFUL, "Операция успешна!");
         }
         else{
-            req.setAttribute(EntityConstants.OPERATION_SUCCESSFUL, false);
+            session.setAttribute(EntityConstants.OPERATION_SUCCESSFUL, "Повторите попытку.");
         }
-        List<UserDTO> userDTOList = userService.getAll();
-        req.setAttribute(EntityConstants.USER_LIST_PARAM, userDTOList);
-
-        req.getRequestDispatcher(ADMIN_USER_LIST_JSP).forward(req, resp);
+        resp.sendRedirect(View.Mapping.ADMIN_USER_LIST + "#zatemnenie");
     }
 }

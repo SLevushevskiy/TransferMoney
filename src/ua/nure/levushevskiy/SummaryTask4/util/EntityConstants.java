@@ -5,10 +5,10 @@ package ua.nure.levushevskiy.SummaryTask4.util;
  */
 public class EntityConstants {
 
-    public static final String REGISTRATION_ERROR_CONTAINER_PARAM = "registrationErrorContainer";
-    public static final String AUTHORIZATION_ERROR_CONTAINER_PARAM = "authorisationErrorContainer";
+    public static final String ERROR_CONTAINER_PARAM = "errorContainer";
     public static final String EMAIL_PARAM = "email";
     public static final String PASSWORD_PARAM = "password";
+    public static final String PASSWORD_CONFIRM_PARAM = "confirm";
     public static final String USER_ID_PARAM = "userId";
     public static final String USER_PARAM = "user";
     public static final String USER_LIST_PARAM ="userList";
@@ -44,6 +44,7 @@ public class EntityConstants {
     public static final String PAYMENT_MOBILE_PARAM = "mobileNum";
     public static final String PAYMENT_PARAM = "payment";
     public static final String OPERATION_SUCCESSFUL = "operationSuccessful";
+    public static final String TRANSFER_PAYMENT = "transferPayment";
 
     private EntityConstants() {}
 

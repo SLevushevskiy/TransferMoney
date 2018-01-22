@@ -43,39 +43,32 @@ public class PaymentRechargeServlet extends HttpServlet {
     @Override
     protected void doGet(HttpServletRequest req, HttpServletResponse resp) throws ServletException, IOException {
         HttpSession session = req.getSession();
-        if(session.getAttribute(EntityConstants.USER_PARAM)== null){
-            resp.sendRedirect(View.Mapping.AUTHORIZATION);
-            return;
-        }
-
         List<PaymentNameDTO> paymentNameDTOList = paymentNameService.getAll();
         req.setAttribute(EntityConstants.PAYMENT_NAME_LIST_PARAM, paymentNameDTOList);
-
         List<AccountDTO> accountDTOList = accountService.getAll();
         accountDTOList = removeAccount(accountDTOList, Integer.parseInt(session.getAttribute(EntityConstants.USER_ID_PARAM).toString()));
         req.setAttribute(EntityConstants.ACCOUNT_LIST_PARAM, accountDTOList);
-
         req.getRequestDispatcher(PAYMENT_RECHARGE_JSP).forward(req, resp);
     }
 
     @Override
     protected void doPost(HttpServletRequest req, HttpServletResponse resp) throws ServletException, IOException {
         HttpSession session = req.getSession();//создаем сессию
-        try {
+        req.setCharacterEncoding("UTF-8");
         int accountId = Integer.parseInt(req.getParameter(EntityConstants.ACCOUNT_CHOOSE_PARAM));
         PaymentDTO paymentDTO = getPaymentFromRequest(req);
-        session.setAttribute(EntityConstants.ACCOUNT_CHOOSE_PARAM, accountId);
-        if(!accountService.changeAccountAmound(accountId,paymentDTO.getTotal())){
-             throw new IllegalStateException();
-        }
-            paymentDTO = paymentService.savePayment(paymentDTO);
-            session.setAttribute(EntityConstants.PAYMENT_PARAM, paymentDTO);
-        } catch (Exception e) {
-            //session.setAttribute(EntityConstants.INVALID_ACCOUNT_PARAM, accountDTO);
-            resp.sendRedirect(View.Mapping.ERROR);
+        AccountDTO accountDTO = accountService.getById(accountId);
+        if(!accountDTO.getAccountStatusDTO().getStatus().equals("active")){
+            session.setAttribute(EntityConstants.OPERATION_SUCCESSFUL, "Операция не выполнена! Карта заблокирована.");
+            resp.sendRedirect(View.Mapping.PAYMENT_RECHARGE+"#zatemnenie");//redirect
             return;
         }
-        resp.sendRedirect(View.Mapping.REPORT_PAYMENT);//redirect
+        session.setAttribute(EntityConstants.ACCOUNT_NAME_PARAM,accountDTO.getAccountNameDTO().getName());
+        session.setAttribute(EntityConstants.ACCOUNT_AMOUND_PARAM,accountDTO.getAmound());
+        session.setAttribute(EntityConstants.ACCOUNT_CHOOSE_PARAM,accountId);
+            paymentDTO = paymentService.savePayment(paymentDTO);
+            session.setAttribute(EntityConstants.PAYMENT_PARAM, paymentDTO);
+        resp.sendRedirect(View.Mapping.CONFIRM_PAYMENT);
     }
 
     @Override
@@ -152,7 +145,7 @@ public class PaymentRechargeServlet extends HttpServlet {
     private List<AccountDTO> removeAccount(final List<AccountDTO> accountDTOList,int userId) {
         List<AccountDTO> modifiedList = new ArrayList<>();
         for (AccountDTO accountDTO : accountDTOList) {
-            if (accountDTO.getUserDTO().getIdUser()==userId) {
+            if (accountDTO.getUserDTO().getIdUser()==userId & accountDTO.getAccountStatusDTO().getStatus().equals("active")) {
                 modifiedList.add(accountDTO);
             }
         }

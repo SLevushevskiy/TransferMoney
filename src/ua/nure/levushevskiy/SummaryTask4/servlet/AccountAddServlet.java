@@ -63,19 +63,14 @@ public class AccountAddServlet extends HttpServlet {
     @Override
     protected void doPost(HttpServletRequest req, HttpServletResponse resp) throws ServletException, IOException {
         HttpSession session = req.getSession();//создаем сессию
-        // session.removeAttribute(EntityConstants.AUTHORIZATION_ERROR_CONTAINER_PARAM);
-
         AccountDTO accountDTO = getAccountFromRequest(req);
-
-            try {
-                accountDTO = accountService.saveAccount(accountDTO);
-            } catch (IllegalStateException e) {
-                session.setAttribute(EntityConstants.INVALID_ACCOUNT_PARAM, accountDTO);
-                resp.sendRedirect(View.Mapping.REGISTRATION);
-                return;
-
-            }
-        resp.sendRedirect(View.Mapping.ACCOUNT_LIST);//redirect
+        try {
+            accountService.saveAccount(accountDTO);
+        } catch (Exception e) {
+            resp.sendRedirect(View.Mapping.ACCOUNT_LIST + "#zatemnenie");
+            return;
+        }
+        resp.sendRedirect(View.Mapping.ACCOUNT_LIST);
     }
 
     /**

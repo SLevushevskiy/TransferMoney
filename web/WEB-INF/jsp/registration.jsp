@@ -9,8 +9,9 @@
 <!DOCTYPE HTML>
 <html>
 <head>
-    <title>Transfer Money</title>
+    <title>Регистрация</title>
     <link rel="stylesheet" href="/assets/css/style.css" media="screen" type="text/css" />
+    <link rel="stylesheet" href="/assets/css/window.css" media="screen" type="text/css" />
     <script src="assets/js/confirmPass.js"></script>
     <link href='http://fonts.googleapis.com/css?family=Open+Sans:400,700' rel='stylesheet' type='text/css'>
 </head>
@@ -20,7 +21,8 @@
 
 <div class="wrapper">
 
-    <header>        <div class="wrapper">
+    <header>
+        <div class="wrapper">
             <a href="#"><img src="assets/images/logo.jpg" class="logo" alt="" title=""/><h1>Transfer Money</h1></a>
         </div>
     </header><!--  end header section  -->
@@ -28,8 +30,8 @@
 
         <div id="okno">
             <ul>
-                <c:forEach items="${registrationErrorContainer}" var="errorContainer">
-                    <li>${errorContainer.value}</li>
+                <c:forEach items="${errorContainer}" var="error">
+                    <li>${error.value}</li>
                 </c:forEach>
                 <li></li>
                 <li>
@@ -45,7 +47,6 @@
                     Пароль должен содержать цифры и буквы латинского алфавита.
                 </li>
             </ul>
-
             <a href="#" class="close">Приступить к регистрации</a>
         </div>
     </div>

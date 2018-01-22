@@ -5,11 +5,12 @@
 <%@ taglib prefix="t" tagdir="/WEB-INF/tags" %>
 
 <fmt:requestEncoding value="UTF-8" />
-<!DOCTYPE HTML>
+<!DOCTYPE html>
 <html>
 <head>
-    <title>Transfer Money</title>
-    <link rel="stylesheet" href="/assets/css/style.css" media="screen" type="text/css" />
+    <title>Авторизация</title>
+    <link rel="stylesheet" href="/assets/css/style.css" media="screen" type='text/css' />
+    <link rel="stylesheet" href="/assets/css/window.css" media="screen" type='text/css' />
     <link href='http://fonts.googleapis.com/css?family=Open+Sans:400,700' rel='stylesheet' type='text/css'>
 </head>
 
@@ -17,13 +18,16 @@
 
 <div class="wrapper">
 
-    <header>        <div class="wrapper">
-        <a href="#"><img src="assets/images/logo.jpg" class="logo" alt="" title=""/><h1>Transfer Money</h1></a>
-    </div>
+    <header>
+        <div class="wrapper">
+            <a href="#"><img src="assets/images/logo.jpg" class="logo" alt="" title=""/><h1>Transfer Money</h1></a>
+        </div>
     </header><!--  end header section  -->
 
-    <div class="middle">
+    <!-- WindowError -->
+    <%@ include file="/WEB-INF/tags/windowError.jspf" %>
 
+    <div class="middle">
         <aside class="right-sidebar">
             <div id="login-form">
                 <h2>Вход</h2>
@@ -34,7 +38,6 @@
                         <input type="submit" value="Войти"/>
                     </form>
                     <p><a href="${pageContext.servletContext.contextPath}/registration">Регистрация&nbsp;<span class="fontawesome-arrow-right"></span></a>
-
                     </p>
                 </fieldset>
             </div>

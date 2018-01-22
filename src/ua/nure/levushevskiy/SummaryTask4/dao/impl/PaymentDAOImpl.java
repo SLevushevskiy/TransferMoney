@@ -15,7 +15,7 @@ public class PaymentDAOImpl implements PaymentDAO {
     /**
      * Request to retrieve all payment objects by ID.
      */
-    public static final String SQL_SELECT_BY_ID = "SELECT * FROM st4db.payment WHERE idAccount = ?";
+    public static final String SQL_SELECT_BY_ID = "SELECT * FROM st4db.payment WHERE idPayment = ?";
     /**
      * Request to retrieve all account objects.
      */
@@ -103,7 +103,7 @@ public class PaymentDAOImpl implements PaymentDAO {
         try (PreparedStatement preparedStatement = connection.prepareStatement(SQL_PAYMENT_INSERT, Statement.RETURN_GENERATED_KEYS)) {
             preparedStatement.setDate(1, payment.getDatePayment());
             preparedStatement.setDouble(2, payment.getTotal());
-            preparedStatement.setString(3, payment.getDescription());
+            preparedStatement.setNString(3, payment.getDescription());
             preparedStatement.setLong(4, payment.getAccountId());
             preparedStatement.setLong(5, payment.getStatusId());
             preparedStatement.setLong(6, payment.getPaymentNameId());
@@ -150,7 +150,7 @@ public class PaymentDAOImpl implements PaymentDAO {
         }
         ResultSet rs = null;
         try (PreparedStatement preparedStatement = connection.prepareStatement(SQL_SELECT_BY_ID)) {
-            preparedStatement.setLong(1, id);
+            preparedStatement.setInt(1, id);
             rs = preparedStatement.executeQuery();
             paymentList = extractResultSet(rs);
 

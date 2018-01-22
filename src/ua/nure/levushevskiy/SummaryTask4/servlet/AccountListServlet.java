@@ -37,7 +37,6 @@ public class AccountListServlet extends HttpServlet {
     @Override
     protected void doGet(HttpServletRequest req, HttpServletResponse resp) throws ServletException, IOException {
         HttpSession session = req.getSession();
-
         List<AccountDTO> accountDTOList = accountService.getAll();
         accountDTOList = removeAccount(accountDTOList, Integer.parseInt(session.getAttribute(EntityConstants.USER_ID_PARAM).toString()));
         req.setAttribute(EntityConstants.ACCOUNT_LIST_PARAM, accountDTOList);
@@ -48,16 +47,12 @@ public class AccountListServlet extends HttpServlet {
     protected void doPost(HttpServletRequest req, HttpServletResponse resp) throws ServletException, IOException {
         HttpSession session = req.getSession();
         int accountId = Integer.parseInt(req.getParameter(EntityConstants.ACCOUNT_CHOOSE_PARAM));
-        // UserDTO userDTO = userService.getById(userId);
-        if(accountService.updateAccountStatusById(accountId, req.getParameter(EntityConstants.STATUS_PARAM)))
-        {
-            req.setAttribute(EntityConstants.OPERATION_SUCCESSFUL, true);
+        if (accountService.updateAccountStatusById(accountId, req.getParameter(EntityConstants.STATUS_PARAM))) {
+            session.setAttribute(EntityConstants.OPERATION_SUCCESSFUL, "Операция успешна!");
+        } else {
+            session.setAttribute(EntityConstants.OPERATION_SUCCESSFUL, "Повторите попытку.");
         }
-        else{
-            req.setAttribute(EntityConstants.OPERATION_SUCCESSFUL, false);
-        }
-
-        resp.sendRedirect(View.Mapping.ACCOUNT_LIST);
+       resp.sendRedirect(View.Mapping.ACCOUNT_LIST + "#zatemnenie");
     }
 
     /**

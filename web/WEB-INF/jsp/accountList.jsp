@@ -12,15 +12,16 @@
     <meta charset="utf-8" />
     <meta name="viewport" content="width=device-width, initial-scale=1" />
     <link rel="stylesheet" href="assets/css/main.css" />
+    <link rel="stylesheet" href="/assets/css/window.css" media="screen" type="text/css" />
 </head>
 <body>
 
 <!-- Header -->
 <%@ include file="/WEB-INF/tags/header.jspf" %>
-
+<!-- WindowError -->
+<%@ include file="/WEB-INF/tags/windowError.jspf" %>
 <!-- Main -->
 <div id="main">
-
     <!-- Intro -->
     <section id="top" class="one dark cover">
         <div class="container">
@@ -72,16 +73,6 @@
             </ul>
         </div>
     </section>
-</div>
-
-<!-- Footer -->
-<div id="footer">
-
-    <!-- Copyright -->
-    <ul class="copyright">
-        <li>&copy; Untitled. All rights reserved.</li><li>Design: <a href="http://html5up.net">HTML5 UP</a></li>
-    </ul>
-
 </div>
 
 <!-- Scripts -->

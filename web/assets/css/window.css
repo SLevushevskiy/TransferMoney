@@ -26,7 +26,10 @@
     background: #fff;
     z-index: 100;
 }
-#zatemnenie:target {display: block;}
+#zatemnenie:target {
+    display: block;
+    z-index: 99;
+}
 .close {
     margin-top: 13px;
     margin-left: 130px;

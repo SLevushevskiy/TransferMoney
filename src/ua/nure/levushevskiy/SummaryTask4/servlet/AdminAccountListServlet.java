@@ -36,17 +36,13 @@ public class AdminAccountListServlet extends HttpServlet{
     }
     @Override
     protected void doGet(HttpServletRequest req, HttpServletResponse resp) throws ServletException, IOException {
-        int userId = Integer.parseInt(req.getParameter(EntityConstants.USER_CHOOSE_PARAM));
         HttpSession session = req.getSession();
-        if(session.getAttribute(EntityConstants.USER_PARAM)== null){
-            resp.sendRedirect(View.Mapping.AUTHORIZATION);
-            return;
-        }
-
+        int userId = req.getParameter(EntityConstants.USER_CHOOSE_PARAM)==null?(int)session.getAttribute(EntityConstants.USER_CHOOSE_PARAM)
+                :Integer.parseInt(req.getParameter(EntityConstants.USER_CHOOSE_PARAM));
         List<AccountDTO> accountDTOList = accountService.getAll();
         accountDTOList = removeAccount(accountDTOList, userId);
         req.setAttribute(EntityConstants.ACCOUNT_LIST_PARAM, accountDTOList);
-        session.setAttribute(EntityConstants.USER_CHOOSE_PARAM,userId);
+        session.setAttribute(EntityConstants.USER_CHOOSE_PARAM, userId);
         req.getRequestDispatcher(ADMIN_ACCOUNT_LIST_JSP).forward(req, resp);
     }
 
@@ -54,15 +50,14 @@ public class AdminAccountListServlet extends HttpServlet{
     protected void doPost(HttpServletRequest req, HttpServletResponse resp) throws ServletException, IOException {
         HttpSession session = req.getSession();
         int accountId = Integer.parseInt(req.getParameter(EntityConstants.ACCOUNT_CHOOSE_PARAM));
-        // UserDTO userDTO = userService.getById(userId);
         if(accountService.updateAccountStatusById(accountId, req.getParameter(EntityConstants.STATUS_PARAM)))
         {
-            req.setAttribute(EntityConstants.OPERATION_SUCCESSFUL, true);
+            session.setAttribute(EntityConstants.OPERATION_SUCCESSFUL, "Операция успешна!");
         }
         else{
-            req.setAttribute(EntityConstants.OPERATION_SUCCESSFUL, false);
+            session.setAttribute(EntityConstants.OPERATION_SUCCESSFUL, "Повторите попытку.");
         }
-        resp.sendRedirect(View.Mapping.ADMIN_ACCOUNT_LIST);
+        resp.sendRedirect(View.Mapping.ADMIN_ACCOUNT_LIST + "#zatemnenie");
     }
 
     /**

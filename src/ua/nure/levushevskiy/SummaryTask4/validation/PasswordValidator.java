@@ -48,7 +48,6 @@ public class PasswordValidator {
                 errorContainer.put(VALIDATOR_TARGET, ERROR_INVALID_PASSWORD);
             }
         }
-
         return errorContainer;
     }
 }

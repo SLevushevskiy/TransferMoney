@@ -12,13 +12,14 @@
     <meta charset="utf-8" />
     <meta name="viewport" content="width=device-width, initial-scale=1" />
     <link rel="stylesheet" href="assets/css/main.css" />
+    <link rel="stylesheet" href="/assets/css/window.css" media="screen" type="text/css" />
 </head>
 <body>
 
 <!-- Header -->
 <%@ include file="/WEB-INF/tags/header.jspf" %>
-
-
+<!-- WindowError -->
+<%@ include file="/WEB-INF/tags/windowError.jspf" %>
 <!-- Main -->
 <div id="main">
 

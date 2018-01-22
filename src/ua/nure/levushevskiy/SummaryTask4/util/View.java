@@ -5,8 +5,8 @@ package ua.nure.levushevskiy.SummaryTask4.util;
  */
 public class View {
 
-    public static final String ABOUT_JSP = "WEB-INF/jsp/about.jsp";
-    public static final String LOGIN_JSP = "WEB-INF/jsp/authorisation.jsp";
+
+    public static final String AUTHORIZATION_JSP = "WEB-INF/jsp/authorisation.jsp";
     public static final String ERROR_JSP = "WEB-INF/jsp/errorPage.jsp";
     public static final String REPORT_JSP = "WEB-INF/jsp/reportPayment.jsp";
 
@@ -23,10 +23,8 @@ public class View {
     public static final String ADMIN_REQUEST_LIST_JSP = "WEB-INF/jsp/adminRequestList.jsp";
     public static final String ADMIN_USER_LIST_JSP = "WEB-INF/jsp/adminUserList.jsp";
     public static final String ADMIN_ACCOUNT_LIST_JSP = "WEB-INF/jsp/adminAccountList.jsp";
-    public static final String ALL_USERS_JSP = "WEB-INF/jsp/allUsers.jsp";
-    public static final String EDIT_COLOR_SIZE_JSP = "WEB-INF/jsp/editColorSize.jsp";
-    public static final String PENDING_ORDERS_JSP = "WEB-INF/jsp/pendingOrders.jsp";
-    public static final String EDIT_PRODUCT_JSP = "WEB-INF/jsp/editProduct.jsp";
+    public static final String CONFIRM_PAYMENT_JSP = "WEB-INF/jsp/confirmPayment.jsp";
+
 
     private View() { }
 
@@ -42,6 +40,11 @@ public class View {
         public static final String ACCOUNT_LIST = "/accountList";
         public static final String REPORT_PAYMENT = "/reportPayment";
         public static final String ADMIN_ACCOUNT_LIST = "/adminAccountList";
+        public static final String ADMIN_USER_LIST = "/userList";
+        public static final String PAYMENT_MOBILE = "/mobilePayment";
+        public static final String CONFIRM_PAYMENT = "/confirmPayment";
+        public static final String PAYMENT_RECHARGE = "/rechargePayment";
+        public static final String PAYMENT_TRANSFER = "/trasferPayment";
 
         private Mapping() { }
     }

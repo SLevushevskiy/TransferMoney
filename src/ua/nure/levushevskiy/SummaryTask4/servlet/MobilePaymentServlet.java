@@ -3,6 +3,7 @@ package ua.nure.levushevskiy.SummaryTask4.servlet;
 import ua.nure.levushevskiy.SummaryTask4.dto.AccountDTO;
 import ua.nure.levushevskiy.SummaryTask4.dto.PaymentDTO;
 import ua.nure.levushevskiy.SummaryTask4.dto.PaymentNameDTO;
+import ua.nure.levushevskiy.SummaryTask4.entity.Account;
 import ua.nure.levushevskiy.SummaryTask4.exception.InitializationException;
 import ua.nure.levushevskiy.SummaryTask4.service.impl.AccountServiceImpl;
 import ua.nure.levushevskiy.SummaryTask4.service.impl.PaymentNameServiceImpl;
@@ -46,37 +47,37 @@ public class MobilePaymentServlet extends HttpServlet {
     @Override
     protected void doGet(HttpServletRequest req, HttpServletResponse resp) throws ServletException, IOException {
         HttpSession session = req.getSession();
-
-        List<PaymentNameDTO> paymentNameDTOList = paymentNameService.getAll();
-        req.setAttribute(EntityConstants.PAYMENT_NAME_LIST_PARAM, paymentNameDTOList);
-
         List<AccountDTO> accountDTOList = accountService.getAll();
         accountDTOList = removeAccount(accountDTOList, Integer.parseInt(session.getAttribute(EntityConstants.USER_ID_PARAM).toString()));
         req.setAttribute(EntityConstants.ACCOUNT_LIST_PARAM, accountDTOList);
-
         req.getRequestDispatcher(PAYMENT_MOBILE_JSP).forward(req, resp);
     }
 
     @Override
     protected void doPost(HttpServletRequest req, HttpServletResponse resp) throws ServletException, IOException {
         HttpSession session = req.getSession();//создаем сессию
-        // session.removeAttribute(EntityConstants.AUTHORIZATION_ERROR_CONTAINER_PARAM);
-        try {
-            int accountId = Integer.parseInt(req.getParameter(EntityConstants.ACCOUNT_CHOOSE_PARAM));
-            PaymentDTO paymentDTO = getPaymentFromRequest(req);
-            session.setAttribute(EntityConstants.ACCOUNT_CHOOSE_PARAM,accountId);
-            if(!accountService.changeAccountAmound(accountId,paymentDTO.getTotal())){
-                throw new IllegalStateException();
-            }
-            paymentDTO = paymentService.savePayment(paymentDTO);
-            session.setAttribute(EntityConstants.PAYMENT_PARAM, paymentDTO);
-            session.setAttribute(EntityConstants.PAYMENT_MOBILE_PARAM, req.getParameter(EntityConstants.PAYMENT_MOBILE_PARAM));
-        } catch (Exception e) {
-            //session.setAttribute(EntityConstants.INVALID_ACCOUNT_PARAM, accountDTO);
-            resp.sendRedirect(View.Mapping.ERROR);
+        session.removeAttribute(EntityConstants.ERROR_CONTAINER_PARAM);
+        req.setCharacterEncoding("UTF-8");
+        int accountId = Integer.parseInt(req.getParameter(EntityConstants.ACCOUNT_CHOOSE_PARAM));
+        PaymentDTO paymentDTO = getPaymentFromRequest(req);
+        paymentDTO = paymentService.savePayment(paymentDTO);
+        AccountDTO accountDTO = accountService.getById(accountId);
+        if(accountDTO.getAmound()+paymentDTO.getTotal()<0){
+            session.setAttribute(EntityConstants.OPERATION_SUCCESSFUL, "Операция не выполнена! Недостаточно средств.");
+            resp.sendRedirect(View.Mapping.PAYMENT_MOBILE+"#zatemnenie");//redirect
             return;
         }
-        resp.sendRedirect(View.Mapping.REPORT_PAYMENT);//redirect
+        if(!accountDTO.getAccountStatusDTO().getStatus().equals("active")){
+            session.setAttribute(EntityConstants.OPERATION_SUCCESSFUL, "Операция не выполнена! Карта заблокирована.");
+            resp.sendRedirect(View.Mapping.PAYMENT_MOBILE+"#zatemnenie");//redirect
+            return;
+        }
+        session.setAttribute(EntityConstants.ACCOUNT_NAME_PARAM,accountDTO.getAccountNameDTO().getName());
+        session.setAttribute(EntityConstants.ACCOUNT_AMOUND_PARAM,accountDTO.getAmound());
+        session.setAttribute(EntityConstants.ACCOUNT_CHOOSE_PARAM,accountId);
+        session.setAttribute(EntityConstants.PAYMENT_PARAM, paymentDTO);
+        session.setAttribute(EntityConstants.PAYMENT_MOBILE_PARAM, req.getParameter(EntityConstants.PAYMENT_MOBILE_PARAM));
+        resp.sendRedirect(View.Mapping.CONFIRM_PAYMENT);//redirect
     }
 
     @Override
@@ -84,7 +85,7 @@ public class MobilePaymentServlet extends HttpServlet {
         super.init();
         ServletContext context = getServletContext();
         initPaymentService(context);
-        initPaymentTypeService(context);
+        initPaymentNameService(context);
         initAccountService(context);
     }
 
@@ -96,9 +97,7 @@ public class MobilePaymentServlet extends HttpServlet {
      */
     private PaymentDTO getPaymentFromRequest(final HttpServletRequest req) {
         Date datePayment = new Date(System.currentTimeMillis());
-
         PaymentDTO paymentDTO = new PaymentDTO();
-        //ВЫБОР СЧЕТА НА ВИЮХЕ ДЛЯ ОПЛАТЫ
         paymentDTO.setPaymentNameDTO(paymentNameService.getById(Integer.parseInt(req.getParameter(EntityConstants.PAYMENT_NAME_PARAM))));
         paymentDTO.setAccountDTO(accountService.getById(Integer.parseInt(req.getParameter(EntityConstants.ACCOUNT_CHOOSE_PARAM))));
         paymentDTO.setTotal(Double.parseDouble(req.getParameter(EntityConstants.PAYMENT_TOTAL_PARAM).toString()));
@@ -124,7 +123,7 @@ public class MobilePaymentServlet extends HttpServlet {
      *
      * @param context - servlet context.
      */
-    private void initPaymentTypeService(final ServletContext context) {
+    private void initPaymentNameService(final ServletContext context) {
         paymentNameService = (PaymentNameServiceImpl) context.getAttribute(EntityConstants.PAYMENT_NAME_SERVICE);
         if (paymentNameService == null) {
             throw new InitializationException("Payment Type service is not initialized!");
@@ -153,7 +152,7 @@ public class MobilePaymentServlet extends HttpServlet {
     private List<AccountDTO> removeAccount(final List<AccountDTO> accountDTOList,int userId) {
         List<AccountDTO> modifiedList = new ArrayList<>();
         for (AccountDTO accountDTO : accountDTOList) {
-            if (accountDTO.getUserDTO().getIdUser()==userId) {
+            if (accountDTO.getUserDTO().getIdUser()==userId & accountDTO.getAccountStatusDTO().getStatus().equals("active") ) {
                 modifiedList.add(accountDTO);
             }
         }

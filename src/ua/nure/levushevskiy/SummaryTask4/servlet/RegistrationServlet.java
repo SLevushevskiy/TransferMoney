@@ -42,7 +42,7 @@ public class RegistrationServlet extends HttpServlet{
 	@Override
 	protected final void doPost(final HttpServletRequest req, final HttpServletResponse resp) throws ServletException, IOException {
 		HttpSession session = req.getSession();//создаем сессию
-		session.removeAttribute(EntityConstants.AUTHORIZATION_ERROR_CONTAINER_PARAM);
+		session.removeAttribute(EntityConstants.ERROR_CONTAINER_PARAM);
 		req.setCharacterEncoding("UTF-8");
 
 		UserDTO userDTO = getUserFromRequest(req);
@@ -51,7 +51,7 @@ public class RegistrationServlet extends HttpServlet{
 		errorContainer = PasswordValidator.validatePasswordAndConfirm(errorContainer, req.getParameter("password"), req.getParameter("confirm"));
 
 		if (!errorContainer.isEmpty()) {
-			session.setAttribute(EntityConstants.REGISTRATION_ERROR_CONTAINER_PARAM, errorContainer);
+			session.setAttribute(EntityConstants.ERROR_CONTAINER_PARAM, errorContainer);
 			session.setAttribute(EntityConstants.INVALID_USER_PARAM, userDTO);
 			resp.sendRedirect(View.Mapping.REGISTRATION + "#zatemnenie");
 			return;
@@ -59,10 +59,10 @@ public class RegistrationServlet extends HttpServlet{
 			try {
 				userDTO = userService.saveUser(userDTO);
 			}
-			catch (IllegalStateException e) {
+			catch (Exception e) {
 				errorContainer.put(EntityConstants.ERROR_PARAM, e.getMessage());
 				session.setAttribute(EntityConstants.INVALID_USER_PARAM, userDTO);
-				session.setAttribute(EntityConstants.REGISTRATION_ERROR_CONTAINER_PARAM, errorContainer);
+				session.setAttribute(EntityConstants.ERROR_CONTAINER_PARAM, errorContainer);
 				resp.sendRedirect(View.Mapping.REGISTRATION + "#zatemnenie");
 				return;
 			}

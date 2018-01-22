@@ -5,9 +5,13 @@
     <style>
         body {
             background: url(/assets/images/error.jpg) no-repeat center fixed;
+            background-color: #fff59f;
+            text-align: center;
+            vertical-align: middle;
         }
     </style>
 </head>
 <body>
+Ой
 </body>
 </html>
