@@ -13,16 +13,10 @@ import java.io.IOException;
 
 import static ua.nure.levushevskiy.SummaryTask4.util.View.MAIN_JSP;
 
-@WebServlet("/main")
-public class MainPageServlet extends HttpServlet {
+@WebServlet("/personalCabinet")
+public class PersonalCabinetServlet extends HttpServlet {
     @Override
     protected final void doGet(final HttpServletRequest req, final HttpServletResponse resp) throws ServletException, IOException {
-        HttpSession session = req.getSession();
-        if(session.getAttribute(EntityConstants.USER_PARAM)== null){
-            resp.sendRedirect(View.Mapping.AUTHORIZATION);
-            return;
-        }
-
         req.getRequestDispatcher(MAIN_JSP).forward(req, resp);
     }
 }

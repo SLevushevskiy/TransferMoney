@@ -46,10 +46,22 @@
                     <td>${account.getEndDate()}</td>
                     <td>${account.getAccountStatusDTO().status}</td>
                     <td>
+                        <c:if test="${account.getAccountStatusDTO().status eq 'active'}">
                         <form action="/paymentList" method="post">
                             <input type="hidden" name="accountChoose" value="${account.getIdAccount()}">
                             <input type="submit" value="История платежей" >
                         </form>
+                        </c:if>
+                        <c:if test="${account.getAccountStatusDTO().status eq 'blocked'}">
+                            <form action="/accountList" method="post">
+                                <input type="hidden" name="accountChoose" value="${account.getIdAccount()}">
+                                <input type="hidden" name="status" value="reqActive">
+                                <input type="submit" value="Разблокировать" >
+                            </form>
+                        </c:if>
+                        <c:if test="${account.getAccountStatusDTO().status eq 'reqActive'}">
+                            Ожидает разблокирования
+                        </c:if>
                     </td>
                 </tr>
                 </c:forEach>

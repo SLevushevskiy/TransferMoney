@@ -18,9 +18,10 @@ import java.util.ArrayList;
 import java.util.List;
 
 import static ua.nure.levushevskiy.SummaryTask4.util.View.ACCOUNT_LIST_JSP;
+import static ua.nure.levushevskiy.SummaryTask4.util.View.ADMIN_ACCOUNT_LIST_JSP;
 
-@WebServlet("/accountList")
-public class AccountListServlet extends HttpServlet {
+@WebServlet("/adminAccountList")
+public class AdminAccountListServlet extends HttpServlet{
 
     /**
      * An object that contains account business logic.
@@ -33,15 +34,20 @@ public class AccountListServlet extends HttpServlet {
         ServletContext context = getServletContext();
         initAccountService(context);
     }
-
     @Override
     protected void doGet(HttpServletRequest req, HttpServletResponse resp) throws ServletException, IOException {
+        int userId = Integer.parseInt(req.getParameter(EntityConstants.USER_CHOOSE_PARAM));
         HttpSession session = req.getSession();
+        if(session.getAttribute(EntityConstants.USER_PARAM)== null){
+            resp.sendRedirect(View.Mapping.AUTHORIZATION);
+            return;
+        }
 
         List<AccountDTO> accountDTOList = accountService.getAll();
-        accountDTOList = removeAccount(accountDTOList, Integer.parseInt(session.getAttribute(EntityConstants.USER_ID_PARAM).toString()));
+        accountDTOList = removeAccount(accountDTOList, userId);
         req.setAttribute(EntityConstants.ACCOUNT_LIST_PARAM, accountDTOList);
-        req.getRequestDispatcher(ACCOUNT_LIST_JSP).forward(req, resp);
+        session.setAttribute(EntityConstants.USER_CHOOSE_PARAM,userId);
+        req.getRequestDispatcher(ADMIN_ACCOUNT_LIST_JSP).forward(req, resp);
     }
 
     @Override
@@ -56,8 +62,7 @@ public class AccountListServlet extends HttpServlet {
         else{
             req.setAttribute(EntityConstants.OPERATION_SUCCESSFUL, false);
         }
-
-        resp.sendRedirect(View.Mapping.ACCOUNT_LIST);
+        resp.sendRedirect(View.Mapping.ADMIN_ACCOUNT_LIST);
     }
 
     /**

@@ -9,10 +9,5 @@
     </style>
 </head>
 <body>
-<c:if test="${sessionScope.blocked}">
-    <script>
-        alert("Ваш аккаунт заблокирован обратитесь к администратору. \nSergey Levushevskiy s.levushevskiy@yandex.ru ");
-    </script>
-</c:if>
 </body>
 </html>

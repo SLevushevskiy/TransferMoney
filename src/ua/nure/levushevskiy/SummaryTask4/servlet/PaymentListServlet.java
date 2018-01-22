@@ -47,10 +47,7 @@ public class PaymentListServlet extends HttpServlet {
     @Override
     protected void doGet(HttpServletRequest req, HttpServletResponse resp) throws ServletException, IOException {
         HttpSession session = req.getSession();
-        if(session.getAttribute(EntityConstants.USER_PARAM)== null){
-            resp.sendRedirect(View.Mapping.AUTHORIZATION);
-            return;
-        }
+
         List<PaymentDTO> paymentDTOList = paymentService.getAll();
         int accountId =  Integer.parseInt(req.getParameter(EntityConstants.ACCOUNT_CHOOSE_PARAM).toString());
         paymentDTOList = removePayment(paymentDTOList, accountId);

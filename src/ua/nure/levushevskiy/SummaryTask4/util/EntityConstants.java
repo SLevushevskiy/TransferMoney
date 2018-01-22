@@ -11,10 +11,12 @@ public class EntityConstants {
     public static final String PASSWORD_PARAM = "password";
     public static final String USER_ID_PARAM = "userId";
     public static final String USER_PARAM = "user";
-    public static final String TRUE_KEY_PARAM = "trueKey";
+    public static final String USER_LIST_PARAM ="userList";
+    public static final String USER_CHOOSE_PARAM = "userChoose";
+
     public static final String ERROR_PARAM = "ERROR";
     public static final String STACK_TRACE_PARAM = "stackTrace";
-    public static final String STATUS_CODE_PARAM = "statusCode";
+    public static final String STATUS_PARAM = "status";
     public static final String SERVLET_NAME = "servletName";
     public static final String LOCAL_PARAM = "local";
     public static final String FROM_PARAM = "from";
@@ -41,6 +43,7 @@ public class EntityConstants {
     public static final String PAYMENT_NAME_LIST_PARAM = "paymentNameList";
     public static final String PAYMENT_MOBILE_PARAM = "mobileNum";
     public static final String PAYMENT_PARAM = "payment";
+    public static final String OPERATION_SUCCESSFUL = "operationSuccessful";
 
     private EntityConstants() {}
 

@@ -46,10 +46,6 @@ public class MobilePaymentServlet extends HttpServlet {
     @Override
     protected void doGet(HttpServletRequest req, HttpServletResponse resp) throws ServletException, IOException {
         HttpSession session = req.getSession();
-        if(session.getAttribute(EntityConstants.USER_PARAM)== null){
-            resp.sendRedirect(View.Mapping.AUTHORIZATION);
-            return;
-        }
 
         List<PaymentNameDTO> paymentNameDTOList = paymentNameService.getAll();
         req.setAttribute(EntityConstants.PAYMENT_NAME_LIST_PARAM, paymentNameDTOList);
