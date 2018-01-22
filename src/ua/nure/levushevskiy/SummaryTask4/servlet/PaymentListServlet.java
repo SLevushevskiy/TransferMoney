@@ -29,7 +29,7 @@ public class PaymentListServlet extends HttpServlet {
     /**
      * An object that contains payment business logic.
      */
-    PaymentServiceImpl paymentService;
+    private PaymentServiceImpl paymentService;
 
     /**
      * An object that contains account business logic.

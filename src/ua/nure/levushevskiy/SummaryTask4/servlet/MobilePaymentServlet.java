@@ -72,11 +72,7 @@ public class MobilePaymentServlet extends HttpServlet {
             resp.sendRedirect(View.Mapping.PAYMENT_MOBILE+"#zatemnenie");//redirect
             return;
         }
-        session.setAttribute(EntityConstants.ACCOUNT_NAME_PARAM,accountDTO.getAccountNameDTO().getName());
-        session.setAttribute(EntityConstants.ACCOUNT_AMOUND_PARAM,accountDTO.getAmound());
-        session.setAttribute(EntityConstants.ACCOUNT_CHOOSE_PARAM,accountId);
         session.setAttribute(EntityConstants.PAYMENT_PARAM, paymentDTO);
-        session.setAttribute(EntityConstants.PAYMENT_MOBILE_PARAM, req.getParameter(EntityConstants.PAYMENT_MOBILE_PARAM));
         resp.sendRedirect(View.Mapping.CONFIRM_PAYMENT);//redirect
     }
 
@@ -101,7 +97,7 @@ public class MobilePaymentServlet extends HttpServlet {
         paymentDTO.setPaymentNameDTO(paymentNameService.getById(Integer.parseInt(req.getParameter(EntityConstants.PAYMENT_NAME_PARAM))));
         paymentDTO.setAccountDTO(accountService.getById(Integer.parseInt(req.getParameter(EntityConstants.ACCOUNT_CHOOSE_PARAM))));
         paymentDTO.setTotal(Double.parseDouble(req.getParameter(EntityConstants.PAYMENT_TOTAL_PARAM).toString()));
-        paymentDTO.setDescription((String) req.getParameter(EntityConstants.PAYMENT_DESCRIPTION_PARAM));
+        paymentDTO.setDescription("Пополнение мобильного:" + req.getParameter(EntityConstants.PAYMENT_MOBILE_PARAM)+"\n"+ req.getParameter(EntityConstants.PAYMENT_DESCRIPTION_PARAM));
         paymentDTO.setDatePayment(datePayment);
         return paymentDTO;
     }

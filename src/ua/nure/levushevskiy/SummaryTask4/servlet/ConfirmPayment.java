@@ -75,8 +75,8 @@ public class ConfirmPayment extends HttpServlet{
             UserDTO userDTO = userService.getById(Integer.parseInt(session.getAttribute(EntityConstants.USER_ID_PARAM).toString()));
             password = Cryptographer.md5Custom(password);
             if(userDTO.getPassword().equals(password)){
-                int accountId = (int) session.getAttribute(EntityConstants.ACCOUNT_CHOOSE_PARAM);
                 PaymentDTO paymentDTO = (PaymentDTO) session.getAttribute(EntityConstants.PAYMENT_PARAM);
+                int accountId = (int) paymentDTO.getAccountDTO().getIdAccount();
                 if(!accountService.changeAccountAmound(accountId, paymentDTO.getTotal())){
                     throw new IllegalStateException();
                 }
@@ -84,8 +84,10 @@ public class ConfirmPayment extends HttpServlet{
                 int paymentId = (int)paymentDTO.getIdPayment();
                 paymentDTO = paymentService.getById(paymentId);
                 session.setAttribute(EntityConstants.PAYMENT_PARAM, paymentDTO);
-                if((boolean)session.getAttribute(EntityConstants.TRANSFER_PAYMENT))
+                if(session.getAttribute(EntityConstants.TRANSFER_PAYMENT)!=null&&
+                (boolean)session.getAttribute(EntityConstants.TRANSFER_PAYMENT)){
                     transferPayment(paymentDTO,req);
+                }
                 session.setAttribute(EntityConstants.OPERATION_SUCCESSFUL, "Операция успешна!");
             }
         } catch (Exception e) {
@@ -99,7 +101,6 @@ public class ConfirmPayment extends HttpServlet{
 
     private boolean transferPayment(final PaymentDTO paymentDTO,final HttpServletRequest req){
         HttpSession session = req.getSession();//создаем сессию
-
         session.getAttribute(EntityConstants.PAYMENT_PARAM);//перевод
         paymentDTO.setPaymentNameDTO((PaymentNameDTO) session.getAttribute(EntityConstants.PAYMENT_NAME_PARAM));//для 2-го платежа пополнение
         int accountId = Integer.parseInt((String) session.getAttribute(EntityConstants.ACCOUNT_ID_PARAM));

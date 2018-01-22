@@ -123,7 +123,7 @@ public class PaymentDAOImpl implements PaymentDAO {
             }
         } catch (SQLException e) {
             LOG.error(e);
-            throw new DAOException("Error while saving user!", e);
+            throw new DAOException("Error while saving payment!", e);
         } finally {
             closeConnection(connection);
         }

@@ -29,9 +29,9 @@
             <table>
                 <tr>
                     <td><span class="icon fa-credit-card-alt"></span></td>
-                    <th>${accountName}</th>
-                    <th>${accountChoose}</th>
-                    <th>${amound}</th>
+                    <th>${payment.getAccountDTO().idAccount}</th>
+                    <th>${payment.getAccountDTO().getAccountNameDTO().name}</th>
+                    <th>${payment.getAccountDTO().amound}</th>
                 </tr>
             </table>
             <ul>

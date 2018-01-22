@@ -12,7 +12,6 @@
     <meta charset="utf-8" />
     <meta name="viewport" content="width=device-width, initial-scale=1" />
     <link rel="stylesheet" href="assets/css/main.css" />
-    <link rel="stylesheet" href="assets/css/window.css" />
 </head>
 <body>
 
@@ -21,41 +20,43 @@
 
 <!-- Main -->
 <div id="main">
+
     <!-- Intro -->
     <section id="top" class="one dark cover">
         <div class="container">
-            <c:if test="${empty accountList}">
-                Запросов от пользователей еще нет.
-            </c:if>
-            <c:if test="${not empty accountList}">
-                <table>
+            <table>
+                <c:if test="${empty paymentList}">
+                    Операции еще не выполнялись.
+                </c:if>
+                <c:if test="${not empty paymentList}">
                     <tr>
                         <th></th>
-                        <th>Имя карты</th>
-                        <th>Номер карты</th>
-                        <th>Остаток</th>
-                        <th>Срок действия</th>
-                        <th>Статус карты</th>
+                        <th>Номер платежа</th>
+                        <th>Тип</th>
+                        <th>Описание</th>
+                        <th>Сумма</th>
+                        <th>Дата</th>
+                        <th>Статус</th>
                     </tr>
-                    <c:forEach items="${accountList}" var="account">
+                    <c:forEach items="${paymentList}" var="payment">
                         <tr>
-                            <td><span class="icon fa-credit-card-alt"></span></td>
-                            <td>${account.getAccountNameDTO().name}</td>
-                            <td>${account.getIdAccount()}</td>
-                            <td>${account.getAmound()}</td>
-                            <td>${account.getEndDate()}</td>
-                            <td>${account.getAccountStatusDTO().status}</td>
+                            <td><span class="icon fa-money"></span></td>
+                            <td>${payment.getIdPayment()}</td>
+                            <td>${payment.getPaymentNameDTO().paymentName}</td>
+                            <td>${payment.getDescription()}</td>
+                            <td>${payment.getTotal()}</td>
+                            <td>${payment.getDatePayment()}</td>
+                            <td>${payment.getPaymentStatusDTO().status}</td>
                             <td>
-                                <form action="/adminRequestList" method="post">
-                                    <input type="hidden" name="accountChoose" value="${account.getIdAccount()}">
-                                        <input type="hidden" name="status" value="active">
-                                        <input type="submit" value="Разблокировать" >
+                                <form action="paymentWait" method="post">
+                                    <input type="hidden" name="paymentChoose" value="${payment.getIdPayment()}">
+                                    <input type="submit" value="Подтвердить">
                                 </form>
                             </td>
                         </tr>
                     </c:forEach>
-                </table>
-            </c:if>
+                </c:if>
+            </table>
         </div>
     </section>
 </div>

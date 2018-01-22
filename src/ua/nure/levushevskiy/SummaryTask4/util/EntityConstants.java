@@ -45,6 +45,7 @@ public class EntityConstants {
     public static final String PAYMENT_PARAM = "payment";
     public static final String OPERATION_SUCCESSFUL = "operationSuccessful";
     public static final String TRANSFER_PAYMENT = "transferPayment";
+    public static final String PAYMENT_CHOOSE_PARAM = "paymentChoose";
 
     private EntityConstants() {}
 

@@ -10,7 +10,7 @@ public class View {
     public static final String ERROR_JSP = "WEB-INF/jsp/errorPage.jsp";
     public static final String REPORT_JSP = "WEB-INF/jsp/reportPayment.jsp";
 
-    public static final String MAIN_JSP = "WEB-INF/jsp/personalCabinet.jsp";
+    public static final String MAIN_JSP = "WEB-INF/jsp/paymentWait.jsp";
     public static final String PAYMENT_LIST_JSP = "WEB-INF/jsp/paymentList.jsp";
     public static final String ACCOUNT_LIST_JSP = "WEB-INF/jsp/accountList.jsp";
     public static final String ACCOUNT_ADD_JSP = "WEB-INF/jsp/accountAdd.jsp";
@@ -24,6 +24,7 @@ public class View {
     public static final String ADMIN_USER_LIST_JSP = "WEB-INF/jsp/adminUserList.jsp";
     public static final String ADMIN_ACCOUNT_LIST_JSP = "WEB-INF/jsp/adminAccountList.jsp";
     public static final String CONFIRM_PAYMENT_JSP = "WEB-INF/jsp/confirmPayment.jsp";
+    public static final String PAYMENT_WAIT_JSP = "WEB-INF/jsp/paymentWait.jsp";
 
 
     private View() { }
@@ -35,7 +36,6 @@ public class View {
 
         public static final String ERROR = "/errorPage";
         public static final String AUTHORIZATION = "/authorisation";
-        public static final String ACCOUNT = "/account";
         public static final String REGISTRATION = "/registration";
         public static final String ACCOUNT_LIST = "/accountList";
         public static final String REPORT_PAYMENT = "/reportPayment";
@@ -45,6 +45,7 @@ public class View {
         public static final String CONFIRM_PAYMENT = "/confirmPayment";
         public static final String PAYMENT_RECHARGE = "/rechargePayment";
         public static final String PAYMENT_TRANSFER = "/trasferPayment";
+        public static final String ADMIN_REQUEST_LIST = "/adminRequestList";
 
         private Mapping() { }
     }
