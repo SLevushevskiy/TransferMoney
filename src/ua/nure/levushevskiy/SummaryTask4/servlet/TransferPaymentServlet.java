@@ -56,30 +56,36 @@ public class TransferPaymentServlet extends HttpServlet {
     @Override
     protected void doPost(HttpServletRequest req, HttpServletResponse resp) throws ServletException, IOException {
         HttpSession session = req.getSession();//создаем сессию
-        int accountId = Integer.parseInt(req.getParameter(EntityConstants.ACCOUNT_CHOOSE_PARAM));
-        AccountDTO accountDTO = accountService.getById(accountId);
-        PaymentDTO paymentDTO = getPaymentFromRequest(req);
-        paymentDTO = paymentService.savePayment(paymentDTO);
-        AccountDTO accountDTO2 = accountService.getById(Integer.parseInt(req.getParameter(EntityConstants.ACCOUNT_ID_PARAM)));
-        if(!accountDTO2.getAccountStatusDTO().getStatus().equals("active")){
-            session.setAttribute(EntityConstants.OPERATION_SUCCESSFUL, "Операция не выполнена! Карта получателя заблокирована.");
+        req.setCharacterEncoding("UTF-8");
+        try {
+            int accountId = Integer.parseInt(req.getParameter(EntityConstants.ACCOUNT_CHOOSE_PARAM));
+            AccountDTO accountDTO = accountService.getById(accountId);
+            PaymentDTO paymentDTO = getPaymentFromRequest(req);
+            AccountDTO accountDTO2 = accountService.getById(Integer.parseInt(req.getParameter(EntityConstants.ACCOUNT_ID_PARAM)));
+            paymentDTO = paymentService.savePayment(paymentDTO);
+            if (!accountDTO2.getAccountStatusDTO().getStatus().equals("active")) {
+                session.setAttribute(EntityConstants.OPERATION_SUCCESSFUL, "Операция не выполнена! Карта получателя заблокирована.");
+                resp.sendRedirect(View.Mapping.PAYMENT_TRANSFER + "#zatemnenie");//redirect
+                return;
+            }
+            if (accountDTO.getAmound() + paymentDTO.getTotal() < 0) {
+                session.setAttribute(EntityConstants.OPERATION_SUCCESSFUL, "Операция не выполнена! Недостаточно средств.");
+                resp.sendRedirect(View.Mapping.PAYMENT_TRANSFER + "#zatemnenie");//redirect
+                return;
+            }
+            session.setAttribute(EntityConstants.PAYMENT_NAME_PARAM, paymentNameService.getById(1));//для 2-го платежа пополнение
+            session.setAttribute(EntityConstants.ACCOUNT_ID_PARAM, req.getParameter(EntityConstants.ACCOUNT_ID_PARAM));
+            session.setAttribute(EntityConstants.ACCOUNT_NAME_PARAM, accountDTO.getAccountNameDTO().getName());
+            session.setAttribute(EntityConstants.ACCOUNT_AMOUND_PARAM, accountDTO.getAmound());
+           // session.setAttribute(EntityConstants.ACCOUNT_CHOOSE_PARAM, accountId);
+            session.setAttribute(EntityConstants.TRANSFER_PAYMENT, true);
+            session.setAttribute(EntityConstants.PAYMENT_PARAM, paymentDTO);
+           // session.setAttribute(EntityConstants.ACCOUNT_ID_PARAM, req.getParameter(EntityConstants.ACCOUNT_ID_PARAM));
+        }catch (Exception e){
+            session.setAttribute(EntityConstants.OPERATION_SUCCESSFUL, "Ошибка! Повторите операцию.");
             resp.sendRedirect(View.Mapping.PAYMENT_TRANSFER+"#zatemnenie");//redirect
             return;
         }
-        if(accountDTO.getAmound()+paymentDTO.getTotal()<0){
-            session.setAttribute(EntityConstants.OPERATION_SUCCESSFUL, "Операция не выполнена! Недостаточно средств.");
-            resp.sendRedirect(View.Mapping.PAYMENT_TRANSFER+"#zatemnenie");//redirect
-            return;
-        }
-        session.setAttribute(EntityConstants.PAYMENT_NAME_PARAM, paymentNameService.getById(1));//для 2-го платежа пополнение
-        session.setAttribute(EntityConstants.ACCOUNT_ID_PARAM, req.getParameter(EntityConstants.ACCOUNT_ID_PARAM));
-        session.setAttribute(EntityConstants.ACCOUNT_NAME_PARAM,accountDTO.getAccountNameDTO().getName());
-        session.setAttribute(EntityConstants.ACCOUNT_AMOUND_PARAM,accountDTO.getAmound());
-        session.setAttribute(EntityConstants.ACCOUNT_CHOOSE_PARAM,accountId);
-        session.setAttribute(EntityConstants.TRANSFER_PAYMENT, true);
-        session.setAttribute(EntityConstants.PAYMENT_PARAM, paymentDTO);
-        session.setAttribute(EntityConstants.ACCOUNT_ID_PARAM, req.getParameter(EntityConstants.ACCOUNT_ID_PARAM));
-
         resp.sendRedirect(View.Mapping.CONFIRM_PAYMENT);//redirect
     }
 

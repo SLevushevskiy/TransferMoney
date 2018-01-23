@@ -46,6 +46,7 @@ public class View {
         public static final String PAYMENT_RECHARGE = "/rechargePayment";
         public static final String PAYMENT_TRANSFER = "/trasferPayment";
         public static final String ADMIN_REQUEST_LIST = "/adminRequestList";
+        public static final String ACCOUNT_ADD = "/accountAdd";
 
         private Mapping() { }
     }

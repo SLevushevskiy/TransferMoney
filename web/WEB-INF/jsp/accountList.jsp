@@ -8,11 +8,10 @@
 <!DOCTYPE HTML>
 <html>
 <head>
-    <title>Transfer Money</title>
+    <title>Список счетов</title>
     <meta charset="utf-8" />
     <meta name="viewport" content="width=device-width, initial-scale=1" />
     <link rel="stylesheet" href="assets/css/main.css" />
-    <link rel="stylesheet" href="/assets/css/window.css" media="screen" type="text/css" />
 </head>
 <body>
 
@@ -29,6 +28,10 @@
                 Еще нет счета? 
             </c:if>
             <c:if test="${not empty accountList}">
+                <form action="accountList" method="get">
+                    <!-- AccountSort -->
+                    <%@ include file="/WEB-INF/tags/accountSort.jspf" %>
+                </form>
             <table>
                 <tr>
                     <th></th>

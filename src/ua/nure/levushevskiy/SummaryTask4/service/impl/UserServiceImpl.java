@@ -4,6 +4,8 @@ import org.apache.log4j.Logger;
 import ua.nure.levushevskiy.SummaryTask4.dao.api.UserDAO;
 import ua.nure.levushevskiy.SummaryTask4.dto.UserDTO;
 import ua.nure.levushevskiy.SummaryTask4.entity.User;
+import ua.nure.levushevskiy.SummaryTask4.mail.MailSenderRunner;
+import ua.nure.levushevskiy.SummaryTask4.mail.api.ConfirmationMailSender;
 import ua.nure.levushevskiy.SummaryTask4.service.api.UserRoleService;
 import ua.nure.levushevskiy.SummaryTask4.service.api.UserService;
 import ua.nure.levushevskiy.SummaryTask4.service.api.UserStatusService;
@@ -33,10 +35,17 @@ public class UserServiceImpl implements UserService {
      */
     private final UserStatusService userStatusService;
 
-    public UserServiceImpl(final UserDAO userDAO, final UserRoleService roleService, final UserStatusService userStatusService) {
+    /**
+     * Object for sending confirmation letter.
+     */
+    //private final ConfirmationMailSender confirmationMailSender;
+
+    public UserServiceImpl(final UserDAO userDAO, final UserRoleService roleService,
+                           final UserStatusService userStatusService) {
         this.userDAO = userDAO;
         this.roleService = roleService;
         this.userStatusService = userStatusService;
+        //this.confirmationMailSender = confirmationMailSender;
     }
 
     @Override
@@ -47,7 +56,7 @@ public class UserServiceImpl implements UserService {
         userDTO.setPassword(Cryptographer.md5Custom(userDTO.getPassword()));
         User user = Transformer.userDTO2User(userDTO);
         userDTO =  Transformer.user2UserDTO(userDAO.save(user), roleService, userStatusService);
-        /*LOG.info("New user was added!");
+        LOG.info("New user was added!");/*
         MailSenderRunner mailSenderRunner = new MailSenderRunner(confirmationMailSender, userDTO);
         mailSenderRunner.setDaemon(true);
         mailSenderRunner.start();

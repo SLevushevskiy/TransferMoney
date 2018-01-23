@@ -63,11 +63,12 @@ public class AccountAddServlet extends HttpServlet {
     @Override
     protected void doPost(HttpServletRequest req, HttpServletResponse resp) throws ServletException, IOException {
         HttpSession session = req.getSession();//создаем сессию
-        AccountDTO accountDTO = getAccountFromRequest(req);
         try {
+            AccountDTO accountDTO = getAccountFromRequest(req);
             accountService.saveAccount(accountDTO);
         } catch (Exception e) {
-            resp.sendRedirect(View.Mapping.ACCOUNT_LIST + "#zatemnenie");
+            session.setAttribute(EntityConstants.OPERATION_SUCCESSFUL,"Ошибка! Повторите операцию.");
+            resp.sendRedirect(View.Mapping.ACCOUNT_ADD + "#zatemnenie");
             return;
         }
         resp.sendRedirect(View.Mapping.ACCOUNT_LIST);

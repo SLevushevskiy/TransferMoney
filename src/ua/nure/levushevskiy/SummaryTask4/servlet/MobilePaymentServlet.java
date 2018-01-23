@@ -58,21 +58,22 @@ public class MobilePaymentServlet extends HttpServlet {
         HttpSession session = req.getSession();//создаем сессию
         session.removeAttribute(EntityConstants.ERROR_CONTAINER_PARAM);
         req.setCharacterEncoding("UTF-8");
-        int accountId = Integer.parseInt(req.getParameter(EntityConstants.ACCOUNT_CHOOSE_PARAM));
-        PaymentDTO paymentDTO = getPaymentFromRequest(req);
-        paymentDTO = paymentService.savePayment(paymentDTO);
-        AccountDTO accountDTO = accountService.getById(accountId);
-        if(accountDTO.getAmound()+paymentDTO.getTotal()<0){
-            session.setAttribute(EntityConstants.OPERATION_SUCCESSFUL, "Операция не выполнена! Недостаточно средств.");
+        try {
+            int accountId = Integer.parseInt(req.getParameter(EntityConstants.ACCOUNT_CHOOSE_PARAM));
+            PaymentDTO paymentDTO = getPaymentFromRequest(req);
+            paymentDTO = paymentService.savePayment(paymentDTO);
+            AccountDTO accountDTO = accountService.getById(accountId);
+            if (accountDTO.getAmound() + paymentDTO.getTotal() < 0) {
+                session.setAttribute(EntityConstants.OPERATION_SUCCESSFUL, "Операция не выполнена! Недостаточно средств.");
+                resp.sendRedirect(View.Mapping.PAYMENT_MOBILE + "#zatemnenie");//redirect
+                return;
+            }
+            session.setAttribute(EntityConstants.PAYMENT_PARAM, paymentDTO);
+        }catch (Exception e){
+            session.setAttribute(EntityConstants.OPERATION_SUCCESSFUL, "Ошибка! Повторите операцию.");
             resp.sendRedirect(View.Mapping.PAYMENT_MOBILE+"#zatemnenie");//redirect
             return;
         }
-        if(!accountDTO.getAccountStatusDTO().getStatus().equals("active")){
-            session.setAttribute(EntityConstants.OPERATION_SUCCESSFUL, "Операция не выполнена! Карта заблокирована.");
-            resp.sendRedirect(View.Mapping.PAYMENT_MOBILE+"#zatemnenie");//redirect
-            return;
-        }
-        session.setAttribute(EntityConstants.PAYMENT_PARAM, paymentDTO);
         resp.sendRedirect(View.Mapping.CONFIRM_PAYMENT);//redirect
     }
 
@@ -97,7 +98,7 @@ public class MobilePaymentServlet extends HttpServlet {
         paymentDTO.setPaymentNameDTO(paymentNameService.getById(Integer.parseInt(req.getParameter(EntityConstants.PAYMENT_NAME_PARAM))));
         paymentDTO.setAccountDTO(accountService.getById(Integer.parseInt(req.getParameter(EntityConstants.ACCOUNT_CHOOSE_PARAM))));
         paymentDTO.setTotal(Double.parseDouble(req.getParameter(EntityConstants.PAYMENT_TOTAL_PARAM).toString()));
-        paymentDTO.setDescription("Пополнение мобильного:" + req.getParameter(EntityConstants.PAYMENT_MOBILE_PARAM)+"\n"+ req.getParameter(EntityConstants.PAYMENT_DESCRIPTION_PARAM));
+        paymentDTO.setDescription("Пополнение мобильного: " + req.getParameter(EntityConstants.PAYMENT_MOBILE_PARAM)+"\n"+ req.getParameter(EntityConstants.PAYMENT_DESCRIPTION_PARAM));
         paymentDTO.setDatePayment(datePayment);
         return paymentDTO;
     }
@@ -148,7 +149,7 @@ public class MobilePaymentServlet extends HttpServlet {
     private List<AccountDTO> removeAccount(final List<AccountDTO> accountDTOList,int userId) {
         List<AccountDTO> modifiedList = new ArrayList<>();
         for (AccountDTO accountDTO : accountDTOList) {
-            if (accountDTO.getUserDTO().getIdUser()==userId & accountDTO.getAccountStatusDTO().getStatus().equals("active") ) {
+            if (accountDTO.getUserDTO().getIdUser()==userId && accountDTO.getAccountStatusDTO().getStatus().equals("active") ) {
                 modifiedList.add(accountDTO);
             }
         }

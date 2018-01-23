@@ -1,0 +1,18 @@
+.sort{
+    margin-bottom: 20px;
+    margin-left: 5px;
+}
+
+.sort label{
+    float: left;
+    display: block;
+    margin-right: 10px;
+}
+
+.sort select{
+    width: auto;
+    height: 35px;
+    border-radius: 7px;
+    font-family:Arial, FontAwesome;
+    display: block;
+}

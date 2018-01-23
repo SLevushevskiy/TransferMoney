@@ -8,11 +8,10 @@
 <!DOCTYPE HTML>
 <html>
 <head>
-    <title>Transfer Money</title>
+    <title>Список пользователей</title>
     <meta charset="utf-8" />
     <meta name="viewport" content="width=device-width, initial-scale=1" />
     <link rel="stylesheet" href="assets/css/main.css" />
-    <link rel="stylesheet" href="assets/css/window.css" />
 </head>
 <body>
 
@@ -22,7 +21,6 @@
 <%@ include file="/WEB-INF/tags/windowError.jspf" %>
 <!-- Main -->
 <div id="main">
-
     <!-- Intro -->
     <section id="top" class="one dark cover">
         <div class="container">
@@ -50,7 +48,7 @@
                             <td>
                                 <form action="/adminAccountList" method="get">
                                     <input type="hidden" name="userChoose" value="${user.getIdUser()}">
-                                    <input type="submit" value="Cчета пользователя" >
+                                    <input type="submit" value="Cчета" >
                                 </form>
                             </td>
                             <td>

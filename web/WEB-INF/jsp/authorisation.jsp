@@ -4,13 +4,12 @@
 <%@ taglib prefix="fmt" uri="http://java.sun.com/jsp/jstl/fmt" %>
 <%@ taglib prefix="t" tagdir="/WEB-INF/tags" %>
 
-<fmt:requestEncoding value="UTF-8" />
-<!DOCTYPE html>
+<fmt:requestEncoding value="UTF-8"/>
 <html>
 <head>
     <title>Авторизация</title>
-    <link rel="stylesheet" href="/assets/css/style.css" media="screen" type='text/css' />
-    <link rel="stylesheet" href="/assets/css/window.css" media="screen" type='text/css' />
+    <link rel="stylesheet" href="assets/css/style.css" media="screen" type='text/css' />
+    <link rel="stylesheet" href="assets/css/window.css" media="screen" type='text/css' />
     <link href='http://fonts.googleapis.com/css?family=Open+Sans:400,700' rel='stylesheet' type='text/css'>
 </head>
 

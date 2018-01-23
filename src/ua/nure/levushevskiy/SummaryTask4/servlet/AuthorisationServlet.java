@@ -59,7 +59,7 @@ public class AuthorisationServlet extends HttpServlet {
         try {
             UserDTO userDTO = userService.getByEmailAndPassword(email, password);
             session.setAttribute(EntityConstants.USER_PARAM, userDTO);
-            session.setAttribute(EntityConstants.USER_ID_PARAM, userDTO.getIdUser());
+            session.setAttribute(EntityConstants.USER_ID_PARAM, (int) userDTO.getIdUser());
         } catch (Exception e) {
             errorContainer.put(EntityConstants.ERROR_PARAM, e.getMessage());
             session.setAttribute(EntityConstants.ERROR_CONTAINER_PARAM, errorContainer);

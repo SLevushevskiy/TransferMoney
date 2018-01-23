@@ -26,7 +26,13 @@
     <!-- Intro -->
     <section id="top" class="one dark cover">
         <div class="container">
-            <table>
+            <table class="amound">
+                <tr>
+                    <td></td>
+                    <th>ID</th>
+                    <th>Name card</th>
+                    <th>Amound</th>
+                </tr>
                 <tr>
                     <td><span class="icon fa-credit-card-alt"></span></td>
                     <th>${payment.getAccountDTO().idAccount}</th>

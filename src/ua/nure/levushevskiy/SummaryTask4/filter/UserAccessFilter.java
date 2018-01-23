@@ -12,8 +12,6 @@ import javax.servlet.http.HttpServletResponse;
 import javax.servlet.http.HttpSession;
 import java.io.IOException;
 
-import static ua.nure.levushevskiy.SummaryTask4.util.View.LOGIN_JSP;
-
 @WebFilter(filterName = "UserAccessFilter",
         urlPatterns = {"/*"})
 public class UserAccessFilter implements Filter {

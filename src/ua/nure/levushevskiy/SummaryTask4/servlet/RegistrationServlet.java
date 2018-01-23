@@ -44,12 +44,10 @@ public class RegistrationServlet extends HttpServlet{
 		HttpSession session = req.getSession();//создаем сессию
 		session.removeAttribute(EntityConstants.ERROR_CONTAINER_PARAM);
 		req.setCharacterEncoding("UTF-8");
-
 		UserDTO userDTO = getUserFromRequest(req);
 		Map<String, String> errorContainer = new HashMap<>();
 		errorContainer = MainValidator.validate(userDTO, errorContainer);
 		errorContainer = PasswordValidator.validatePasswordAndConfirm(errorContainer, req.getParameter("password"), req.getParameter("confirm"));
-
 		if (!errorContainer.isEmpty()) {
 			session.setAttribute(EntityConstants.ERROR_CONTAINER_PARAM, errorContainer);
 			session.setAttribute(EntityConstants.INVALID_USER_PARAM, userDTO);

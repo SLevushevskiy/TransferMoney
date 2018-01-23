@@ -27,6 +27,7 @@
         <div class="container">
             <form action="accountAdd" method="post">
                 <select name="accountName">
+                    <option disabled selected >Выберите счет</option>
                     <c:forEach items="${accountNameList}" var="accountN">
                     <option value="${accountN.getIdAccountName()}">${accountN.getName()}</option>
                     </c:forEach>

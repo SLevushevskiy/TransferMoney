@@ -24,17 +24,31 @@
     <!-- Intro -->
     <section id="top" class="one dark cover">
         <div class="container">
-            <table>
+            <table class="amound">
+                <tr>
+                    <td></td>
+                    <th>ID</th>
+                    <th>Name card</th>
+                    <th>Amound</th>
+                </tr>
                 <tr>
                     <td><span class="icon fa-credit-card-alt"></span></td>
-                    <th>${accountName}</th>
                     <th>${accountChoose}</th>
+                    <th>${accountName}</th>
                     <th>${amound}</th>
                 </tr>
-                <c:if test="${empty paymentList}">
-                    Операции еще не выполнялись.
-                </c:if>
-                <c:if test="${not empty paymentList}">
+            </table>
+
+            <c:if test="${empty paymentList}">
+                Операции еще не выполнялись.
+            </c:if>
+            <c:if test="${not empty paymentList}">
+            <form action="paymentList" method="get">
+            <!-- PaymentSort -->
+            <%@ include file="/WEB-INF/tags/paymentSort.jspf" %>
+                <input type="hidden" name="accountChoose" value="${accountChoose}">
+            </form>
+            <table>
                 <tr>
                     <th></th>
                     <th>Номер платежа</th>

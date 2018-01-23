@@ -7,6 +7,8 @@ import ua.nure.levushevskiy.SummaryTask4.dao.factory.api.DAOFactory;
 import ua.nure.levushevskiy.SummaryTask4.db.ConnectionPool;
 import ua.nure.levushevskiy.SummaryTask4.entity.Account;
 import ua.nure.levushevskiy.SummaryTask4.entity.AccountStatus;
+import ua.nure.levushevskiy.SummaryTask4.mail.api.ConfirmationMailSender;
+import ua.nure.levushevskiy.SummaryTask4.mail.impl.MailSender;
 import ua.nure.levushevskiy.SummaryTask4.service.api.*;
 import ua.nure.levushevskiy.SummaryTask4.service.impl.*;
 import ua.nure.levushevskiy.SummaryTask4.util.EntityConstants;
@@ -37,13 +39,15 @@ public class InitApplicationListener implements ServletContextListener {
         ServletContext context = servletContextEvent.getServletContext();
 
         ResourceBundle resourceBundle = ResourceBundle.getBundle("dataBase");
+        ResourceBundle mailBundle = ResourceBundle.getBundle("mail");
         ConnectionPool dataSource = null;
         try {
             dataSource = new ConnectionPool(resourceBundle);
         } catch (IOException | SQLException | PropertyVetoException e) {
             throw new IllegalArgumentException("Incorrect database properties!");
         }
-
+/*
+        ConfirmationMailSender confirmationMailSender = new MailSender(mailBundle);*/
         initServices(context, dataSource);
     }
 

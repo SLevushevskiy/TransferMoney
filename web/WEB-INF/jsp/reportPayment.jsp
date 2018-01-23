@@ -17,10 +17,8 @@
 
 <!-- Header -->
 <%@ include file="/WEB-INF/tags/header.jspf" %>
-
 <!-- Main -->
 <div id="main">
-
     <!-- Intro -->
     <section id="top" class="one dark cover">
         <div class="container">

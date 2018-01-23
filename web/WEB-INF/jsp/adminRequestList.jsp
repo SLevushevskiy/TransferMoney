@@ -8,11 +8,10 @@
 <!DOCTYPE HTML>
 <html>
 <head>
-    <title>Transfer Money</title>
+    <title>Запросы пользователей</title>
     <meta charset="utf-8" />
     <meta name="viewport" content="width=device-width, initial-scale=1" />
     <link rel="stylesheet" href="assets/css/main.css" />
-    <link rel="stylesheet" href="assets/css/window.css" />
 </head>
 <body>
 
@@ -28,6 +27,10 @@
                 Запросов от пользователей еще нет.
             </c:if>
             <c:if test="${not empty accountList}">
+            <form action="adminRequestList" method="get">
+                <!-- AccountSort -->
+                <%@ include file="/WEB-INF/tags/accountSort.jspf" %>
+            </form>
                 <table>
                     <tr>
                         <th></th>

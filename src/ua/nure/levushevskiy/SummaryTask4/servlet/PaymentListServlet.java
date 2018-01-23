@@ -7,6 +7,7 @@ import ua.nure.levushevskiy.SummaryTask4.service.api.PaymentService;
 import ua.nure.levushevskiy.SummaryTask4.service.impl.AccountServiceImpl;
 import ua.nure.levushevskiy.SummaryTask4.service.impl.PaymentServiceImpl;
 import ua.nure.levushevskiy.SummaryTask4.util.EntityConstants;
+import ua.nure.levushevskiy.SummaryTask4.util.Sort;
 import ua.nure.levushevskiy.SummaryTask4.util.View;
 
 import javax.servlet.ServletContext;
@@ -18,6 +19,7 @@ import javax.servlet.http.HttpServletResponse;
 import javax.servlet.http.HttpSession;
 import java.io.IOException;
 import java.util.ArrayList;
+import java.util.Collections;
 import java.util.List;
 
 
@@ -50,6 +52,16 @@ public class PaymentListServlet extends HttpServlet {
         List<PaymentDTO> paymentDTOList = paymentService.getAll();
         int accountId =  Integer.parseInt(req.getParameter(EntityConstants.ACCOUNT_CHOOSE_PARAM).toString());
         paymentDTOList = removePayment(paymentDTOList, accountId);
+        if(req.getParameter(EntityConstants.SORT_PAYMENT)!=null){
+            switch (req.getParameter(EntityConstants.SORT_PAYMENT)){
+                case "numUp": paymentDTOList.sort(Sort.PaymentIdCompare); break;
+                case "numDown": paymentDTOList.sort(Sort.PaymentIdCompare);
+                    Collections.reverse(paymentDTOList); break;
+                case "dateUp": paymentDTOList.sort(Sort.PaymentDateCompare); break;
+                case "dateDown":paymentDTOList.sort(Sort.PaymentDateCompare);
+                    Collections.reverse(paymentDTOList); break;
+            }
+        }
         req.setAttribute(EntityConstants.ACCOUNT_CHOOSE_PARAM, accountId);
         req.setAttribute(EntityConstants.ACCOUNT_NAME_PARAM, accountService.getById(accountId).getAccountNameDTO().getName());
         req.setAttribute(EntityConstants.ACCOUNT_AMOUND_PARAM, accountService.getById(accountId).getAmound());
@@ -104,7 +116,8 @@ public class PaymentListServlet extends HttpServlet {
     private List<PaymentDTO> removePayment(final List<PaymentDTO> paymentDTOList, int accountId) {
         List<PaymentDTO> modifiedList = new ArrayList<>();
         for (PaymentDTO paymentDTO : paymentDTOList) {
-            if (paymentDTO.getAccountDTO().getIdAccount()==accountId) {
+            if (paymentDTO.getAccountDTO().getIdAccount()==accountId &&
+                    paymentDTO.getPaymentStatusDTO().getStatus().equals("sent")) {
                 modifiedList.add(paymentDTO);
             }
         }

@@ -12,7 +12,6 @@
     <meta charset="utf-8" />
     <meta name="viewport" content="width=device-width, initial-scale=1" />
     <link rel="stylesheet" href="assets/css/main.css" />
-    <link rel="stylesheet" href="/assets/css/window.css" media="screen" type="text/css" />
 </head>
 <body>
 
@@ -22,7 +21,6 @@
 <%@ include file="/WEB-INF/tags/windowError.jspf" %>
 <!-- Main -->
 <div id="main">
-
     <!-- Intro -->
     <section id="top" class="one dark cover">
         <div class="container">
@@ -31,13 +29,14 @@
                 <input type="text" value="Перевод на карту" disabled/>
 
                 <select name="accountChoose">
+                    <option disabled selected >Выберите счет</option>
                     <c:forEach items="${accountList}" var="accountN">
                         <option value="${accountN.getIdAccount()}">${accountN.getAccountNameDTO().name} (${accountN.getIdAccount()})  ${accountN.getAmound()}</option>
                     </c:forEach>
                 </select>
-                <input type="text" name="accountId" placeholder="Введите номер счета" />
-                <input type="text" name="paymentTotal" placeholder="Сумма" />
-                <input type="text" name="paymentDescription" placeholder="Описание" />
+                <input type="text" name="accountId" placeholder="Введите номер счета" required/>
+                <input type="text" name="paymentTotal" placeholder="Сумма" required/>
+                <input type="text" name="paymentDescription" placeholder="Описание" required/>
                 <input type="submit" value="Готово "/>
             </form>
         </div>

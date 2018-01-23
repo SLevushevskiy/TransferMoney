@@ -24,11 +24,15 @@
     <!-- Intro -->
     <section id="top" class="one dark cover">
         <div class="container">
+            <c:if test="${empty paymentList}">
+                Операции еще не выполнялись.
+            </c:if>
+            <c:if test="${not empty paymentList}">
+            <form action="paymentWait" method="get">
+            <!-- PaymentSort -->
+            <%@ include file="/WEB-INF/tags/paymentSort.jspf" %>
+            </form>
             <table>
-                <c:if test="${empty paymentList}">
-                    Операции еще не выполнялись.
-                </c:if>
-                <c:if test="${not empty paymentList}">
                     <tr>
                         <th></th>
                         <th>Номер платежа</th>

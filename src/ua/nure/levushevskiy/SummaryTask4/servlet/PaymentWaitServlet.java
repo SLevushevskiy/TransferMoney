@@ -6,6 +6,7 @@ import ua.nure.levushevskiy.SummaryTask4.exception.InitializationException;
 import ua.nure.levushevskiy.SummaryTask4.service.impl.AccountServiceImpl;
 import ua.nure.levushevskiy.SummaryTask4.service.impl.PaymentServiceImpl;
 import ua.nure.levushevskiy.SummaryTask4.util.EntityConstants;
+import ua.nure.levushevskiy.SummaryTask4.util.Sort;
 import ua.nure.levushevskiy.SummaryTask4.util.View;
 
 import javax.servlet.ServletContext;
@@ -17,6 +18,7 @@ import javax.servlet.http.HttpServletResponse;
 import javax.servlet.http.HttpSession;
 import java.io.IOException;
 import java.util.ArrayList;
+import java.util.Collections;
 import java.util.List;
 
 import static ua.nure.levushevskiy.SummaryTask4.util.View.*;
@@ -42,9 +44,26 @@ public class PaymentWaitServlet extends HttpServlet {
     }
     @Override
     protected final void doGet(final HttpServletRequest req, final HttpServletResponse resp) throws ServletException, IOException {
+        HttpSession session = req.getSession();
+        try{
         List<PaymentDTO> paymentDTOList = paymentService.getAll();
-        paymentDTOList = removePayment(paymentDTOList);
+        paymentDTOList = removePayment(paymentDTOList,(int)session.getAttribute(EntityConstants.USER_ID_PARAM));
+            if(req.getParameter(EntityConstants.SORT_PAYMENT)!=null){
+                switch (req.getParameter(EntityConstants.SORT_PAYMENT)){
+                    case "numUp": paymentDTOList.sort(Sort.PaymentIdCompare); break;
+                    case "numDown": paymentDTOList.sort(Sort.PaymentIdCompare);
+                        Collections.reverse(paymentDTOList); break;
+                    case "dateUp": paymentDTOList.sort(Sort.PaymentDateCompare); break;
+                    case "dateDown":paymentDTOList.sort(Sort.PaymentDateCompare);
+                        Collections.reverse(paymentDTOList); break;
+                }
+            }
         req.setAttribute(EntityConstants.PAYMENT_LIST_PARAM, paymentDTOList);
+        } catch (Exception e){
+            session.setAttribute(EntityConstants.OPERATION_SUCCESSFUL, e.getMessage());
+            resp.sendRedirect(View.Mapping.ERROR);
+            return;
+        }
         req.getRequestDispatcher(PAYMENT_WAIT_JSP).forward(req, resp);
     }
 
@@ -88,10 +107,11 @@ public class PaymentWaitServlet extends HttpServlet {
      * @param paymentDTOList - payment list.
      * @return - list accounts.
      */
-    private List<PaymentDTO> removePayment(final List<PaymentDTO> paymentDTOList) {
+    private List<PaymentDTO> removePayment(final List<PaymentDTO> paymentDTOList, int userId) {
         List<PaymentDTO> modifiedList = new ArrayList<>();
         for (PaymentDTO paymentDTO : paymentDTOList) {
-            if (paymentDTO.getPaymentStatusDTO().getStatus().equals("prepared")) {
+            if (paymentDTO.getAccountDTO().getUserDTO().getIdUser()==userId
+                    && paymentDTO.getPaymentStatusDTO().getStatus().equals("prepared")) {
                 modifiedList.add(paymentDTO);
             }
         }

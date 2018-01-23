@@ -10,24 +10,20 @@
 <html>
 <head>
     <title>Регистрация</title>
-    <link rel="stylesheet" href="/assets/css/style.css" media="screen" type="text/css" />
-    <link rel="stylesheet" href="/assets/css/window.css" media="screen" type="text/css" />
-    <script src="assets/js/confirmPass.js"></script>
+    <link href='/assets/css/style.css' rel='stylesheet' type='text/css'>
+    <link href='/assets/css/window.css' rel='stylesheet'>
     <link href='http://fonts.googleapis.com/css?family=Open+Sans:400,700' rel='stylesheet' type='text/css'>
+    <script src="assets/js/confirmPass.js"></script>
 </head>
 
 <body>
-
-
 <div class="wrapper">
-
     <header>
         <div class="wrapper">
             <a href="#"><img src="assets/images/logo.jpg" class="logo" alt="" title=""/><h1>Transfer Money</h1></a>
         </div>
     </header><!--  end header section  -->
     <div id="zatemnenie">
-
         <div id="okno">
             <ul>
                 <c:forEach items="${errorContainer}" var="error">
@@ -71,7 +67,6 @@
                         <input type="submit" value="Зарегестрироваться"/>
                     </form>
                     <p><a href="#zatemnenie">Помощь</a>  &nbsp;|&nbsp;<a href="${pageContext.servletContext.contextPath}/authorisation">Войти&nbsp;<span class="fontawesome-arrow-right"></span></a>
-
                     </p>
                 </fieldset>
             </div>

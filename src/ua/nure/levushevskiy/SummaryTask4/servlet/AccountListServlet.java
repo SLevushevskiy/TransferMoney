@@ -4,6 +4,7 @@ import ua.nure.levushevskiy.SummaryTask4.dto.AccountDTO;
 import ua.nure.levushevskiy.SummaryTask4.exception.InitializationException;
 import ua.nure.levushevskiy.SummaryTask4.service.impl.AccountServiceImpl;
 import ua.nure.levushevskiy.SummaryTask4.util.EntityConstants;
+import ua.nure.levushevskiy.SummaryTask4.util.Sort;
 import ua.nure.levushevskiy.SummaryTask4.util.View;
 
 import javax.servlet.ServletContext;
@@ -15,6 +16,7 @@ import javax.servlet.http.HttpServletResponse;
 import javax.servlet.http.HttpSession;
 import java.io.IOException;
 import java.util.ArrayList;
+import java.util.Collections;
 import java.util.List;
 
 import static ua.nure.levushevskiy.SummaryTask4.util.View.ACCOUNT_LIST_JSP;
@@ -39,6 +41,19 @@ public class AccountListServlet extends HttpServlet {
         HttpSession session = req.getSession();
         List<AccountDTO> accountDTOList = accountService.getAll();
         accountDTOList = removeAccount(accountDTOList, Integer.parseInt(session.getAttribute(EntityConstants.USER_ID_PARAM).toString()));
+        if(req.getParameter(EntityConstants.SORT_ACCOUNT)!=null){
+            switch (req.getParameter(EntityConstants.SORT_ACCOUNT)){
+                case "numUp": accountDTOList.sort(Sort.AccountIdCompare); break;
+                case "numDown": accountDTOList.sort(Sort.AccountIdCompare);
+                    Collections.reverse(accountDTOList); break;
+                case "amoundUp": accountDTOList.sort(Sort.AccountAmoundCompare); break;
+                case "amoundDown":accountDTOList.sort(Sort.AccountAmoundCompare);
+                    Collections.reverse(accountDTOList); break;
+                case "nameUp": accountDTOList.sort(Sort.AccountNameCompare); break;
+                case "nameDown": accountDTOList.sort(Sort.AccountNameCompare);
+                    Collections.reverse(accountDTOList);break;
+            }
+        }
         req.setAttribute(EntityConstants.ACCOUNT_LIST_PARAM, accountDTOList);
         req.getRequestDispatcher(ACCOUNT_LIST_JSP).forward(req, resp);
     }
@@ -53,6 +68,10 @@ public class AccountListServlet extends HttpServlet {
             session.setAttribute(EntityConstants.OPERATION_SUCCESSFUL, "Повторите попытку.");
         }
        resp.sendRedirect(View.Mapping.ACCOUNT_LIST + "#zatemnenie");
+    }
+
+    private void sort(){
+
     }
 
     /**
