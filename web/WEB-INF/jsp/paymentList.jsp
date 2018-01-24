@@ -67,6 +67,12 @@
                         <td>${payment.getTotal()}</td>
                         <td>${payment.getDatePayment()}</td>
                         <td>${payment.getPaymentStatusDTO().status}</td>
+                        <td>
+                        <form action="/savePdfReport" method="get">
+                            <input type="hidden" name="payment" value="${payment.getIdPayment()}">
+                            <input type="submit" value="Сохранить отчет">
+                        </form>
+                        </td>
                     </tr>
                 </c:forEach>
                 </c:if>

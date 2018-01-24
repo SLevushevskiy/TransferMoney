@@ -36,6 +36,11 @@
                 <label>Дата: </label><li>${payment.getDatePayment()}</li>
                 <label>Статус: </label><li>${payment.getPaymentStatusDTO().status}</li>
             </ul>
+            <br>
+            <form action="savePdfReport" method="get">
+                <input type="hidden" name="payment" value="${payment.getIdPayment()}">
+                <input type="submit" value="Сохранить отчет">
+            </form>
         </div>
     </section>
 </div>

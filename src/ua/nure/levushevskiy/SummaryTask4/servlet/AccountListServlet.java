@@ -53,6 +53,7 @@ public class AccountListServlet extends HttpServlet {
                 case "nameDown": accountDTOList.sort(Sort.AccountNameCompare);
                     Collections.reverse(accountDTOList);break;
             }
+            req.setAttribute(EntityConstants.SORT_ACCOUNT, req.getParameter(EntityConstants.SORT_ACCOUNT));
         }
         req.setAttribute(EntityConstants.ACCOUNT_LIST_PARAM, accountDTOList);
         req.getRequestDispatcher(ACCOUNT_LIST_JSP).forward(req, resp);

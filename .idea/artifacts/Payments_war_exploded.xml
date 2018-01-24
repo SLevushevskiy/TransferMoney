@@ -13,6 +13,7 @@
           <element id="library" level="project" name="commons-dbcp-1.4" />
           <element id="library" level="project" name="commons-pool-1.5.4" />
           <element id="library" level="project" name="mysql:mysql-connector-java:5.1.23" />
+          <element id="library" level="project" name="itextpdf-5.1.0" />
         </element>
       </element>
     </root>
