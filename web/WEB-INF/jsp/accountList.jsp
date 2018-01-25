@@ -7,6 +7,7 @@
 <fmt:requestEncoding value="UTF-8" />
 <!DOCTYPE HTML>
 <html>
+<c:set var="fromUrl" scope="request" value="accountList" />
 <head>
     <title>Список счетов</title>
     <meta charset="utf-8" />
