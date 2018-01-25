@@ -6,11 +6,5 @@
       <file value="file://$PROJECT_DIR$/src/mail.properties" />
       <base-name>resources</base-name>
     </custom-resource-bundle>
-    <custom-resource-bundle>
-      <file value="file://$PROJECT_DIR$/src/dataBase.properties" />
-      <file value="file://$PROJECT_DIR$/src/log4j.properties" />
-      <file value="file://$PROJECT_DIR$/src/mail.properties" />
-      <base-name>resources</base-name>
-    </custom-resource-bundle>
   </component>
 </project>

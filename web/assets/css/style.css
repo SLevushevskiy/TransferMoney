@@ -64,8 +64,6 @@ a{
 
 p {
 	color: white;
-	margin-top: 20px;
-	text-align: center;
 }
 p a{
 	color: white;
@@ -183,7 +181,7 @@ h1 { color: #ffffff;
   border: 1px solid #292829;
   border-top: 0;
   padding: 12px 10px;
-  width: 358px;
+  width: 338px;
 
 }
 
@@ -193,7 +191,7 @@ h1 { color: #ffffff;
 	-moz-border-radius: 3px 3px 0px 0px;
 	-webkit-border-radius: 3px 3px 0px 0px;
 	padding: 12px 10px;
-	width: 358px;
+	width: 338px;
   -webkit-appearance:none;
 }
 
@@ -204,7 +202,7 @@ h1 { color: #ffffff;
 	-moz-border-radius: 0px 0px 3px 3px;
 	-webkit-border-radius: 0px 0px 3px 3px;
 	padding: 12px 10px;
-	width: 358px;
+	width: 338px;
   -webkit-appearance:none;
 }
 
@@ -254,4 +252,16 @@ h1 { color: #ffffff;
 
 #login-form fieldset form span a:hover {
 	color: #eb6d1a;
+}
+
+.help{
+	margin: 0 auto;
+	margin-top: 20px;
+	text-align: center;
+}
+
+.help form#reg{
+	display: inline-block;
+	width: auto;
+
 }
