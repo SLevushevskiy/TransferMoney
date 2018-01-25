@@ -15,9 +15,8 @@ public class EntityConstants {
     public static final String USER_CHOOSE_PARAM = "userChoose";
 
     public static final String ERROR_PARAM = "ERROR";
-    public static final String STACK_TRACE_PARAM = "stackTrace";
     public static final String STATUS_PARAM = "status";
-    public static final String SERVLET_NAME = "servletName";
+
     public static final String LOCAL_PARAM = "local";
     public static final String FROM_PARAM = "from";
     public static final String LANGUAGE_PARAM = "language";

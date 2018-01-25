@@ -18,7 +18,7 @@ import static ua.nure.levushevskiy.SummaryTask4.util.View.ACCOUNT_LIST_JSP;
  * A filter that restricts ordinary users access to admin pages.
  */
 @WebFilter(filterName = "AdminAccessFilter",
-        urlPatterns = {"/ ","/adminAccountList","/adminRequestAccount"})
+        urlPatterns = {"/adminAccountList","/adminRequestAccount","/userList"})
 public class AdminAccessFilter implements Filter {
 
     /**
@@ -45,6 +45,9 @@ public class AdminAccessFilter implements Filter {
                 filterChain.doFilter(servletRequest, servletResponse);
                 return;
             }
+        } else {
+            resp.sendRedirect(View.Mapping.AUTHORIZATION);
+            return;
         }
         resp.sendRedirect(View.Mapping.ACCOUNT_LIST);
     }

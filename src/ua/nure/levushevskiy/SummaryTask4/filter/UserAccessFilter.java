@@ -12,8 +12,11 @@ import javax.servlet.http.HttpServletResponse;
 import javax.servlet.http.HttpSession;
 import java.io.IOException;
 
+import static ua.nure.levushevskiy.SummaryTask4.util.EntityConstants.ERROR_PARAM;
+
 @WebFilter(filterName = "UserAccessFilter",
-        urlPatterns = {"/*"})
+        urlPatterns = {"/accountAdd","/accountList","/confirmPayment","/mobilePayment","/paymentList","/rechargePayment",
+        "/paymentWait","/reportPayment","/savePdfReport","/trasferPayment"})
 public class UserAccessFilter implements Filter {
 
     /**
@@ -32,15 +35,23 @@ public class UserAccessFilter implements Filter {
         HttpServletRequest req = (HttpServletRequest) servletRequest;
         HttpServletResponse resp = (HttpServletResponse) servletResponse;
         HttpSession session = req.getSession();
+        UserDTO userDTO = null;
+        String n =req.getServletPath();
 
-        String n =req.getRequestURI();
-
-        if (!(req.getRequestURI().equals(View.Mapping.REGISTRATION)||req.getRequestURI().equals(View.Mapping.AUTHORIZATION))){
-            if (session.getAttribute(EntityConstants.USER_PARAM) == null) {
+      //  if (!(req.getServletPath().equals(View.Mapping.REGISTRATION)||req.getServletPath().equals(View.Mapping.AUTHORIZATION)||req.getServletPath().equals("/localization"))){
+            if (session.getAttribute(EntityConstants.USER_PARAM) != null) {
+                userDTO = (UserDTO) session.getAttribute(EntityConstants.USER_PARAM);
+                if (userDTO.getUserStatusDTO().getStatus().equals("blocked")) {
+                    req.setAttribute(ERROR_PARAM, "You was blocked by admin.");
+                    resp.sendRedirect(View.Mapping.ERROR);
+                    return;
+                }
+            }
+            else {
                 resp.sendRedirect(View.Mapping.AUTHORIZATION);
                 return;
             }
-        }
+
         filterChain.doFilter(servletRequest, servletResponse);
     }
 
