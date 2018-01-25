@@ -3,7 +3,7 @@
 
 <!DOCTYPE HTML>
 <html>
-<c:set var="fromUrl" scope="request" value="adminUserList" />
+<c:set var="fromUrl" scope="request" value="userList" />
 <head>
     <title><fmt:message key="title.admin.user.list" bundle="${bundle}"/></title>
     <meta charset="utf-8" />
