@@ -1,14 +1,11 @@
-<%@ page contentType="text/html;charset=UTF-8" pageEncoding="UTF-8" language="java" %>
-<%@ page isELIgnored="false" %>
-<%@ taglib uri="http://java.sun.com/jsp/jstl/core" prefix="c" %>
-<%@ taglib prefix="fmt" uri="http://java.sun.com/jsp/jstl/fmt" %>
-<%@ taglib prefix="t" tagdir="/WEB-INF/tags" %>
+<!-- tagLib -->
+<%@ include file="/WEB-INF/tags/tagLib.jspf" %>
 
-<fmt:requestEncoding value="UTF-8" />
 <!DOCTYPE HTML>
 <html>
+<c:set var="fromUrl" scope="request" value="adminUserList" />
 <head>
-    <title>Список пользователей</title>
+    <title><fmt:message key="title.admin.user.list" bundle="${bundle}"/></title>
     <meta charset="utf-8" />
     <meta name="viewport" content="width=device-width, initial-scale=1" />
     <link rel="stylesheet" href="assets/css/main.css" />
@@ -25,17 +22,17 @@
     <section id="top" class="one dark cover">
         <div class="container">
             <c:if test="${empty userList}">
-                Еще нет пользователей...
+                <fmt:message key="label.users.empty" bundle="${bundle}"/>
             </c:if>
             <c:if test="${not empty userList}">
                 <table>
                     <tr>
-                        <th>ID</th>
-                        <th>Имя</th>
-                        <th>Фамилия</th>
-                        <th>E-mail</th>
-                        <th>Роль</th>
-                        <th>Статус</th>
+                        <th><fmt:message key="label.users.id" bundle="${bundle}"/></th>
+                        <th><fmt:message key="label.users.name" bundle="${bundle}"/></th>
+                        <th><fmt:message key="label.users.surname" bundle="${bundle}"/></th>
+                        <th><fmt:message key="label.users.email" bundle="${bundle}"/></th>
+                        <th><fmt:message key="label.users.rank" bundle="${bundle}"/></th>
+                        <th><fmt:message key="label.users.status" bundle="${bundle}"/></th>
                     </tr>
                     <c:forEach items="${userList}" var="user">
                         <tr>
@@ -48,7 +45,7 @@
                             <td>
                                 <form action="/adminAccountList" method="get">
                                     <input type="hidden" name="userChoose" value="${user.getIdUser()}">
-                                    <input type="submit" value="Cчета" >
+                                    <input type="submit" value="<fmt:message key="label.accounts" bundle="${bundle}"/>" >
                                 </form>
                             </td>
                             <td>
@@ -56,11 +53,11 @@
                                     <input type="hidden" name="userChoose" value="${user.getIdUser()}">
                                     <c:if test="${user.getUserStatusDTO().status eq 'blocked'}">
                                         <input type="hidden" name="status" value="active">
-                                        <input type="submit" value="Разблокировать" >
+                                        <input type="submit" value="<fmt:message key="button.unblock" bundle="${bundle}"/>" >
                                     </c:if>
                                     <c:if test="${user.getUserStatusDTO().status eq 'active'}">
                                         <input type="hidden" name="status" value="blocked">
-                                        <input type="submit" value="Заблокировать" >
+                                        <input type="submit" value="<fmt:message key="button.block" bundle="${bundle}"/>" >
                                     </c:if>
                                 </form>
                             </td>

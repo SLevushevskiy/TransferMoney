@@ -1,14 +1,11 @@
-<%@ page contentType="text/html;charset=UTF-8" pageEncoding="UTF-8" language="java" %>
-<%@ page isELIgnored="false" %>
-<%@ taglib uri="http://java.sun.com/jsp/jstl/core" prefix="c" %>
-<%@ taglib prefix="fmt" uri="http://java.sun.com/jsp/jstl/fmt" %>
-<%@ taglib prefix="t" tagdir="/WEB-INF/tags" %>
+<!-- tagLib -->
+<%@ include file="/WEB-INF/tags/tagLib.jspf" %>
 
-<fmt:requestEncoding value="UTF-8" />
 <!DOCTYPE HTML>
 <html>
+<c:set var="fromUrl" scope="request" value="adminRequestList" />
 <head>
-    <title>Запросы пользователей</title>
+    <title><fmt:message key="title.account.list.user" bundle="${bundle}"/></title>
     <meta charset="utf-8" />
     <meta name="viewport" content="width=device-width, initial-scale=1" />
     <link rel="stylesheet" href="assets/css/main.css" />
@@ -24,7 +21,7 @@
     <section id="top" class="one dark cover">
         <div class="container">
             <c:if test="${empty accountList}">
-                Запросов от пользователей еще нет.
+                <fmt:message key="title.account.list.user" bundle="${bundle}"/>
             </c:if>
             <c:if test="${not empty accountList}">
             <form action="adminRequestList" method="get">
@@ -34,11 +31,11 @@
                 <table>
                     <tr>
                         <th></th>
-                        <th>Имя карты</th>
-                        <th>Номер карты</th>
-                        <th>Остаток</th>
-                        <th>Срок действия</th>
-                        <th>Статус карты</th>
+                        <th><fmt:message key="label.account.name" bundle="${bundle}"/></th>
+                        <th><fmt:message key="label.account.id" bundle="${bundle}"/></th>
+                        <th><fmt:message key="label.account.amound" bundle="${bundle}"/></th>
+                        <th><fmt:message key="label.account.date" bundle="${bundle}"/></th>
+                        <th><fmt:message key="label.account.status" bundle="${bundle}"/></th>
                     </tr>
                     <c:forEach items="${accountList}" var="account">
                         <tr>
@@ -52,7 +49,7 @@
                                 <form action="/adminRequestList" method="post">
                                     <input type="hidden" name="accountChoose" value="${account.getIdAccount()}">
                                         <input type="hidden" name="status" value="active">
-                                        <input type="submit" value="Разблокировать" >
+                                        <input type="submit" value="<fmt:message key="button.unblock" bundle="${bundle}"/>" >
                                 </form>
                             </td>
                         </tr>
