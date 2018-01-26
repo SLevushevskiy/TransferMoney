@@ -44,7 +44,7 @@ public class View {
         public static final String PAYMENT_MOBILE = "/mobilePayment";
         public static final String CONFIRM_PAYMENT = "/confirmPayment";
         public static final String PAYMENT_RECHARGE = "/rechargePayment";
-        public static final String PAYMENT_TRANSFER = "/trasferPayment";
+        public static final String PAYMENT_TRANSFER = "/transferPayment";
         public static final String ADMIN_REQUEST_LIST = "/adminRequestList";
         public static final String ACCOUNT_ADD = "/accountAdd";
 

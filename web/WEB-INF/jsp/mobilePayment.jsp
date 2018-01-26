@@ -1,14 +1,11 @@
-<%@ page contentType="text/html;charset=UTF-8" pageEncoding="UTF-8" language="java" %>
-<%@ page isELIgnored="false" %>
-<%@ taglib uri="http://java.sun.com/jsp/jstl/core" prefix="c" %>
-<%@ taglib prefix="fmt" uri="http://java.sun.com/jsp/jstl/fmt" %>
-<%@ taglib prefix="t" tagdir="/WEB-INF/tags" %>
+<!-- tagLib -->
+<%@ include file="/WEB-INF/tags/tagLib.jspf" %>
 
-<fmt:requestEncoding value="UTF-8" />
 <!DOCTYPE HTML>
 <html>
+<c:set var="fromUrl" scope="request" value="mobilePayment" />
 <head>
-    <title>Мобильный платеж</title>
+    <title><fmt:message key="title.payment.mobile" bundle="${bundle}"/></title>
     <meta charset="utf-8" />
     <meta name="viewport" content="width=device-width, initial-scale=1" />
     <link rel="stylesheet" href="assets/css/main.css" />
@@ -27,18 +24,18 @@
         <div class="container">
             <form action="mobilePayment" method="post">
                 <input type="hidden" name="paymentName" value="3" />
-                <input type="text" value="Пополнить мобильный" disabled/>
+                <input type="text" value="<fmt:message key="title.payment.mobile" bundle="${bundle}"/>" disabled/>
                 <select name="accountChoose">
-                    <option disabled selected >Выберите счет</option>
+                    <option disabled selected ><fmt:message key="label.account.choose" bundle="${bundle}"/></option>
                     <c:forEach items="${accountList}" var="accountN">
                         <option value="${accountN.getIdAccount()}">${accountN.getAccountNameDTO().name} (${accountN.getIdAccount()})  ${accountN.getAmound()}</option>
                     </c:forEach>
                 </select>
-                <input type="text" name="mobileNum" placeholder="Введите номер телефона" pattern="\^+380[0-9]{9}$\"
+                <input type="text" name="mobileNum" placeholder="<fmt:message key="label.payment.mobile" bundle="${bundle}"/>" pattern="\^+380[0-9]{9}$\"
                        oninvalid="this.setCustomValidity('Please input number phone with format +380.. ')" oninput="this.setCustomValidity('')" required/>
-                <input type="text" name="paymentTotal" placeholder="Сумма" required/>
-                <input type="text" name="paymentDescription" placeholder="Описание" required/>
-                <input type="submit" value="Готово "/>
+                <input type="text" name="paymentTotal" placeholder="<fmt:message key="label.payment.total" bundle="${bundle}"/>" required/>
+                <input type="text" name="paymentDescription" placeholder="<fmt:message key="label.payment.description" bundle="${bundle}"/>" required/>
+                <input type="submit" value="<fmt:message key="window.close" bundle="${bundle}"/>"/>
             </form>
         </div>
     </section>

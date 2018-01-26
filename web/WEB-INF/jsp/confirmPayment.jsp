@@ -1,14 +1,11 @@
-<%@ page contentType="text/html;charset=UTF-8" pageEncoding="UTF-8" language="java" %>
-<%@ page isELIgnored="false" %>
-<%@ taglib uri="http://java.sun.com/jsp/jstl/core" prefix="c" %>
-<%@ taglib prefix="fmt" uri="http://java.sun.com/jsp/jstl/fmt" %>
-<%@ taglib prefix="t" tagdir="/WEB-INF/tags" %>
+<!-- tagLib -->
+<%@ include file="/WEB-INF/tags/tagLib.jspf" %>
 
-<fmt:requestEncoding value="UTF-8" />
 <!DOCTYPE HTML>
 <html>
+<c:set var="fromUrl" scope="request" value="confirmPayment" />
 <head>
-    <title>Подтверждение платежа</title>
+    <title><fmt:message key="title.payment.confirm" bundle="${bundle}"/></title>
     <meta charset="utf-8" />
     <meta name="viewport" content="width=device-width, initial-scale=1" />
     <link rel="stylesheet" href="assets/css/main.css" />
@@ -29,9 +26,9 @@
             <table class="amound">
                 <tr>
                     <td></td>
-                    <th>ID</th>
-                    <th>Name card</th>
-                    <th>Amound</th>
+                    <th><fmt:message key="label.account.id" bundle="${bundle}"/></th>
+                    <th><fmt:message key="label.account.name" bundle="${bundle}"/></th>
+                    <th><fmt:message key="label.account.amound" bundle="${bundle}"/></th>
                 </tr>
                 <tr>
                     <td><span class="icon fa-credit-card-alt"></span></td>
@@ -54,12 +51,12 @@
                 <li>${payment.getPaymentStatusDTO().status}</li>
             </ul>
             <form action="confirmPayment" method="post">
-                <label>Для подтверждения платежа введите пароль от учетной записи.</label>
-                <input type="password" name="password" placeholder="Введите пароль" pattern="^[a-zA-Z0-9]{6,15}$"
+                <label><fmt:message key="label.confirm" bundle="${bundle}"/></label>
+                <input type="password" name="password" placeholder="<fmt:message key="registration.password" bundle="${bundle}"/>" pattern="^[a-zA-Z0-9]{6,15}$"
                        oninvalid="this.setCustomValidity('Invalid password format! The password contains invalid characters OR length! Example: 123qwe, qwerty1')" oninput="this.setCustomValidity('')" required/>
-                <input type="password" name="confirm" placeholder="Подтвердите пароль" pattern="^[a-zA-Z0-9]{6,15}$"
+                <input type="password" name="confirm" placeholder="<fmt:message key="registration.password.confirm" bundle="${bundle}"/>" pattern="^[a-zA-Z0-9]{6,15}$"
                        oninvalid="this.setCustomValidity('Invalid password format! The password contains invalid characters OR length! Example: 123qwe, qwerty1')" oninput="this.setCustomValidity('')" required/>
-                <input type="submit" value="Готово "/>
+                <input type="submit" value="<fmt:message key="registration.help.done" bundle="${bundle}"/>"/>
             </form>
         </div>
     </section>

@@ -25,7 +25,7 @@ import java.util.List;
 import static ua.nure.levushevskiy.SummaryTask4.util.View.PAYMENT_RECHARGE_JSP;
 import static ua.nure.levushevskiy.SummaryTask4.util.View.PAYMENT_TRANSFER_JSP;
 
-@WebServlet("/trasferPayment")
+@WebServlet("/transferPayment")
 public class TransferPaymentServlet extends HttpServlet {
     /**
      * An object that contains payment business logic.

@@ -1,14 +1,11 @@
-<%@ page contentType="text/html;charset=UTF-8" pageEncoding="UTF-8" language="java" %>
-<%@ page isELIgnored="false" %>
-<%@ taglib uri="http://java.sun.com/jsp/jstl/core" prefix="c" %>
-<%@ taglib prefix="fmt" uri="http://java.sun.com/jsp/jstl/fmt" %>
-<%@ taglib prefix="t" tagdir="/WEB-INF/tags" %>
+<!-- tagLib -->
+<%@ include file="/WEB-INF/tags/tagLib.jspf" %>
 
-<fmt:requestEncoding value="UTF-8" />
 <!DOCTYPE HTML>
 <html>
+<c:set var="fromUrl" scope="request" value="rechargePayment" />
 <head>
-    <title>Пополнение счета</title>
+    <title><fmt:message key="title.payment.recharge" bundle="${bundle}"/></title>
     <meta charset="utf-8" />
     <meta name="viewport" content="width=device-width, initial-scale=1" />
     <link rel="stylesheet" href="assets/css/main.css" />
@@ -27,16 +24,16 @@
         <div class="container">
             <form action="rechargePayment" method="post">
                 <input type="hidden" name="paymentName" value="1" />
-                <input type="text" value="Пополнить счет" disabled/>
+                <input type="text" value="<fmt:message key="title.payment.recharge" bundle="${bundle}"/>" disabled/>
                 <select name="accountChoose" required>
-                    <option disabled selected >Выберите счет</option>
+                    <option disabled selected ><fmt:message key="label.account.choose" bundle="${bundle}"/></option>
                     <c:forEach items="${accountList}" var="accountN">
                         <option value="${accountN.getIdAccount()}">${accountN.getAccountNameDTO().name} (${accountN.getIdAccount()})  ${accountN.getAmound()}</option>
                     </c:forEach>
                 </select>
-                <input type="text" name="paymentTotal" placeholder="Сумма" required/>
-                <input type="text" name="paymentDescription" placeholder="Описание" required/>
-                <input type="submit" value="Готово "/>
+                <input type="text" name="paymentTotal" placeholder="<fmt:message key="label.payment.total" bundle="${bundle}"/>" required/>
+                <input type="text" name="paymentDescription" placeholder="<fmt:message key="label.payment.description" bundle="${bundle}"/>" required/>
+                <input type="submit" value="<fmt:message key="label.payment.submit" bundle="${bundle}"/> "/>
             </form>
         </div>
     </section>

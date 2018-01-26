@@ -1,14 +1,11 @@
-<%@ page contentType="text/html;charset=UTF-8" pageEncoding="UTF-8" language="java" %>
-<%@ page isELIgnored="false" %>
-<%@ taglib uri="http://java.sun.com/jsp/jstl/core" prefix="c" %>
-<%@ taglib prefix="fmt" uri="http://java.sun.com/jsp/jstl/fmt" %>
-<%@ taglib prefix="t" tagdir="/WEB-INF/tags" %>
+<!-- tagLib -->
+<%@ include file="/WEB-INF/tags/tagLib.jspf" %>
 
-<fmt:requestEncoding value="UTF-8" />
 <!DOCTYPE HTML>
 <html>
+<c:set var="fromUrl" scope="request" value="reportPayment" />
 <head>
-    <title>Мобильный платеж</title>
+    <title><fmt:message key="title.payment.report" bundle="${bundle}"/></title>
     <meta charset="utf-8" />
     <meta name="viewport" content="width=device-width, initial-scale=1" />
     <link rel="stylesheet" href="assets/css/main.css" />
@@ -23,23 +20,23 @@
     <section id="top" class="one dark cover">
         <div class="container">
             <ul>
-                <label>Номер платежа: </label><li>${payment.getIdPayment()}</li>
-                <label>Название платежа: </label><li>${payment.getPaymentNameDTO().paymentName}</li>
+                <label><fmt:message key="label.payment.id" bundle="${bundle}"/>: </label><li>${payment.getIdPayment()}</li>
+                <label><fmt:message key="label.payment.name" bundle="${bundle}"/>: </label><li>${payment.getPaymentNameDTO().paymentName}</li>
                 <c:if test="${not empty mobileNum}">
-                    <label>Номер телефона: </label><li>${mobileNum}</li>
+                    <label><fmt:message key="label.payment.phone.num" bundle="${bundle}"/>: </label><li>${mobileNum}</li>
                 </c:if>
                 <c:if test="${not empty accountId}">
-                    <label>Номер счета: </label><li>${accountId}</li>
+                    <label><fmt:message key="label.payment.account.id" bundle="${bundle}"/>: </label><li>${accountId}</li>
                 </c:if>
-                <label>Описание: </label><li>${payment.getDescription()}</li>
-                <label>Сумма: </label><li>${payment.getTotal()}</li>
-                <label>Дата: </label><li>${payment.getDatePayment()}</li>
-                <label>Статус: </label><li>${payment.getPaymentStatusDTO().status}</li>
+                <label><fmt:message key="label.payment.description" bundle="${bundle}"/>: </label><li>${payment.getDescription()}</li>
+                <label><fmt:message key="label.payment.total" bundle="${bundle}"/>: </label><li>${payment.getTotal()}</li>
+                <label><fmt:message key="label.payment.date" bundle="${bundle}"/>: </label><li>${payment.getDatePayment()}</li>
+                <label><fmt:message key="label.payment.status" bundle="${bundle}"/>: </label><li>${payment.getPaymentStatusDTO().status}</li>
             </ul>
             <br>
             <form action="savePdfReport" method="get">
                 <input type="hidden" name="payment" value="${payment.getIdPayment()}">
-                <input type="submit" value="Сохранить отчет">
+                <input type="submit" value="<fmt:message key="button.save.report" bundle="${bundle}"/>">
             </form>
         </div>
     </section>

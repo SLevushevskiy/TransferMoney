@@ -1,14 +1,11 @@
-<%@ page contentType="text/html;charset=UTF-8" pageEncoding="UTF-8" language="java" %>
-<%@ page isELIgnored="false" %>
-<%@ taglib uri="http://java.sun.com/jsp/jstl/core" prefix="c" %>
-<%@ taglib prefix="fmt" uri="http://java.sun.com/jsp/jstl/fmt" %>
-<%@ taglib prefix="t" tagdir="/WEB-INF/tags" %>
+<!-- tagLib -->
+<%@ include file="/WEB-INF/tags/tagLib.jspf" %>
 
-<fmt:requestEncoding value="UTF-8" />
 <!DOCTYPE HTML>
 <html>
+<c:set var="fromUrl" scope="request" value="paymentWait" />
 <head>
-    <title>Transfer Money</title>
+    <title><fmt:message key="title.payment.wait" bundle="${bundle}"/></title>
     <meta charset="utf-8" />
     <meta name="viewport" content="width=device-width, initial-scale=1" />
     <link rel="stylesheet" href="assets/css/main.css" />
@@ -25,7 +22,7 @@
     <section id="top" class="one dark cover">
         <div class="container">
             <c:if test="${empty paymentList}">
-                Операции еще не выполнялись.
+                <fmt:message key="label.operation.empty" bundle="${bundle}"/>
             </c:if>
             <c:if test="${not empty paymentList}">
             <form action="paymentWait" method="get">
@@ -35,12 +32,12 @@
             <table>
                     <tr>
                         <th></th>
-                        <th>Номер платежа</th>
-                        <th>Тип</th>
-                        <th>Описание</th>
-                        <th>Сумма</th>
-                        <th>Дата</th>
-                        <th>Статус</th>
+                        <th><fmt:message key="label.payment.id" bundle="${bundle}"/></th>
+                        <th><fmt:message key="label.payment.type" bundle="${bundle}"/></th>
+                        <th><fmt:message key="label.payment.description" bundle="${bundle}"/></th>
+                        <th><fmt:message key="label.payment.total" bundle="${bundle}"/></th>
+                        <th><fmt:message key="label.payment.date" bundle="${bundle}"/></th>
+                        <th><fmt:message key="label.payment.status" bundle="${bundle}"/></th>
                     </tr>
                     <c:forEach items="${paymentList}" var="payment">
                         <tr>
@@ -54,7 +51,7 @@
                             <td>
                                 <form action="paymentWait" method="post">
                                     <input type="hidden" name="paymentChoose" value="${payment.getIdPayment()}">
-                                    <input type="submit" value="Подтвердить">
+                                    <input type="submit" value="<fmt:message key="label.payment.submit" bundle="${bundle}"/>">
                                 </form>
                             </td>
                         </tr>
