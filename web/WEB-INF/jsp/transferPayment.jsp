@@ -31,8 +31,10 @@
                     </c:forEach>
                 </select>
                 <input type="text" name="accountId" placeholder="<fmt:message key="label.payment.transfer.num" bundle="${bundle}"/>" required/>
-                <input type="text" name="paymentTotal" placeholder="<fmt:message key="label.payment.total" bundle="${bundle}"/>" required/>
-                <input type="text" name="paymentDescription" placeholder="<fmt:message key="label.payment.description" bundle="${bundle}"/>" required/>
+                <input type="text" name="paymentTotal" placeholder="<fmt:message key="label.payment.total" bundle="${bundle}"/>" pattern="\d+(\.\d{0,2})?"
+                       oninvalid="this.setCustomValidity('Total with format #.##')" oninput="this.setCustomValidity('')"  required/>
+                <input type="text" name="paymentDescription" placeholder="<fmt:message key="label.payment.description" bundle="${bundle}"/>" pattern="^[а-яА-ЯёЁa-zA-Z0-9]+$"
+                       oninvalid="this.setCustomValidity('Please use only latin or cyryllic letter and numbers')" oninput="this.setCustomValidity('')" required/>
                 <input type="submit" value="<fmt:message key="label.payment.submit" bundle="${bundle}"/> "/>
             </form>
         </div>

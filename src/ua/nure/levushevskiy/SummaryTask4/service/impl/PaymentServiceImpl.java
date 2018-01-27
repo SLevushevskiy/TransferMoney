@@ -14,7 +14,7 @@ public class PaymentServiceImpl implements PaymentService {
     /**
      * The Logger object for logging events of DAO class.
      */
-    private static final Logger LOG = Logger.getLogger(AccountServiceImpl.class);
+    private static final Logger LOG = Logger.getLogger(PaymentServiceImpl.class);
 
     /**
      * The object to interact with the table 'payment' in database.
@@ -53,8 +53,7 @@ public class PaymentServiceImpl implements PaymentService {
     public PaymentDTO savePayment(PaymentDTO paymentDTO) {
         Payment payment = Transformer.paymentDTO2Payment(paymentDTO);
         paymentDTO =  Transformer.payment2PaymentDTO(paymentDAO.save(payment),accountService, paymentStatusService, paymentNameService);
-        LOG.info("New account was added!");
-        //LOG.info("Sending confirmation letter.");
+        LOG.info("New payment was added!");
         return paymentDTO;
     }
 

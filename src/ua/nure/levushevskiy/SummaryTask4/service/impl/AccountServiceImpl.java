@@ -58,7 +58,6 @@ public class AccountServiceImpl implements AccountService{
         Account account = Transformer.accountDTO2Account(accountDTO);
         accountDTO =  Transformer.account2AccountDTO(accountDAO.save(account),userService, accountNameService, accountStatusService);
         LOG.info("New account was added!");
-        //LOG.info("Sending confirmation letter.");
         return accountDTO;
     }
 
