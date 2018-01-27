@@ -14,7 +14,8 @@
 
 <!-- Header -->
 <%@ include file="/WEB-INF/tags/header.jspf" %>
-
+<!-- WindowError -->
+<%@ include file="/WEB-INF/tags/windowError.jspf" %>
 <!-- Main -->
 <div id="main">
 

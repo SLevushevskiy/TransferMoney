@@ -37,7 +37,14 @@ public class PaymentDeleteServlet extends HttpServlet {
 
     @Override
     protected void doGet(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
+        HttpSession session = request.getSession();
+        try {
         paymentService.delete(Integer.parseInt(request.getParameter(EntityConstants.PAYMENT_CHOOSE_PARAM)));
+        }catch (Exception e){
+        session.setAttribute(EntityConstants.OPERATION_SUCCESSFUL, "Ошибка! Повторите операцию.");
+        response.sendRedirect(View.Mapping.PAYMENT_WAIT+"#zatemnenie");//redirect
+        return;
+    }
         response.sendRedirect(View.Mapping.PAYMENT_WAIT);
     }
     /**

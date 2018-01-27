@@ -43,8 +43,6 @@ public class PaymentRechargeServlet extends HttpServlet {
     @Override
     protected void doGet(HttpServletRequest req, HttpServletResponse resp) throws ServletException, IOException {
         HttpSession session = req.getSession();
-        List<PaymentNameDTO> paymentNameDTOList = paymentNameService.getAll();
-        req.setAttribute(EntityConstants.PAYMENT_NAME_LIST_PARAM, paymentNameDTOList);
         List<AccountDTO> accountDTOList = accountService.getAll();
         accountDTOList = removeAccount(accountDTOList, Integer.parseInt(session.getAttribute(EntityConstants.USER_ID_PARAM).toString()));
         req.setAttribute(EntityConstants.ACCOUNT_LIST_PARAM, accountDTOList);
@@ -54,19 +52,10 @@ public class PaymentRechargeServlet extends HttpServlet {
     @Override
     protected void doPost(HttpServletRequest req, HttpServletResponse resp) throws ServletException, IOException {
         HttpSession session = req.getSession();//создаем сессию
+        session.removeAttribute(EntityConstants.ERROR_CONTAINER_PARAM);
         req.setCharacterEncoding("UTF-8");
         try{
-        int accountId = Integer.parseInt(req.getParameter(EntityConstants.ACCOUNT_CHOOSE_PARAM));
         PaymentDTO paymentDTO = getPaymentFromRequest(req);
-        AccountDTO accountDTO = accountService.getById(accountId);
-        if(accountDTO.getAmound()+paymentDTO.getTotal()<0){
-            session.setAttribute(EntityConstants.OPERATION_SUCCESSFUL, "Операция не выполнена! Недостаточно средств.");
-            resp.sendRedirect(View.Mapping.PAYMENT_RECHARGE+"#zatemnenie");//redirect
-            return;
-        }
-        session.setAttribute(EntityConstants.ACCOUNT_NAME_PARAM,accountDTO.getAccountNameDTO().getName());
-        session.setAttribute(EntityConstants.ACCOUNT_AMOUND_PARAM,accountDTO.getAmound());
-        session.setAttribute(EntityConstants.ACCOUNT_CHOOSE_PARAM,accountId);
             paymentDTO = paymentService.savePayment(paymentDTO);
             session.setAttribute(EntityConstants.PAYMENT_PARAM, paymentDTO);
         }catch (Exception e){
@@ -99,7 +88,7 @@ public class PaymentRechargeServlet extends HttpServlet {
         //ВЫБОР СЧЕТА НА ВИЮХЕ ДЛЯ ОПЛАТЫ
         paymentDTO.setPaymentNameDTO(paymentNameService.getById(Integer.parseInt(req.getParameter(EntityConstants.PAYMENT_NAME_PARAM))));
         paymentDTO.setAccountDTO(accountService.getById(Integer.parseInt(req.getParameter(EntityConstants.ACCOUNT_CHOOSE_PARAM))));
-        paymentDTO.setTotal(Double.parseDouble(req.getParameter(EntityConstants.PAYMENT_TOTAL_PARAM).toString()));
+        paymentDTO.setTotal(Double.parseDouble(req.getParameter(EntityConstants.PAYMENT_TOTAL_PARAM).toString().replace(",",".")));
         paymentDTO.setDescription((String) req.getParameter(EntityConstants.PAYMENT_DESCRIPTION_PARAM));
         paymentDTO.setDatePayment(datePayment);
         return paymentDTO;

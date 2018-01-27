@@ -6,6 +6,7 @@ import ua.nure.levushevskiy.SummaryTask4.dto.PaymentStatusDTO;
 import ua.nure.levushevskiy.SummaryTask4.dto.UserDTO;
 import ua.nure.levushevskiy.SummaryTask4.exception.InitializationException;
 import ua.nure.levushevskiy.SummaryTask4.service.impl.AccountServiceImpl;
+import ua.nure.levushevskiy.SummaryTask4.service.impl.PaymentNameServiceImpl;
 import ua.nure.levushevskiy.SummaryTask4.service.impl.PaymentServiceImpl;
 import ua.nure.levushevskiy.SummaryTask4.service.impl.UserServiceImpl;
 import ua.nure.levushevskiy.SummaryTask4.util.Cryptographer;
@@ -43,11 +44,17 @@ public class ConfirmPayment extends HttpServlet{
      */
     private UserServiceImpl userService;
 
+    /**
+     * An object that contains payment name logic.
+     */
+    PaymentNameServiceImpl paymentNameService;
+
     @Override
     public void init() throws ServletException {
         super.init();
         ServletContext context = getServletContext();
         initPaymentService(context);
+        initPaymentNameService(context);
         initAccountService(context);
         initUserService(context);
     }
@@ -60,6 +67,7 @@ public class ConfirmPayment extends HttpServlet{
     @Override
     protected void doPost(HttpServletRequest req, HttpServletResponse resp) throws ServletException, IOException {
         HttpSession session = req.getSession();//создаем сессию
+        boolean transfer = false;
         session.removeAttribute(EntityConstants.ERROR_CONTAINER_PARAM);
         Map<String, String> errorContainer = new HashMap<>();
         String password = req.getParameter(EntityConstants.PASSWORD_PARAM);
@@ -77,16 +85,27 @@ public class ConfirmPayment extends HttpServlet{
             if(userDTO.getPassword().equals(password)){
                 PaymentDTO paymentDTO = (PaymentDTO) session.getAttribute(EntityConstants.PAYMENT_PARAM);
                 int accountId = (int) paymentDTO.getAccountDTO().getIdAccount();
-                if(!accountService.changeAccountAmound(accountId, paymentDTO.getTotal())){
-                    throw new IllegalStateException();
-                }
-                paymentService.updatePaymentStatusById((int)paymentDTO.getIdPayment(),"sent");
-                int paymentId = (int)paymentDTO.getIdPayment();
-                paymentDTO = paymentService.getById(paymentId);
-                session.setAttribute(EntityConstants.PAYMENT_PARAM, paymentDTO);
-                if(session.getAttribute(EntityConstants.TRANSFER_PAYMENT)!=null&&
-                (boolean)session.getAttribute(EntityConstants.TRANSFER_PAYMENT)){
-                    transferPayment(paymentDTO,req);
+                int toAccountId;
+                if(paymentDTO.getPaymentNameDTO().getPaymentName().equals("Transfer to the card")){
+                    toAccountId = toAccountId(paymentDTO.getDescription());
+                    if(!accountService.getById(toAccountId).getAccountStatusDTO().getStatus().equals("active")){
+                        throw new IllegalStateException("Account blocked");
+                    }
+                    if(!accountService.changeAccountAmound(accountId, paymentDTO.getTotal())){
+                        throw new IllegalStateException("Amount is insufficiently");
+                    }
+                    paymentService.updatePaymentStatusById((int)paymentDTO.getIdPayment(),"sent");
+                    paymentDTO = paymentService.getById((int)paymentDTO.getIdPayment());
+                    session.setAttribute(EntityConstants.PAYMENT_PARAM, paymentDTO);//выполнили платеж и в сессию кинули
+
+                    transferPayment(paymentDTO,toAccountId, req);
+                } else{
+                    if(!accountService.changeAccountAmound(accountId, paymentDTO.getTotal())){
+                        throw new IllegalStateException("Amount is insufficiently");
+                    }
+                    paymentService.updatePaymentStatusById((int)paymentDTO.getIdPayment(),"sent");
+                    paymentDTO = paymentService.getById((int)paymentDTO.getIdPayment());
+                    session.setAttribute(EntityConstants.PAYMENT_PARAM, paymentDTO);//выполнили платеж и в сессию кинули
                 }
                 session.setAttribute(EntityConstants.OPERATION_SUCCESSFUL, "Операция успешна!");
             }
@@ -99,16 +118,22 @@ public class ConfirmPayment extends HttpServlet{
         resp.sendRedirect(View.Mapping.REPORT_PAYMENT);
     }
 
-    private boolean transferPayment(final PaymentDTO paymentDTO,final HttpServletRequest req){
-        HttpSession session = req.getSession();//создаем сессию
-        session.getAttribute(EntityConstants.PAYMENT_PARAM);//перевод
-        paymentDTO.setPaymentNameDTO((PaymentNameDTO) session.getAttribute(EntityConstants.PAYMENT_NAME_PARAM));//для 2-го платежа пополнение
-        int accountId = Integer.parseInt((String) session.getAttribute(EntityConstants.ACCOUNT_ID_PARAM));
-        paymentDTO.setAccountDTO(accountService.getById(accountId));//2-й аккаунт
+    private int toAccountId(final String description){
+        int start = description.indexOf("[ ")+2;
+        String accountId = description.substring(start);
+        accountId = accountId.substring(0,accountId.indexOf(" ]"));
+        return Integer.parseInt(accountId);
+    }
+
+    private boolean transferPayment(final PaymentDTO paymentDTO,final int toAccountId, final HttpServletRequest req){
+        paymentDTO.setDescription("Пополнение от "+paymentDTO.getAccountDTO().getUserDTO().getName()+" "+
+        paymentDTO.getAccountDTO().getUserDTO().getSurname());
+        paymentDTO.setPaymentNameDTO(paymentNameService.getById(1));//для 2-го платежа пополнение
+        paymentDTO.setAccountDTO(accountService.getById(toAccountId));//2-й аккаунт
         paymentDTO.setTotal(Math.abs(paymentDTO.getTotal()));//сумма для пополнения
         //пополнение
-        if(!accountService.changeAccountAmound(accountId,paymentDTO.getTotal())){
-            throw new IllegalStateException();
+        if(!accountService.changeAccountAmound(toAccountId,paymentDTO.getTotal())){
+            throw new IllegalStateException("Невышло пополнить счет");
         }
         //сохранение платежа
         paymentService.savePayment(paymentDTO);
@@ -148,6 +173,18 @@ public class ConfirmPayment extends HttpServlet{
         userService = (UserServiceImpl) context.getAttribute(EntityConstants.USER_SERVICE);
         if (userService == null) {
             throw new InitializationException("User service is not initialized!");
+        }
+    }
+
+    /**
+     * Method that initializes payment type service.
+     *
+     * @param context - servlet context.
+     */
+    private void initPaymentNameService(final ServletContext context) {
+        paymentNameService = (PaymentNameServiceImpl) context.getAttribute(EntityConstants.PAYMENT_NAME_SERVICE);
+        if (paymentNameService == null) {
+            throw new InitializationException("Payment Type service is not initialized!");
         }
     }
 }

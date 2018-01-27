@@ -62,6 +62,7 @@ public class AccountListServlet extends HttpServlet {
     @Override
     protected void doPost(HttpServletRequest req, HttpServletResponse resp) throws ServletException, IOException {
         HttpSession session = req.getSession();
+        session.removeAttribute(EntityConstants.ERROR_CONTAINER_PARAM);
         int accountId = Integer.parseInt(req.getParameter(EntityConstants.ACCOUNT_CHOOSE_PARAM));
         if (accountService.updateAccountStatusById(accountId, req.getParameter(EntityConstants.STATUS_PARAM))) {
             session.setAttribute(EntityConstants.OPERATION_SUCCESSFUL, "Операция успешна!");
@@ -69,10 +70,6 @@ public class AccountListServlet extends HttpServlet {
             session.setAttribute(EntityConstants.OPERATION_SUCCESSFUL, "Повторите попытку.");
         }
        resp.sendRedirect(View.Mapping.ACCOUNT_LIST + "#zatemnenie");
-    }
-
-    private void sort(){
-
     }
 
     /**

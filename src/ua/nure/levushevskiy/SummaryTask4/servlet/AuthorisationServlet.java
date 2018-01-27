@@ -46,6 +46,7 @@ public class AuthorisationServlet extends HttpServlet {
     protected void doPost(HttpServletRequest req, HttpServletResponse resp) throws ServletException, IOException {
         HttpSession session = req.getSession();
         session.removeAttribute(EntityConstants.ERROR_CONTAINER_PARAM);
+        session.removeAttribute(EntityConstants.OPERATION_SUCCESSFUL);
         Map<String, String> errorContainer = new HashMap<>();
         String password = req.getParameter(EntityConstants.PASSWORD_PARAM);
         String email = req.getParameter(EntityConstants.EMAIL_PARAM);

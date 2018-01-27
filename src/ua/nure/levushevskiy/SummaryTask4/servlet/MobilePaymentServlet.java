@@ -59,12 +59,11 @@ public class MobilePaymentServlet extends HttpServlet {
         session.removeAttribute(EntityConstants.ERROR_CONTAINER_PARAM);
         req.setCharacterEncoding("UTF-8");
         try {
-            int accountId = Integer.parseInt(req.getParameter(EntityConstants.ACCOUNT_CHOOSE_PARAM));
             PaymentDTO paymentDTO = getPaymentFromRequest(req);
             paymentDTO = paymentService.savePayment(paymentDTO);
-            AccountDTO accountDTO = accountService.getById(accountId);
+            AccountDTO accountDTO = accountService.getById(Integer.parseInt(req.getParameter(EntityConstants.ACCOUNT_CHOOSE_PARAM)));
             if (accountDTO.getAmound() + paymentDTO.getTotal() < 0) {
-                session.setAttribute(EntityConstants.OPERATION_SUCCESSFUL, "Операция не выполнена! Недостаточно средств.");
+                session.setAttribute(EntityConstants.OPERATION_SUCCESSFUL, "Операция не может быть выполнена! Недостаточно средств. Платеж отправлен в ожидание.");
                 resp.sendRedirect(View.Mapping.PAYMENT_MOBILE + "#zatemnenie");//redirect
                 return;
             }
@@ -97,7 +96,7 @@ public class MobilePaymentServlet extends HttpServlet {
         PaymentDTO paymentDTO = new PaymentDTO();
         paymentDTO.setPaymentNameDTO(paymentNameService.getById(Integer.parseInt(req.getParameter(EntityConstants.PAYMENT_NAME_PARAM))));
         paymentDTO.setAccountDTO(accountService.getById(Integer.parseInt(req.getParameter(EntityConstants.ACCOUNT_CHOOSE_PARAM))));
-        paymentDTO.setTotal(Double.parseDouble(req.getParameter(EntityConstants.PAYMENT_TOTAL_PARAM).toString()));
+        paymentDTO.setTotal(Double.parseDouble(req.getParameter(EntityConstants.PAYMENT_TOTAL_PARAM).toString().replace(",",".")));
         paymentDTO.setDescription("Пополнение мобильного: " + req.getParameter(EntityConstants.PAYMENT_MOBILE_PARAM)+"\n"+ req.getParameter(EntityConstants.PAYMENT_DESCRIPTION_PARAM));
         paymentDTO.setDatePayment(datePayment);
         return paymentDTO;

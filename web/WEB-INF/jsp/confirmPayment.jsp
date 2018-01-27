@@ -38,13 +38,6 @@
                 </tr>
             </table>
             <ul>
-                <li>${payment.getPaymentNameDTO().paymentName}</li>
-                <c:if test="${not empty mobileNum}">
-                    <li>${mobileNum}</li>
-                </c:if>
-                <c:if test="${not empty accountId}">
-                    <li>На счет [${accountId}]</li>
-                </c:if>
                 <li>${payment.getDescription()}</li>
                 <li>${payment.getTotal()}</li>
                 <li>${payment.getDatePayment()}</li>

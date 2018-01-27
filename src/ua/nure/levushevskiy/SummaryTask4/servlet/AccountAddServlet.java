@@ -63,6 +63,8 @@ public class AccountAddServlet extends HttpServlet {
     @Override
     protected void doPost(HttpServletRequest req, HttpServletResponse resp) throws ServletException, IOException {
         HttpSession session = req.getSession();//создаем сессию
+        session.removeAttribute(EntityConstants.ERROR_CONTAINER_PARAM);
+        session.removeAttribute(EntityConstants.OPERATION_SUCCESSFUL);
         try {
             AccountDTO accountDTO = getAccountFromRequest(req);
             accountService.saveAccount(accountDTO);

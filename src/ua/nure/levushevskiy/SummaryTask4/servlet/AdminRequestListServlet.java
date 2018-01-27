@@ -37,7 +37,6 @@ public class AdminRequestListServlet extends HttpServlet {
     }
     @Override
     protected void doGet(HttpServletRequest req, HttpServletResponse resp) throws ServletException, IOException {
-        HttpSession session = req.getSession();
         List<AccountDTO> accountDTOList = accountService.getAll();
         accountDTOList = removeAccount(accountDTOList);
         if(req.getParameter(EntityConstants.SORT_ACCOUNT)!=null){
@@ -60,6 +59,7 @@ public class AdminRequestListServlet extends HttpServlet {
     @Override
     protected void doPost(HttpServletRequest req, HttpServletResponse resp) throws ServletException, IOException {
         HttpSession session = req.getSession();
+        session.removeAttribute(EntityConstants.ERROR_CONTAINER_PARAM);
         int accountId = Integer.parseInt(req.getParameter(EntityConstants.ACCOUNT_CHOOSE_PARAM));
         if(accountService.updateAccountStatusById(accountId, req.getParameter(EntityConstants.STATUS_PARAM)))
         {

@@ -72,8 +72,6 @@ public class PaymentWaitServlet extends HttpServlet {
         HttpSession session = req.getSession();
         PaymentDTO paymentDTO = paymentService.getById(Integer.parseInt(req.getParameter(EntityConstants.PAYMENT_CHOOSE_PARAM)));
         session.setAttribute(EntityConstants.PAYMENT_PARAM, paymentDTO);
-        if(paymentDTO.getPaymentNameDTO().getPaymentName().equals("Transfer to the card"))
-            session.setAttribute(EntityConstants.TRANSFER_PAYMENT,true);
         resp.sendRedirect(Mapping.CONFIRM_PAYMENT);
     }
 

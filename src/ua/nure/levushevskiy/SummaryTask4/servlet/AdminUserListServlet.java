@@ -52,6 +52,7 @@ public class AdminUserListServlet extends HttpServlet {
     @Override
     protected void doPost(HttpServletRequest req, HttpServletResponse resp) throws ServletException, IOException {
         HttpSession session = req.getSession();
+        session.removeAttribute(EntityConstants.ERROR_CONTAINER_PARAM);
         int userId = Integer.parseInt(req.getParameter(EntityConstants.USER_CHOOSE_PARAM));
         if(userService.updateUserStatus(userId,req.getParameter(EntityConstants.STATUS_PARAM)))
         {

@@ -43,6 +43,7 @@ public class RegistrationServlet extends HttpServlet{
 	protected final void doPost(final HttpServletRequest req, final HttpServletResponse resp) throws ServletException, IOException {
 		HttpSession session = req.getSession();//создаем сессию
 		session.removeAttribute(EntityConstants.ERROR_CONTAINER_PARAM);
+		session.removeAttribute(EntityConstants.OPERATION_SUCCESSFUL);
 		req.setCharacterEncoding("UTF-8");
 		UserDTO userDTO = getUserFromRequest(req);
 		Map<String, String> errorContainer = new HashMap<>();

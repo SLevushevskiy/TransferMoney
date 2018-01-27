@@ -22,7 +22,7 @@ import java.sql.Date;
 import java.util.ArrayList;
 import java.util.List;
 
-import static ua.nure.levushevskiy.SummaryTask4.util.View.PAYMENT_RECHARGE_JSP;
+
 import static ua.nure.levushevskiy.SummaryTask4.util.View.PAYMENT_TRANSFER_JSP;
 
 @WebServlet("/transferPayment")
@@ -45,8 +45,6 @@ public class TransferPaymentServlet extends HttpServlet {
     @Override
     protected void doGet(HttpServletRequest req, HttpServletResponse resp) throws ServletException, IOException {
         HttpSession session = req.getSession();
-        List<PaymentNameDTO> paymentNameDTOList = paymentNameService.getAll();
-        req.setAttribute(EntityConstants.PAYMENT_NAME_LIST_PARAM, paymentNameDTOList);
         List<AccountDTO> accountDTOList = accountService.getAll();
         accountDTOList = removeAccount(accountDTOList, Integer.parseInt(session.getAttribute(EntityConstants.USER_ID_PARAM).toString()));
         req.setAttribute(EntityConstants.ACCOUNT_LIST_PARAM, accountDTOList);
@@ -56,33 +54,27 @@ public class TransferPaymentServlet extends HttpServlet {
     @Override
     protected void doPost(HttpServletRequest req, HttpServletResponse resp) throws ServletException, IOException {
         HttpSession session = req.getSession();//создаем сессию
+        session.removeAttribute(EntityConstants.OPERATION_SUCCESSFUL);
         req.setCharacterEncoding("UTF-8");
         try {
             int accountId = Integer.parseInt(req.getParameter(EntityConstants.ACCOUNT_CHOOSE_PARAM));
             AccountDTO accountDTO = accountService.getById(accountId);
-            PaymentDTO paymentDTO = getPaymentFromRequest(req);
             AccountDTO accountDTO2 = accountService.getById(Integer.parseInt(req.getParameter(EntityConstants.ACCOUNT_ID_PARAM)));
+            PaymentDTO paymentDTO = getPaymentFromRequest(req,accountDTO2);
             paymentDTO = paymentService.savePayment(paymentDTO);
             if (!accountDTO2.getAccountStatusDTO().getStatus().equals("active")) {
-                session.setAttribute(EntityConstants.OPERATION_SUCCESSFUL, "Операция не выполнена! Карта получателя заблокирована.");
+                session.setAttribute(EntityConstants.OPERATION_SUCCESSFUL, "Операция не может быть выполнена! Карта получателя заблокирована. Платеж отправлен в ожидание.");
                 resp.sendRedirect(View.Mapping.PAYMENT_TRANSFER + "#zatemnenie");//redirect
                 return;
             }
             if (accountDTO.getAmound() + paymentDTO.getTotal() < 0) {
-                session.setAttribute(EntityConstants.OPERATION_SUCCESSFUL, "Операция не выполнена! Недостаточно средств.");
+                session.setAttribute(EntityConstants.OPERATION_SUCCESSFUL, "Операция не может быть выполнена! Недостаточно средств. Платеж отправлен в ожидание.");
                 resp.sendRedirect(View.Mapping.PAYMENT_TRANSFER + "#zatemnenie");//redirect
                 return;
             }
-            session.setAttribute(EntityConstants.PAYMENT_NAME_PARAM, paymentNameService.getById(1));//для 2-го платежа пополнение
-            session.setAttribute(EntityConstants.ACCOUNT_ID_PARAM, req.getParameter(EntityConstants.ACCOUNT_ID_PARAM));
-            session.setAttribute(EntityConstants.ACCOUNT_NAME_PARAM, accountDTO.getAccountNameDTO().getName());
-            session.setAttribute(EntityConstants.ACCOUNT_AMOUND_PARAM, accountDTO.getAmound());
-           // session.setAttribute(EntityConstants.ACCOUNT_CHOOSE_PARAM, accountId);
-            session.setAttribute(EntityConstants.TRANSFER_PAYMENT, true);
             session.setAttribute(EntityConstants.PAYMENT_PARAM, paymentDTO);
-           // session.setAttribute(EntityConstants.ACCOUNT_ID_PARAM, req.getParameter(EntityConstants.ACCOUNT_ID_PARAM));
         }catch (Exception e){
-            session.setAttribute(EntityConstants.OPERATION_SUCCESSFUL, "Ошибка! Повторите операцию.");
+            session.setAttribute(EntityConstants.OPERATION_SUCCESSFUL, "Ошибка! Проверьте корректность заполнения формы.");
             resp.sendRedirect(View.Mapping.PAYMENT_TRANSFER+"#zatemnenie");//redirect
             return;
         }
@@ -104,15 +96,15 @@ public class TransferPaymentServlet extends HttpServlet {
      * @param req - request.
      * @return - formed object with the received data.
      */
-    private PaymentDTO getPaymentFromRequest(final HttpServletRequest req) {
+    private PaymentDTO getPaymentFromRequest(final HttpServletRequest req,AccountDTO accountDTO) {
+        String description = "Перевод на счет "+accountDTO.getAccountNameDTO().getName() +" [ "+accountDTO.getIdAccount()+" ].\n"+
+                accountDTO.getUserDTO().getName()+" " + accountDTO.getUserDTO().getSurname()+"\n\nКомментарий: ";
         Date datePayment = new Date(System.currentTimeMillis());
-
         PaymentDTO paymentDTO = new PaymentDTO();
-        //ВЫБОР СЧЕТА НА ВИЮХЕ ДЛЯ ОПЛАТЫ
         paymentDTO.setPaymentNameDTO(paymentNameService.getById(Integer.parseInt(req.getParameter(EntityConstants.PAYMENT_NAME_PARAM))));
         paymentDTO.setAccountDTO(accountService.getById(Integer.parseInt(req.getParameter(EntityConstants.ACCOUNT_CHOOSE_PARAM))));
-        paymentDTO.setTotal(Double.parseDouble(req.getParameter(EntityConstants.PAYMENT_TOTAL_PARAM).toString()));
-        paymentDTO.setDescription((String) req.getParameter(EntityConstants.PAYMENT_DESCRIPTION_PARAM));
+        paymentDTO.setTotal(Double.parseDouble(req.getParameter(EntityConstants.PAYMENT_TOTAL_PARAM).toString().replace(",",".")));
+        paymentDTO.setDescription(description + req.getParameter(EntityConstants.PAYMENT_DESCRIPTION_PARAM));
         paymentDTO.setDatePayment(datePayment);
         return paymentDTO;
     }
