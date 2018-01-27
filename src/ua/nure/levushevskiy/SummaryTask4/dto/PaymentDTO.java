@@ -64,7 +64,7 @@ public class PaymentDTO {
             this.total = total;
         }
         else {
-            this.total = -Math.abs(total);
+            this.total = total<0?total:-total;
         }
     }
 

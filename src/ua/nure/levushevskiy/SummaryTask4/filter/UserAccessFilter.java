@@ -22,7 +22,7 @@ public class UserAccessFilter implements Filter {
     /**
      * The Logger object for logging events of filter class.
      */
-    private static final Logger LOG = Logger.getLogger(AdminAccessFilter.class);
+    private static final Logger LOG = Logger.getLogger(UserAccessFilter.class);
 
     @Override
     public final void init(final FilterConfig filterConfig) throws ServletException {

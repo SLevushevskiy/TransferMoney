@@ -20,6 +20,10 @@ public class AccountDAOImpl implements AccountDAO {
      */
     public static final String SQL_SELECT_BY_ID = "SELECT * FROM st4db.account WHERE idAccount = ?";
     /**
+     * Request to retrieve all account objects by ID.
+     */
+    public static final String SQL_SELECT_BY_DATE = "SELECT * FROM st4db.account WHERE end_date = ?";
+    /**
      * Request to retrieve all account objects.
      */
     public static final String SQL_SELECT_ALL = "SELECT * FROM st4db.account";
@@ -302,6 +306,37 @@ public class AccountDAOImpl implements AccountDAO {
             throw new DAOException("Error while extraction result set!", e);
         } finally {
             closeConnection(connection);
+        }
+        return accountList;
+    }
+
+    /**
+     * Method for retrieving all table objects by date.
+     *
+     * @return - got objects.
+     */
+    public List<Account> getAllByDate(Date date) {
+        List<Account> accountList = null;
+
+        Connection connection = null;
+        try {
+            connection = dataSource.getConnection();
+        } catch (SQLException e) {
+            LOG.error(e);
+            throw new DAOException("Cannot get connection!", e);
+        }
+        ResultSet rs = null;
+        try (PreparedStatement preparedStatement = connection.prepareStatement(SQL_SELECT_BY_DATE)) {
+            preparedStatement.setDate(1, date);
+            rs = preparedStatement.executeQuery();
+            accountList = extractResultSet(rs);
+
+        } catch (SQLException e) {
+            LOG.error(e);
+            throw new DAOException("Error while extraction result set!", e);
+        } finally {
+            closeConnection(connection);
+            closeResultSet(rs);
         }
         return accountList;
     }

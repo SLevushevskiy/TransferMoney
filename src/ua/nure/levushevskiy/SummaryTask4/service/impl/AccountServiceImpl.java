@@ -10,6 +10,7 @@ import ua.nure.levushevskiy.SummaryTask4.service.api.AccountStatusService;
 import ua.nure.levushevskiy.SummaryTask4.service.api.UserService;
 import ua.nure.levushevskiy.SummaryTask4.util.Transformer;
 
+import java.sql.Date;
 import java.util.List;
 
 public class AccountServiceImpl implements AccountService{
@@ -70,6 +71,19 @@ public class AccountServiceImpl implements AccountService{
     @Override
     public AccountDTO getById(int id) {
         return Transformer.account2AccountDTO(accountDAO.getById(id), userService, accountNameService, accountStatusService);
+    }
+
+    public boolean blockAccountByDate(){
+        Date date = new Date(System.currentTimeMillis());
+        List<Account> accountList = accountDAO.getAllByDate(date);
+        if(!accountList.isEmpty()){
+            for (Account account : accountList ) {
+                accountDAO.updateAccountStatus((int)account.getIdAccount(),"blocked");
+            }
+            return true;
+        }else {
+            return false;
+        }
     }
 
     /**
