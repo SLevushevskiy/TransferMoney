@@ -263,5 +263,12 @@ h1 { color: #ffffff;
 .help form#reg{
 	display: inline-block;
 	width: auto;
+}
 
+select{
+	border-radius: 5px;
+}
+.help p{
+	vertical-align: top;
+	display: inline-block;
 }

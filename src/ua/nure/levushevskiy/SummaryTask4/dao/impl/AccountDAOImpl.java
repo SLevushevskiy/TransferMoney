@@ -258,11 +258,11 @@ public class AccountDAOImpl implements AccountDAO {
     /**
      * Method to delete an object.
      *
-     * @param account - object to be deleted.
+     * @param accountId - id object to be deleted.
      * @return - true (if object was removed).
      */
     @Override
-    public boolean delete(Account account) {
+    public boolean delete(Integer accountId) {
         return false;
     }
 

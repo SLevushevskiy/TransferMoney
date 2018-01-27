@@ -12,9 +12,13 @@ INSERT INTO `st4db`.`payment_status` (`idPayment_status`, `status`) VALUES ('2',
 
 INSERT INTO `st4db`.`payment_name` (`idpayment_name`, `payment_name`, `payment_type_id`) VALUES ('1', 'Recharge account', '1');
 INSERT INTO `st4db`.`payment_name` (`idpayment_name`, `payment_name`, `payment_type_id`) VALUES ('2', 'Transfer to the card', '2');
+INSERT INTO `st4db`.`payment_name` (`idpayment_name`, `payment_name`, `payment_type_id`) VALUES ('3', 'Refill phone', '2');
+
 
 INSERT INTO `st4db`.`user_role` (`idUserRole`, `rank`) VALUES ('1', 'user');
 INSERT INTO `st4db`.`user_role` (`idUserRole`, `rank`) VALUES ('2', 'admin');
 
 INSERT INTO `st4db`.`user_status` (`idUser_status`, `status`) VALUES ('1', 'active');
 INSERT INTO `st4db`.`user_status` (`idUser_status`, `status`) VALUES ('2', 'blocked');
+
+INSERT INTO `st4db`.`user` (`idUser`, `Name`, `Surname`, `email`, `password`, `Role_id`, `UserStatus_id`) VALUES ('1', 'Admin', 'Root', 'root@gmail.com', 'ff9830c42660c1dd1942844f8069b74a', '2', '1');

@@ -51,12 +51,14 @@ public class PaymentServiceImpl implements PaymentService {
      */
     @Override
     public PaymentDTO savePayment(PaymentDTO paymentDTO) {
-        Payment account = Transformer.paymentDTO2Payment(paymentDTO);
-        paymentDTO =  Transformer.payment2PaymentDTO(paymentDAO.save(account),accountService, paymentStatusService, paymentNameService);
+        Payment payment = Transformer.paymentDTO2Payment(paymentDTO);
+        paymentDTO =  Transformer.payment2PaymentDTO(paymentDAO.save(payment),accountService, paymentStatusService, paymentNameService);
         LOG.info("New account was added!");
         //LOG.info("Sending confirmation letter.");
         return paymentDTO;
     }
+
+
 
     /**
      * Getting payment by id.
@@ -67,6 +69,22 @@ public class PaymentServiceImpl implements PaymentService {
     @Override
     public PaymentDTO getById(int id) {
         return Transformer.payment2PaymentDTO(paymentDAO.getById(id),accountService, paymentStatusService, paymentNameService);
+    }
+
+    /**
+     * Delete payment by id.
+     *
+     * @param id - payment id.
+     * @return - PaymentDTO object.
+     */
+    @Override
+    public boolean delete(int id) {
+        boolean key = paymentDAO.delete(id);
+        if(key)
+            LOG.info("Payment was delete!");
+        else
+            LOG.info("Payment was not delete!");
+        return key;
     }
 
     /**

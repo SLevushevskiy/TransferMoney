@@ -102,7 +102,7 @@ CREATE TABLE `st4db`.`payment` (
   `idPayment` INT NOT NULL auto_increment,
   `date` DATETIME NOT NULL,
   `total` DECIMAL NOT NULL,
-  `description` VARCHAR(45) NOT NULL,
+  `description` VARCHAR(246) NOT NULL,
   `account_id` INT NOT NULL,
   `status_id` INT NOT NULL,
   `payment_name_id` INT NOT NULL,

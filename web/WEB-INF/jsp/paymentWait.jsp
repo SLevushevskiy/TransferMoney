@@ -22,7 +22,7 @@
     <section id="top" class="one dark cover">
         <div class="container">
             <c:if test="${empty paymentList}">
-                <fmt:message key="label.operation.empty" bundle="${bundle}"/>
+                <fmt:message key="label.operation.wait.empty" bundle="${bundle}"/>
             </c:if>
             <c:if test="${not empty paymentList}">
             <form action="paymentWait" method="get">
@@ -53,6 +53,10 @@
                                     <input type="hidden" name="paymentChoose" value="${payment.getIdPayment()}">
                                     <input type="submit" value="<fmt:message key="label.payment.submit" bundle="${bundle}"/>">
                                 </form>
+                            </td>
+                            <td>
+                                    <a href="${pageContext.servletContext.contextPath}/paymentDelete?paymentChoose=${payment.getIdPayment()}">
+                                        <span class="icon icon fa-trash-o"></span></a>
                             </td>
                         </tr>
                     </c:forEach>

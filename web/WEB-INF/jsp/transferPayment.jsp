@@ -21,10 +21,9 @@
     <!-- Intro -->
     <section id="top" class="one dark cover">
         <div class="container">
+            <h2><fmt:message key="title.payment.transfer" bundle="${bundle}"/></h2>
             <form action="transferPayment" method="post">
                 <input type="hidden" name="paymentName" value="2" />
-                <input type="text" value="<fmt:message key="title.payment.transfer" bundle="${bundle}"/>" disabled/>
-
                 <select name="accountChoose">
                     <option disabled selected ><fmt:message key="label.account.choose" bundle="${bundle}"/></option>
                     <c:forEach items="${accountList}" var="accountN">

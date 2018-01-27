@@ -221,7 +221,7 @@ public class UserDAOImpl implements UserDAO {
     }
 
     @Override
-    public final boolean delete(final User t) {
+    public final boolean delete(Integer userId) {
         return false;
     }
 

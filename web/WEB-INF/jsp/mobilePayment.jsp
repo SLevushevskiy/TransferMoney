@@ -22,9 +22,9 @@
     <!-- Intro -->
     <section id="top" class="one dark cover">
         <div class="container">
+            <h2><fmt:message key="title.payment.mobile" bundle="${bundle}"/></h2>
             <form action="mobilePayment" method="post">
                 <input type="hidden" name="paymentName" value="3" />
-                <input type="text" value="<fmt:message key="title.payment.mobile" bundle="${bundle}"/>" disabled/>
                 <select name="accountChoose">
                     <option disabled selected ><fmt:message key="label.account.choose" bundle="${bundle}"/></option>
                     <c:forEach items="${accountList}" var="accountN">

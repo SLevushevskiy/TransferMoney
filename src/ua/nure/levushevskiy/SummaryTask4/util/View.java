@@ -47,6 +47,7 @@ public class View {
         public static final String PAYMENT_TRANSFER = "/transferPayment";
         public static final String ADMIN_REQUEST_LIST = "/adminRequestList";
         public static final String ACCOUNT_ADD = "/accountAdd";
+        public static final String PAYMENT_WAIT = "/paymentWait";
 
         private Mapping() { }
     }

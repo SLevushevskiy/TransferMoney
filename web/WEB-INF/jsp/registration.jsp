@@ -1,16 +1,10 @@
 <%@ page contentType="text/html;charset=UTF-8" pageEncoding="UTF-8" language="java" %>
-<%@ page isELIgnored="false" %>
-<%@ taglib uri="http://java.sun.com/jsp/jstl/core" prefix="c" %>
-<%@ taglib prefix="fmt" uri="http://java.sun.com/jsp/jstl/fmt" %>
-<%@ taglib prefix="t" tagdir="/WEB-INF/tags" %>
-
-<fmt:requestEncoding value="UTF-8" />
-<c:set var="language" value="${not empty param.language ? param.language : not empty language ? language : pageContext.request.locale}" scope="session" />
-<fmt:setLocale value="${language}" />
-<fmt:setBundle basename="resources" var="bundle"/>
+<!-- tagLib -->
+<%@ include file="/WEB-INF/tags/tagLib.jspf" %>
 
 <!DOCTYPE HTML>
 <html>
+<c:set var="fromUrl" scope="request" value="accountList" />
 <head>
     <title><fmt:message key="title.registration" bundle="${bundle}"/></title>
     <link href='/assets/css/style.css' rel='stylesheet' type='text/css'>
@@ -50,7 +44,7 @@
         </div>
     </div>
 
-    <div class="middle clearfix">
+    <div class="middle">
         <aside class="right-sidebar">
             <div id="login-form">
                 <h2><fmt:message key="title.registration" bundle="${bundle}"/></h2>
@@ -73,8 +67,8 @@
                     <form id="reg" action="localization" method="GET">
                         <input type="hidden" name="from" value="registration">
                         <select id="language" name="local" onchange="submit()">
-                            <option value="en" ${language == 'en' ? 'selected' : ''}>En</option>
-                            <option value="ru" ${language == 'ru' ? 'selected' : ''}>Ru</option>
+                            <option value="en" ${language == 'en' ? 'selected' : ''}><fmt:message key="localization.en" bundle="${bundle}"/></option>
+                            <option value="ru" ${language == 'ru' ? 'selected' : ''}><fmt:message key="localization.ru" bundle="${bundle}"/></option>
                         </select>
                     </form>
                     <p>

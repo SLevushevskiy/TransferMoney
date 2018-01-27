@@ -29,10 +29,10 @@ public interface DAO<T, ID> {
     /**
      * Method to delete an object.
      *
-     * @param t - object to be deleted.
+     * @param id - ID.
      * @return - true (if object was removed).
      */
-    boolean delete(T t);
+    boolean delete(ID id);
 
     /**
      * Method for updating the state of an object in a table.

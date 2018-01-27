@@ -31,6 +31,10 @@ public class PaymentDAOImpl implements PaymentDAO {
      */
     public static final String SQL_UPDATE_PAYMENT_STATUS = "UPDATE st4db.payment SET status_id = "
             + "(SELECT idPayment_status FROM st4db.payment_status WHERE status = ?) WHERE idPayment = ?";
+    /**
+     * Request to delete payment objects .
+     */
+    public static final String SQL_DELETE_PAYMENT = " DELETE FROM st4db.payment WHERE idPayment = ?";
 
     /**
      * Object of connection pool.
@@ -171,12 +175,33 @@ public class PaymentDAOImpl implements PaymentDAO {
     /**
      * Method to delete an object.
      *
-     * @param payment - object to be deleted.
+     * @param paymentId - id object to be deleted.
      * @return - true (if object was removed).
      */
     @Override
-    public boolean delete(Payment payment) {
+    public boolean delete(Integer paymentId) {
+
+        Connection connection = null;
+        try {
+            connection = dataSource.getConnection();
+        } catch (SQLException e) {
+            LOG.error(e);
+            throw new DAOException("Cannot get connection!", e);
+        }
+        try (PreparedStatement preparedStatement = connection.prepareStatement(SQL_DELETE_PAYMENT)) {
+            preparedStatement.setLong(1, paymentId);
+            int changes = preparedStatement.executeUpdate();
+            if (changes > 0) {
+                return true;
+            }
+        } catch (SQLException e) {
+            LOG.error(e);
+            throw new DAOException("Error while extraction result set!", e);
+        } finally {
+            closeConnection(connection);
+        }
         return false;
+
     }
 
     /**

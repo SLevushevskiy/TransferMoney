@@ -3,28 +3,28 @@
     width: 100%;
     height: 100%;
     position: absolute;
-    top: 0;
-    left: 0;
     display: none;
+    text-align: center;
 }
 #okno {
-    width: 500px;
-    height: 120px;
+    width: auto;
+    height: auto;
     font-family: 'Open Sans', sans-serif;
     font-size: 14px;
-    text-align: left;
+    text-align: center;
     padding: 15px;
     border: 3px solid rgba(144, 60, 235, 0.45);
     border-radius: 10px;
     color: #0000cc;
     position: absolute;
-    top: 0;
-    right: 0;
-    bottom: 0;
-    left: 0;
     margin: auto;
     background: #fff;
     z-index: 100;
+    display: inline-block;
+}
+
+#okno ul{
+    text-align: left;
 }
 #zatemnenie:target {
     display: block;
@@ -35,7 +35,7 @@
     margin-left: 130px;
     display: inline-block;
     border: 1px solid #0000cc;
-    border-radius: 2px;
+    border-radius: 5px;
     color: #0000cc;
     padding: 0 12px;
     text-decoration: none;

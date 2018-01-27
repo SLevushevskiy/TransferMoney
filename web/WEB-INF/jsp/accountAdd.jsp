@@ -13,15 +13,16 @@
 </head>
 <body>
 
-<!-- Header -->
-<%@ include file="/WEB-INF/tags/header.jspf" %>
 <!-- WindowError -->
 <%@ include file="/WEB-INF/tags/windowError.jspf" %>
+<!-- Header -->
+<%@ include file="/WEB-INF/tags/header.jspf" %>
 <!-- Main -->
 <div id="main">
     <!-- Intro -->
     <section id="top" class="one dark cover">
         <div class="container">
+            <h2><fmt:message key="title.account.add" bundle="${bundle}"/></h2>
             <form action="accountAdd" method="post">
                 <select name="accountName">
                     <option disabled selected ><fmt:message key="label.account.choose" bundle="${bundle}"/></option>

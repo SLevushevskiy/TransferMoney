@@ -1,17 +1,13 @@
 <%@ page contentType="text/html;charset=UTF-8" pageEncoding="UTF-8" language="java" %>
-<%@ page isELIgnored="false" %>
-<%@ taglib uri="http://java.sun.com/jsp/jstl/core" prefix="c" %>
-<%@ taglib prefix="fmt" uri="http://java.sun.com/jsp/jstl/fmt" %>
-<%@ taglib prefix="t" tagdir="/WEB-INF/tags" %>
+<!-- tagLib -->
+<%@ include file="/WEB-INF/tags/tagLib.jspf" %>
 
-<fmt:requestEncoding value="UTF-8"/>
-<c:set var="language" value="${not empty param.language ? param.language : not empty language ? language : pageContext.request.locale}" scope="session" />
-<fmt:setLocale value="${language}" />
-<fmt:setBundle basename="resources" var="bundle"/>
-
+<!DOCTYPE HTML>
 <html>
+<c:set var="fromUrl" scope="request" value="accountList" />
 <head>
     <title><fmt:message key="title.authorisation" bundle="${bundle}"/></title>
+    <meta charset="utf-8" />
     <link rel="stylesheet" href="assets/css/style.css" media="screen" type='text/css' />
     <link rel="stylesheet" href="assets/css/window.css" media="screen" type='text/css' />
     <link href='http://fonts.googleapis.com/css?family=Open+Sans:400,700' rel='stylesheet' type='text/css'>
@@ -43,11 +39,11 @@
                         <form id="reg" action="localization" method="GET">
                             <input type="hidden" name="from" value="authorisation">
                             <select id="language" name="local" onchange="submit()">
-                                <option value="en" ${language == 'en' ? 'selected' : ''}>En</option>
-                                <option value="ru" ${language == 'ru' ? 'selected' : ''}>Ru</option>
+                                <option value="en" ${language == 'en' ? 'selected' : ''}><fmt:message key="localization.en" bundle="${bundle}"/></option>
+                                <option value="ru" ${language == 'ru' ? 'selected' : ''}><fmt:message key="localization.ru" bundle="${bundle}"/></option>
                             </select>
                         </form>
-                    <p><a href="${pageContext.servletContext.contextPath}/registration"><fmt:message key="title.registration" bundle="${bundle}"/>&nbsp;<span class="fontawesome-arrow-right"></span></a>
+                    <p>&nbsp;|&nbsp;<a href="${pageContext.servletContext.contextPath}/registration"><fmt:message key="title.registration" bundle="${bundle}"/>&nbsp;<span class="fontawesome-arrow-right"></span></a>
                     </p>
                     </div>
                 </fieldset>

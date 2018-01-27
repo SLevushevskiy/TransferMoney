@@ -26,6 +26,14 @@ public interface PaymentService {
     PaymentDTO getById(int id);
 
     /**
+     * Delete payment by id.
+     *
+     * @param id - payment id.
+     * @return - PaymentDTO object.
+     */
+    boolean delete(int id);
+
+    /**
      * Getting all payments.
      *
      * @return list of payments.
