@@ -1,6 +1,7 @@
 package ua.nure.levushevskiy.SummaryTask4.servlet;
 
 import com.itextpdf.text.*;
+import com.itextpdf.text.pdf.BaseFont;
 import com.itextpdf.text.pdf.PdfWriter;
 import ua.nure.levushevskiy.SummaryTask4.dto.PaymentDTO;
 import ua.nure.levushevskiy.SummaryTask4.exception.InitializationException;
@@ -15,6 +16,7 @@ import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 import java.io.IOException;
 import java.io.OutputStream;
+import java.util.ResourceBundle;
 
 @WebServlet("/savePdfReport")
 public class SavePdfReportServlet extends HttpServlet {
@@ -71,16 +73,21 @@ public class SavePdfReportServlet extends HttpServlet {
     }
 
     private void createReport(PaymentDTO paymentDTO,  Document document) throws Exception {
-        Font font = new Font(Font.FontFamily.HELVETICA,
+
+        ResourceBundle resourceBundle = ResourceBundle.getBundle("resources");
+        BaseFont baseFont = BaseFont.createFont("C:\\Users\\Serg\\Google Диск\\Epam\\Проект\\Payments\\web\\assets\\fonts\\Tahoma.ttf", BaseFont.IDENTITY_H, true);
+
+
+        Font font = new Font(baseFont,
                 16, Font.NORMAL);
         font.setColor(BaseColor.BLUE);
-        Font font1 = new Font(Font.FontFamily.HELVETICA,
+        Font font1 = new Font(baseFont,
                 32, Font.BOLD);
-        Font font2 = new Font(Font.FontFamily.HELVETICA,
+        Font font2 = new Font(baseFont,
                 16, Font.ITALIC | Font.UNDERLINE);
 
         // отцентрированный параграф
-        Paragraph title = new Paragraph("Report of payment", font1);
+        Paragraph title = new Paragraph(resourceBundle.getString("title.payment.report"), font1);
         title.setAlignment(Element.ALIGN_CENTER);
         title.setSpacingAfter(32);
         document.add(title);
@@ -89,7 +96,7 @@ public class SavePdfReportServlet extends HttpServlet {
         Paragraph chunkParagraph = new Paragraph();
         chunkParagraph.setFont(font2);
         chunkParagraph.setSpacingAfter(8);
-        chunkParagraph.add(new Chunk("Payment ID :"));
+        chunkParagraph.add(new Chunk(resourceBundle.getString("label.payment.id")+": "));
         chunkParagraph.setFont(font);
         chunkParagraph.add(new Chunk("\t"+paymentDTO.getIdPayment()));
         document.add(chunkParagraph);
@@ -97,13 +104,13 @@ public class SavePdfReportServlet extends HttpServlet {
         chunkParagraph = new Paragraph();
         chunkParagraph.setFont(font2);
         chunkParagraph.setSpacingAfter(8);
-        chunkParagraph.add(new Chunk("Payment name:"));
+        chunkParagraph.add(new Chunk(resourceBundle.getString("label.payment.name")+": "));
         chunkParagraph.setFont(font);
         chunkParagraph.add(new Chunk("\t"+paymentDTO.getPaymentNameDTO().getPaymentName()));
         document.add(chunkParagraph);
 
         // параграф с текстом
-        Paragraph description = new Paragraph("Description: ", font2);
+        Paragraph description = new Paragraph(resourceBundle.getString("label.payment.description")+": ", font2);
         description.setSpacingAfter(8);
         document.add(description);
 
@@ -116,7 +123,7 @@ public class SavePdfReportServlet extends HttpServlet {
         chunkParagraph = new Paragraph();
         chunkParagraph.setFont(font2);
         chunkParagraph.setSpacingAfter(8);
-        chunkParagraph.add(new Chunk("Date of payment:"));
+        chunkParagraph.add(new Chunk(resourceBundle.getString("report.payment.date")+": "));
         chunkParagraph.setFont(font);
         chunkParagraph.add(new Chunk("\t"+paymentDTO.getDatePayment()));
         document.add(chunkParagraph);
@@ -125,7 +132,7 @@ public class SavePdfReportServlet extends HttpServlet {
         chunkParagraph = new Paragraph();
         chunkParagraph.setFont(font2);
         chunkParagraph.setSpacingAfter(8);
-        chunkParagraph.add(new Chunk("Total of payment:"));
+        chunkParagraph.add(new Chunk(resourceBundle.getString("report.payment.total")+": "));
         chunkParagraph.setFont(font);
         chunkParagraph.add(new Chunk("\t"+paymentDTO.getTotal()));
         document.add(chunkParagraph);
