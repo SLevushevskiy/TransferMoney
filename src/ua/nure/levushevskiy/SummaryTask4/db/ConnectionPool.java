@@ -44,7 +44,6 @@ public class ConnectionPool {
         String url = bundle.getString("db.url");
         String user = bundle.getString("db.user");
         String password = bundle.getString("db.password");
-//тут крашится
         ds = new BasicDataSource();
         ds.setDriverClassName("com.mysql.jdbc.Driver");
         ds.setUsername(user);

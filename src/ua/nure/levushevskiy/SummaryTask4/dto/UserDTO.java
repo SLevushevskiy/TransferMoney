@@ -1,8 +1,5 @@
 package ua.nure.levushevskiy.SummaryTask4.dto;
 
-import ua.nure.levushevskiy.SummaryTask4.entity.UserRole;
-import ua.nure.levushevskiy.SummaryTask4.entity.UserStatus;
-
 public class UserDTO {
 
     private long idUser;

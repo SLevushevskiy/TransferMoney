@@ -36,10 +36,7 @@ public class UserAccessFilter implements Filter {
         HttpServletResponse resp = (HttpServletResponse) servletResponse;
         HttpSession session = req.getSession();
         UserDTO userDTO = null;
-        String n =req.getServletPath();
-
-      //  if (!(req.getServletPath().equals(View.Mapping.REGISTRATION)||req.getServletPath().equals(View.Mapping.AUTHORIZATION)||req.getServletPath().equals("/localization"))){
-            if (session.getAttribute(EntityConstants.USER_PARAM) != null) {
+           if (session.getAttribute(EntityConstants.USER_PARAM) != null) {
                 userDTO = (UserDTO) session.getAttribute(EntityConstants.USER_PARAM);
                 if (userDTO.getUserStatusDTO().getStatus().equals("blocked")) {
                     req.setAttribute(ERROR_PARAM, "You was blocked by admin.");
@@ -51,7 +48,6 @@ public class UserAccessFilter implements Filter {
                 resp.sendRedirect(View.Mapping.AUTHORIZATION);
                 return;
             }
-
         filterChain.doFilter(servletRequest, servletResponse);
     }
 

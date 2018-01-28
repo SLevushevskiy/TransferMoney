@@ -1,8 +1,6 @@
 package ua.nure.levushevskiy.SummaryTask4.servlet;
 
 import ua.nure.levushevskiy.SummaryTask4.dto.PaymentDTO;
-import ua.nure.levushevskiy.SummaryTask4.dto.PaymentNameDTO;
-import ua.nure.levushevskiy.SummaryTask4.dto.PaymentStatusDTO;
 import ua.nure.levushevskiy.SummaryTask4.dto.UserDTO;
 import ua.nure.levushevskiy.SummaryTask4.exception.InitializationException;
 import ua.nure.levushevskiy.SummaryTask4.service.impl.AccountServiceImpl;
@@ -12,7 +10,6 @@ import ua.nure.levushevskiy.SummaryTask4.service.impl.UserServiceImpl;
 import ua.nure.levushevskiy.SummaryTask4.util.Cryptographer;
 import ua.nure.levushevskiy.SummaryTask4.util.EntityConstants;
 import ua.nure.levushevskiy.SummaryTask4.util.View;
-import ua.nure.levushevskiy.SummaryTask4.validation.EmailValidator;
 import ua.nure.levushevskiy.SummaryTask4.validation.PasswordValidator;
 
 import javax.servlet.ServletContext;
@@ -66,8 +63,7 @@ public class ConfirmPayment extends HttpServlet{
 
     @Override
     protected void doPost(HttpServletRequest req, HttpServletResponse resp) throws ServletException, IOException {
-        HttpSession session = req.getSession();//создаем сессию
-        boolean transfer = false;
+        HttpSession session = req.getSession();
         session.removeAttribute(EntityConstants.ERROR_CONTAINER_PARAM);
         Map<String, String> errorContainer = new HashMap<>();
         String password = req.getParameter(EntityConstants.PASSWORD_PARAM);
@@ -82,37 +78,36 @@ public class ConfirmPayment extends HttpServlet{
             session.setAttribute(EntityConstants.OPERATION_SUCCESSFUL, "Операция не выполнена!");
             UserDTO userDTO = userService.getById(Integer.parseInt(session.getAttribute(EntityConstants.USER_ID_PARAM).toString()));
             password = Cryptographer.md5Custom(password);
-            if(userDTO.getPassword().equals(password)){
+            if (userDTO.getPassword().equals(password)) {
                 PaymentDTO paymentDTO = (PaymentDTO) session.getAttribute(EntityConstants.PAYMENT_PARAM);
                 int accountId = (int) paymentDTO.getAccountDTO().getIdAccount();
                 int toAccountId;
-                if(paymentDTO.getPaymentNameDTO().getPaymentName().equals("Transfer to the card")){
+                if (paymentDTO.getPaymentNameDTO().getPaymentName().equals("Transfer to the card")) {
                     toAccountId = toAccountId(paymentDTO.getDescription());
-                    if(!accountService.getById(toAccountId).getAccountStatusDTO().getStatus().equals("active")){
+                    if (!accountService.getById(toAccountId).getAccountStatusDTO().getStatus().equals("active")) {
                         throw new IllegalStateException("Account blocked");
                     }
-                    if(!accountService.changeAccountAmound(accountId, paymentDTO.getTotal())){
+                    if (!accountService.changeAccountAmound(accountId, paymentDTO.getTotal())) {
                         throw new IllegalStateException("Amount is insufficiently");
                     }
                     paymentService.updatePaymentStatusById((int)paymentDTO.getIdPayment(),"sent");
                     paymentDTO = paymentService.getById((int)paymentDTO.getIdPayment());
-                    session.setAttribute(EntityConstants.PAYMENT_PARAM, paymentDTO);//выполнили платеж и в сессию кинули
-
+                    session.setAttribute(EntityConstants.PAYMENT_PARAM, paymentDTO);
                     transferPayment(paymentDTO,toAccountId, req);
                 } else{
-                    if(!accountService.changeAccountAmound(accountId, paymentDTO.getTotal())){
+                    if (!accountService.changeAccountAmound(accountId, paymentDTO.getTotal())) {
                         throw new IllegalStateException("Amount is insufficiently");
                     }
                     paymentService.updatePaymentStatusById((int)paymentDTO.getIdPayment(),"sent");
                     paymentDTO = paymentService.getById((int)paymentDTO.getIdPayment());
-                    session.setAttribute(EntityConstants.PAYMENT_PARAM, paymentDTO);//выполнили платеж и в сессию кинули
+                    session.setAttribute(EntityConstants.PAYMENT_PARAM, paymentDTO);
                 }
                 session.setAttribute(EntityConstants.OPERATION_SUCCESSFUL, "Операция успешна!");
             }
         } catch (Exception e) {
             errorContainer.put(EntityConstants.ERROR_PARAM, e.getMessage());
             session.setAttribute(EntityConstants.ERROR_CONTAINER_PARAM, errorContainer);
-            resp.sendRedirect(View.Mapping.CONFIRM_PAYMENT+"#zatemnenie");
+            resp.sendRedirect(View.Mapping.CONFIRM_PAYMENT + "#zatemnenie");
             return;
         }
         resp.sendRedirect(View.Mapping.REPORT_PAYMENT);

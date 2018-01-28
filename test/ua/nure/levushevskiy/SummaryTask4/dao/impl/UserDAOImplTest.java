@@ -1,6 +1,5 @@
 package ua.nure.levushevskiy.SummaryTask4.dao.impl;
 
-import com.mysql.jdbc.jdbc2.optional.MysqlConnectionPoolDataSource;
 import org.junit.Assert;
 import org.junit.BeforeClass;
 import org.junit.FixMethodOrder;
@@ -14,8 +13,6 @@ import java.beans.PropertyVetoException;
 import java.io.IOException;
 import java.sql.SQLException;
 import java.util.ResourceBundle;
-
-import static org.junit.Assert.*;
 @FixMethodOrder(MethodSorters.NAME_ASCENDING)
 public class UserDAOImplTest {
 
@@ -31,10 +28,8 @@ public class UserDAOImplTest {
         } catch (IOException | SQLException | PropertyVetoException e) {
             throw new IllegalArgumentException("Incorrect database properties!");
         }
-
         userDAO = new UserDAOImpl(dataSource);
         testUser = new User("Name","Surname","email@mail.ru","password",1,1);
-
     }
 
     @Test

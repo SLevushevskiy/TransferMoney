@@ -1,7 +1,6 @@
 package ua.nure.levushevskiy.SummaryTask4.service.impl;
 
 import ua.nure.levushevskiy.SummaryTask4.dao.api.AccountNameDAO;
-import ua.nure.levushevskiy.SummaryTask4.dto.AccountDTO;
 import ua.nure.levushevskiy.SummaryTask4.dto.AccountNameDTO;
 import ua.nure.levushevskiy.SummaryTask4.entity.AccountName;
 import ua.nure.levushevskiy.SummaryTask4.service.api.AccountNameService;

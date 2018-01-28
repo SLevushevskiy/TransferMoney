@@ -1,6 +1,5 @@
 package ua.nure.levushevskiy.SummaryTask4.servlet;
 
-import org.apache.log4j.Logger;
 import ua.nure.levushevskiy.SummaryTask4.dto.UserDTO;
 import ua.nure.levushevskiy.SummaryTask4.exception.InitializationException;
 import ua.nure.levushevskiy.SummaryTask4.service.impl.UserServiceImpl;
@@ -14,7 +13,6 @@ import javax.servlet.ServletException;
 import javax.servlet.annotation.WebServlet;
 import javax.servlet.http.*;
 import java.io.*;
-import java.nio.charset.StandardCharsets;
 import java.util.*;
 
 import static ua.nure.levushevskiy.SummaryTask4.util.View.REGISTRATION_JSP;

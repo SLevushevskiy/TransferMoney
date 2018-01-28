@@ -4,7 +4,6 @@ import ua.nure.levushevskiy.SummaryTask4.dto.AccountDTO;
 import ua.nure.levushevskiy.SummaryTask4.dto.AccountNameDTO;
 import ua.nure.levushevskiy.SummaryTask4.dto.UserDTO;
 import ua.nure.levushevskiy.SummaryTask4.exception.InitializationException;
-import ua.nure.levushevskiy.SummaryTask4.service.api.AccountNameService;
 import ua.nure.levushevskiy.SummaryTask4.service.impl.AccountNameServiceImpl;
 import ua.nure.levushevskiy.SummaryTask4.service.impl.AccountServiceImpl;
 import ua.nure.levushevskiy.SummaryTask4.service.impl.UserServiceImpl;
@@ -23,7 +22,6 @@ import java.sql.Date;
 import java.util.List;
 
 import static ua.nure.levushevskiy.SummaryTask4.util.View.ACCOUNT_ADD_JSP;
-import static ua.nure.levushevskiy.SummaryTask4.util.View.ACCOUNT_LIST_JSP;
 
 @WebServlet("/accountAdd")
 public class AccountAddServlet extends HttpServlet {

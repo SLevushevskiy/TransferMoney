@@ -1,5 +1,6 @@
 INSERT INTO `st4db`.`account_status` (`idAccount_status`, `status`) VALUES ('1', 'active');
 INSERT INTO `st4db`.`account_status` (`idAccount_status`, `status`) VALUES ('2', 'blocked');
+INSERT INTO `st4db`.`account_status` (`idAccount_status`, `status`) VALUES ('3', 'reqActive');
 
 INSERT INTO `st4db`.`account_name` (`idAccount_name`, `name`) VALUES ('1', 'Card for payments');
 INSERT INTO `st4db`.`account_name` (`idAccount_name`, `name`) VALUES ('2', 'Deposit card');

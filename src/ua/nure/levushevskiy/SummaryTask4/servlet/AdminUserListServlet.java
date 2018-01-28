@@ -2,7 +2,6 @@ package ua.nure.levushevskiy.SummaryTask4.servlet;
 
 import ua.nure.levushevskiy.SummaryTask4.dto.UserDTO;
 import ua.nure.levushevskiy.SummaryTask4.exception.InitializationException;
-import ua.nure.levushevskiy.SummaryTask4.service.api.UserService;
 import ua.nure.levushevskiy.SummaryTask4.service.impl.UserServiceImpl;
 import ua.nure.levushevskiy.SummaryTask4.util.EntityConstants;
 import ua.nure.levushevskiy.SummaryTask4.util.View;

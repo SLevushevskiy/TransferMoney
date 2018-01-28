@@ -4,7 +4,6 @@ import ua.nure.levushevskiy.SummaryTask4.dto.AccountDTO;
 import ua.nure.levushevskiy.SummaryTask4.dto.PaymentDTO;
 
 import java.util.Comparator;
-import java.util.List;
 
 /**
  * A class containing a method for sort list.

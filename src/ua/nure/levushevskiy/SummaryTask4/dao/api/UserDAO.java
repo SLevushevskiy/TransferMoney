@@ -1,7 +1,6 @@
 package ua.nure.levushevskiy.SummaryTask4.dao.api;
 
 import ua.nure.levushevskiy.SummaryTask4.entity.User;
-import ua.nure.levushevskiy.SummaryTask4.entity.UserRole;
 
 /**
  * An interface that contains methods for interacting with the database.

@@ -4,8 +4,6 @@ import org.apache.log4j.Logger;
 import ua.nure.levushevskiy.SummaryTask4.dao.api.UserDAO;
 import ua.nure.levushevskiy.SummaryTask4.dto.UserDTO;
 import ua.nure.levushevskiy.SummaryTask4.entity.User;
-import ua.nure.levushevskiy.SummaryTask4.mail.MailSenderRunner;
-import ua.nure.levushevskiy.SummaryTask4.mail.api.ConfirmationMailSender;
 import ua.nure.levushevskiy.SummaryTask4.service.api.UserRoleService;
 import ua.nure.levushevskiy.SummaryTask4.service.api.UserService;
 import ua.nure.levushevskiy.SummaryTask4.service.api.UserStatusService;

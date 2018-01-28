@@ -2,7 +2,6 @@ package ua.nure.levushevskiy.SummaryTask4.servlet;
 
 import ua.nure.levushevskiy.SummaryTask4.util.EntityConstants;
 
-import javax.servlet.ServletContext;
 import javax.servlet.ServletException;
 import javax.servlet.annotation.WebServlet;
 import javax.servlet.http.HttpServlet;

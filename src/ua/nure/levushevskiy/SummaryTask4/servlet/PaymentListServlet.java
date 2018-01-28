@@ -1,14 +1,11 @@
 package ua.nure.levushevskiy.SummaryTask4.servlet;
 
-import ua.nure.levushevskiy.SummaryTask4.dto.AccountDTO;
 import ua.nure.levushevskiy.SummaryTask4.dto.PaymentDTO;
 import ua.nure.levushevskiy.SummaryTask4.exception.InitializationException;
-import ua.nure.levushevskiy.SummaryTask4.service.api.PaymentService;
 import ua.nure.levushevskiy.SummaryTask4.service.impl.AccountServiceImpl;
 import ua.nure.levushevskiy.SummaryTask4.service.impl.PaymentServiceImpl;
 import ua.nure.levushevskiy.SummaryTask4.util.EntityConstants;
 import ua.nure.levushevskiy.SummaryTask4.util.Sort;
-import ua.nure.levushevskiy.SummaryTask4.util.View;
 
 import javax.servlet.ServletContext;
 import javax.servlet.ServletException;

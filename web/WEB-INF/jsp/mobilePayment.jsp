@@ -1,3 +1,4 @@
+<%@ page contentType="text/html;charset=UTF-8" language="java" %>
 <!-- tagLib -->
 <%@ include file="/WEB-INF/tags/tagLib.jspf" %>
 
@@ -35,22 +36,12 @@
                 oninvalid="this.setCustomValidity('Please input number phone with format +380.. ')" oninput="this.setCustomValidity('')" required/>
                 <input type="text" name="paymentTotal" placeholder="<fmt:message key="label.payment.total" bundle="${bundle}"/>" pattern="\d+(\.\d{0,2})?"
                        oninvalid="this.setCustomValidity('Total with format #.##')" oninput="this.setCustomValidity('')"  required/>
-                <input type="text" name="paymentDescription" placeholder="<fmt:message key="label.payment.description" bundle="${bundle}"/>" pattern="^[а-яА-ЯёЁa-zA-Z0-9]+$"
+                <input type="text" name="paymentDescription" placeholder="<fmt:message key="label.payment.description" bundle="${bundle}"/>" pattern="^[а-яА-ЯёЁa-zA-Z0-9 ]+$"
                 oninvalid="this.setCustomValidity('Please use only latin or cyryllic letter and numbers')" oninput="this.setCustomValidity('')" required/>
                 <input type="submit" value="<fmt:message key="window.close" bundle="${bundle}"/>"/>
             </form>
         </div>
     </section>
-</div>
-
-<!-- Footer -->
-<div id="footer">
-
-    <!-- Copyright -->
-    <ul class="copyright">
-        <li>&copy; Untitled. All rights reserved.</li><li>Design: <a href="http://html5up.net">HTML5 UP</a></li>
-    </ul>
-
 </div>
 
 <!-- Scripts -->

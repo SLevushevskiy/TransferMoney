@@ -16,8 +16,6 @@ import static ua.nure.levushevskiy.SummaryTask4.util.View.ERROR_JSP;
 public class ErrorServlet extends HttpServlet {
     @Override
     protected void doGet(HttpServletRequest req, HttpServletResponse resp) throws ServletException, IOException {
-        HttpSession session = req.getSession();
-        session.removeAttribute(EntityConstants.USER_PARAM);
         req.getRequestDispatcher(ERROR_JSP).forward(req, resp);
     }
 }

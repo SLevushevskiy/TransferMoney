@@ -12,6 +12,6 @@
     </style>
 </head>
 <body>
-<h1>Ваш аккаунт заблокирован!</h1>
+<h1>Error!</h1>
 </body>
 </html>

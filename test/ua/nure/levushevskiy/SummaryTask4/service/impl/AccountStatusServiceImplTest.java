@@ -5,7 +5,6 @@ import org.junit.Test;
 import ua.nure.levushevskiy.SummaryTask4.dao.api.AccountStatusDAO;
 import ua.nure.levushevskiy.SummaryTask4.dto.AccountStatusDTO;
 import ua.nure.levushevskiy.SummaryTask4.entity.AccountStatus;
-import ua.nure.levushevskiy.SummaryTask4.service.api.AccountStatusService;
 
 import static org.junit.Assert.*;
 import static org.mockito.Mockito.*;

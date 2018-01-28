@@ -1,7 +1,6 @@
 package ua.nure.levushevskiy.SummaryTask4.dao.factory.api;
 
 import ua.nure.levushevskiy.SummaryTask4.dao.api.*;
-import ua.nure.levushevskiy.SummaryTask4.dao.impl.PaymentNameDAOImpl;
 
 public interface DAOFactory {
     /**

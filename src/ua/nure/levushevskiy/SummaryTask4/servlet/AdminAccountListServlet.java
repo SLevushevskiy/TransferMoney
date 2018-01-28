@@ -19,7 +19,6 @@ import java.util.ArrayList;
 import java.util.Collections;
 import java.util.List;
 
-import static ua.nure.levushevskiy.SummaryTask4.util.View.ACCOUNT_LIST_JSP;
 import static ua.nure.levushevskiy.SummaryTask4.util.View.ADMIN_ACCOUNT_LIST_JSP;
 
 @WebServlet("/adminAccountList")

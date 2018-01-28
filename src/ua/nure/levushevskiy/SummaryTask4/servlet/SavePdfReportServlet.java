@@ -3,12 +3,12 @@ package ua.nure.levushevskiy.SummaryTask4.servlet;
 import com.itextpdf.text.*;
 import com.itextpdf.text.pdf.BaseFont;
 import com.itextpdf.text.pdf.PdfWriter;
-import org.mockito.cglib.core.Local;
-import sun.util.locale.BaseLocale;
+import org.apache.log4j.Logger;
 import ua.nure.levushevskiy.SummaryTask4.dto.PaymentDTO;
 import ua.nure.levushevskiy.SummaryTask4.exception.InitializationException;
 import ua.nure.levushevskiy.SummaryTask4.service.impl.PaymentServiceImpl;
 import ua.nure.levushevskiy.SummaryTask4.util.EntityConstants;
+import ua.nure.levushevskiy.SummaryTask4.util.View;
 
 import javax.servlet.ServletContext;
 import javax.servlet.ServletException;
@@ -24,6 +24,11 @@ import java.util.ResourceBundle;
 
 @WebServlet("/savePdfReport")
 public class SavePdfReportServlet extends HttpServlet {
+
+    /**
+     * The Logger object for logging events of DAO class.
+     */
+    private static final Logger LOG = Logger.getLogger(SavePdfReportServlet.class);
 
     /**
      * An object that contains payment business logic.
@@ -59,13 +64,15 @@ public class SavePdfReportServlet extends HttpServlet {
             document.close();
 
             os.close();
-
         } catch (DocumentException de) {
-            System.err.println(de.getMessage());
+            LOG.error(de.getMessage());
+            resp.sendRedirect(View.Mapping.ERROR);
         } catch (IOException ioe) {
-            System.err.println(ioe.getMessage());
+            LOG.error(ioe.getMessage());
+            resp.sendRedirect(View.Mapping.ERROR);
         } catch (Exception e) {
-            e.printStackTrace();
+            LOG.error(e.getMessage());
+            resp.sendRedirect(View.Mapping.ERROR);
         }
     }
 
@@ -84,7 +91,7 @@ public class SavePdfReportServlet extends HttpServlet {
     private void createReport(PaymentDTO paymentDTO,  Document document, String locale) throws Exception {
 
         ResourceBundle resourceBundle = ResourceBundle.getBundle("resources", new Locale(locale));
-        BaseFont baseFont = BaseFont.createFont("C:\\Users\\Serg\\Google Диск\\Epam\\Проект\\Payments\\web\\assets\\fonts\\Tahoma.ttf", BaseFont.IDENTITY_H, true);
+        BaseFont baseFont = BaseFont.createFont("C:\\Users\\Serg\\Google Диск\\Epam\\Проект\\SummaryTask4\\web\\assets\\fonts\\Tahoma.ttf", BaseFont.IDENTITY_H, true);
 
 
         Font font = new Font(baseFont,
@@ -147,7 +154,7 @@ public class SavePdfReportServlet extends HttpServlet {
         document.add(chunkParagraph);
 
         // картинка, загруженная по URL
-        String imageUrl = "C:\\Users\\Serg\\Google Диск\\Epam\\Проект\\Payments\\web\\assets\\images\\stamp.png";
+        String imageUrl = "C:\\Users\\Serg\\Google Диск\\Epam\\Проект\\SummaryTask4\\web\\assets\\images\\stamp.png";
         // Image.getInstance("sample.png")
         Image stamp = Image.getInstance(imageUrl);
         stamp.setAlignment(Element.ALIGN_RIGHT);

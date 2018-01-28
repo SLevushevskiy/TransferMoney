@@ -2,7 +2,6 @@ package ua.nure.levushevskiy.SummaryTask4.servlet;
 
 import ua.nure.levushevskiy.SummaryTask4.dto.AccountDTO;
 import ua.nure.levushevskiy.SummaryTask4.dto.PaymentDTO;
-import ua.nure.levushevskiy.SummaryTask4.dto.PaymentNameDTO;
 import ua.nure.levushevskiy.SummaryTask4.exception.InitializationException;
 import ua.nure.levushevskiy.SummaryTask4.service.impl.AccountServiceImpl;
 import ua.nure.levushevskiy.SummaryTask4.service.impl.PaymentNameServiceImpl;

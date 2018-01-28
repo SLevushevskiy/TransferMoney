@@ -69,16 +69,6 @@
     </section>
 </div>
 
-<!-- Footer -->
-<div id="footer">
-
-    <!-- Copyright -->
-    <ul class="copyright">
-        <li>&copy; Untitled. All rights reserved.</li><li>Design: <a href="http://html5up.net">HTML5 UP</a></li>
-    </ul>
-
-</div>
-
 <!-- Scripts -->
 <script src="assets/js/jquery.min.js"></script>
 <script src="assets/js/jquery.scrolly.min.js"></script>

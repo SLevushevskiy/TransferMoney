@@ -2,8 +2,6 @@ package ua.nure.levushevskiy.SummaryTask4.servlet;
 
 import ua.nure.levushevskiy.SummaryTask4.dto.AccountDTO;
 import ua.nure.levushevskiy.SummaryTask4.dto.PaymentDTO;
-import ua.nure.levushevskiy.SummaryTask4.dto.PaymentNameDTO;
-import ua.nure.levushevskiy.SummaryTask4.entity.Account;
 import ua.nure.levushevskiy.SummaryTask4.exception.InitializationException;
 import ua.nure.levushevskiy.SummaryTask4.service.impl.AccountServiceImpl;
 import ua.nure.levushevskiy.SummaryTask4.service.impl.PaymentNameServiceImpl;
@@ -24,7 +22,6 @@ import java.util.ArrayList;
 import java.util.List;
 
 import static ua.nure.levushevskiy.SummaryTask4.util.View.PAYMENT_MOBILE_JSP;
-import static ua.nure.levushevskiy.SummaryTask4.util.View.PAYMENT_RECHARGE_JSP;
 
 @WebServlet("/mobilePayment")
 public class MobilePaymentServlet extends HttpServlet {
