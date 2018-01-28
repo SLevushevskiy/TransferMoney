@@ -29,6 +29,15 @@ public class User {
         this.userStatusId = userStatusId;
     }
 
+    public User(String name, String surname, String email, String password, long roleId, long userStatusId) {
+        this.name = name;
+        this.surname = surname;
+        this.email = email;
+        this.password = password;
+        this.roleId = roleId;
+        this.userStatusId = userStatusId;
+    }
+
     public User() {
     }
 

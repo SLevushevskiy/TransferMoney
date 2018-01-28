@@ -27,6 +27,14 @@ public class Account {
         this.accountNameId = accountNameId;
     }
 
+    public Account(double amound, Date endDate, long accountUserId, long accountStatusId, long accountNameId) {
+        this.amound = amound;
+        this.endDate = endDate;
+        this.accountUserId = accountUserId;
+        this.accountStatusId = accountStatusId;
+        this.accountNameId = accountNameId;
+    }
+
     public Date getEndDate() {
         return endDate;
     }

@@ -57,6 +57,12 @@ public class AccountDAOImpl implements AccountDAO {
      * Request to retrieve amound ny account id.
      */
     public static final String SQL_SELECT_AMOUND_BY_ACCOUNT_ID = "SELECT amound FROM st4db.account WHERE idAccount = ?";
+    /**
+     * Request to delete payment objects .
+     */
+    public static final String SQL_DELETE_ACCOUNT = " DELETE FROM st4db.account WHERE idAccount = ?";
+
+
 
     /**
      * Object of connection pool.
@@ -267,17 +273,25 @@ public class AccountDAOImpl implements AccountDAO {
      */
     @Override
     public boolean delete(Integer accountId) {
-        return false;
-    }
-
-    /**
-     * Method for updating the state of an object in a table.
-     *
-     * @param account - object to be updated.
-     * @return - true (if object was updated).
-     */
-    @Override
-    public boolean update(Account account) {
+        Connection connection = null;
+        try {
+            connection = dataSource.getConnection();
+        } catch (SQLException e) {
+            LOG.error(e);
+            throw new DAOException("Cannot get connection!", e);
+        }
+        try (PreparedStatement preparedStatement = connection.prepareStatement(SQL_DELETE_ACCOUNT)) {
+            preparedStatement.setLong(1, accountId);
+            int changes = preparedStatement.executeUpdate();
+            if (changes > 0) {
+                return true;
+            }
+        } catch (SQLException e) {
+            LOG.error(e);
+            throw new DAOException("Error while extraction result set!", e);
+        } finally {
+            closeConnection(connection);
+        }
         return false;
     }
 

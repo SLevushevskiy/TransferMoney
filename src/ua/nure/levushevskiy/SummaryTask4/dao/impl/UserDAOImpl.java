@@ -42,6 +42,10 @@ public class UserDAOImpl implements UserDAO {
     public static final String SQL_UPDATE_USER_STATUS = "UPDATE st4db.user SET UserStatus_id = "
             + "(SELECT idUser_status FROM st4db.user_status WHERE status = ?) WHERE idUser = ?";
 
+    /**
+     * Request to delete payment objects .
+     */
+    public static final String SQL_DELETE_USER= " DELETE FROM st4db.user WHERE idUser = ?";
 
     /**
      * Object of connection pool.
@@ -222,11 +226,25 @@ public class UserDAOImpl implements UserDAO {
 
     @Override
     public final boolean delete(Integer userId) {
-        return false;
-    }
-
-    @Override
-    public final boolean update(final User t) {
+        Connection connection = null;
+        try {
+            connection = dataSource.getConnection();
+        } catch (SQLException e) {
+            LOG.error(e);
+            throw new DAOException("Cannot get connection!", e);
+        }
+        try (PreparedStatement preparedStatement = connection.prepareStatement(SQL_DELETE_USER)) {
+            preparedStatement.setLong(1, userId);
+            int changes = preparedStatement.executeUpdate();
+            if (changes > 0) {
+                return true;
+            }
+        } catch (SQLException e) {
+            LOG.error(e);
+            throw new DAOException("Error while extraction result set!", e);
+        } finally {
+            closeConnection(connection);
+        }
         return false;
     }
 

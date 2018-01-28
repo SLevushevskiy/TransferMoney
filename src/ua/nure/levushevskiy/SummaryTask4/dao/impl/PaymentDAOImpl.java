@@ -180,7 +180,6 @@ public class PaymentDAOImpl implements PaymentDAO {
      */
     @Override
     public boolean delete(Integer paymentId) {
-
         Connection connection = null;
         try {
             connection = dataSource.getConnection();
@@ -204,16 +203,6 @@ public class PaymentDAOImpl implements PaymentDAO {
 
     }
 
-    /**
-     * Method for updating the state of an object in a table.
-     *
-     * @param payment - object to be updated.
-     * @return - true (if object was updated).
-     */
-    @Override
-    public boolean update(Payment payment) {
-        return false;
-    }
 
     /**
      * Method for retrieving all table objects.

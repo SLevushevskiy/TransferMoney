@@ -9,6 +9,7 @@ import java.util.Map;
 import static org.junit.Assert.*;
 
 public class EmailValidatorTest {
+
     private Map<String, String> errorContainer;
 
     private static final String VALID_EMAIL = "test@ukr.net";

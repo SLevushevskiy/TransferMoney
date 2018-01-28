@@ -21,6 +21,15 @@ public class Payment {
     public Payment() {
     }
 
+    public Payment(Date datePayment, double total, String description, long accountId, long statusId, long paymentNameId) {
+        this.datePayment = datePayment;
+        this.total = total;
+        this.description = description;
+        this.accountId = accountId;
+        this.statusId = statusId;
+        this.paymentNameId = paymentNameId;
+    }
+
     public long getPaymentNameId() {
         return paymentNameId;
     }

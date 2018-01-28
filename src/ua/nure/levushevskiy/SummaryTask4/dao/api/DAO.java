@@ -35,14 +35,6 @@ public interface DAO<T, ID> {
     boolean delete(ID id);
 
     /**
-     * Method for updating the state of an object in a table.
-     *
-     * @param t - object to be updated.
-     * @return - true (if object was updated).
-     */
-    boolean update(T t);
-
-    /**
      * Method for retrieving all table objects.
      *
      * @return - got objects.
