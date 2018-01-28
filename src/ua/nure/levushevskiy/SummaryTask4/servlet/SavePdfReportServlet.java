@@ -3,6 +3,8 @@ package ua.nure.levushevskiy.SummaryTask4.servlet;
 import com.itextpdf.text.*;
 import com.itextpdf.text.pdf.BaseFont;
 import com.itextpdf.text.pdf.PdfWriter;
+import org.mockito.cglib.core.Local;
+import sun.util.locale.BaseLocale;
 import ua.nure.levushevskiy.SummaryTask4.dto.PaymentDTO;
 import ua.nure.levushevskiy.SummaryTask4.exception.InitializationException;
 import ua.nure.levushevskiy.SummaryTask4.service.impl.PaymentServiceImpl;
@@ -14,8 +16,10 @@ import javax.servlet.annotation.WebServlet;
 import javax.servlet.http.HttpServlet;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
+import javax.servlet.http.HttpSession;
 import java.io.IOException;
 import java.io.OutputStream;
+import java.util.Locale;
 import java.util.ResourceBundle;
 
 @WebServlet("/savePdfReport")
@@ -35,6 +39,11 @@ public class SavePdfReportServlet extends HttpServlet {
 
     @Override
     protected void doGet(HttpServletRequest req, HttpServletResponse resp) throws ServletException, IOException {
+        HttpSession session = req.getSession();
+        String locale = Locale.getDefault().toString();
+        if(session.getAttribute(EntityConstants.LANGUAGE_PARAM)!=null) {
+            locale = session.getAttribute(EntityConstants.LANGUAGE_PARAM).toString();
+        }
         PaymentDTO paymentDTO =  paymentService.getById(Integer.parseInt(req.getParameter(EntityConstants.PAYMENT_PARAM)));
         resp.setHeader("Content-Disposition",
                 "attachment;filename=payment_ID"+paymentDTO.getIdPayment()+".pdf");
@@ -44,7 +53,7 @@ public class SavePdfReportServlet extends HttpServlet {
             PdfWriter.getInstance(document, os);
             document.open();
 
-            createReport(paymentDTO, document);
+            createReport(paymentDTO, document, locale);
 
             os.flush();
             document.close();
@@ -72,9 +81,9 @@ public class SavePdfReportServlet extends HttpServlet {
         }
     }
 
-    private void createReport(PaymentDTO paymentDTO,  Document document) throws Exception {
+    private void createReport(PaymentDTO paymentDTO,  Document document, String locale) throws Exception {
 
-        ResourceBundle resourceBundle = ResourceBundle.getBundle("resources");
+        ResourceBundle resourceBundle = ResourceBundle.getBundle("resources", new Locale(locale));
         BaseFont baseFont = BaseFont.createFont("C:\\Users\\Serg\\Google Диск\\Epam\\Проект\\Payments\\web\\assets\\fonts\\Tahoma.ttf", BaseFont.IDENTITY_H, true);
 
 
