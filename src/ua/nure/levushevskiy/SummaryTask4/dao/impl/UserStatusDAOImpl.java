@@ -28,7 +28,7 @@ public class UserStatusDAOImpl implements UserStatusDAO {
     /**
      * The Logger object for logging events of DAO class.
      */
-    private static final Logger LOG = Logger.getLogger(UserDAOImpl.class);
+    private static final Logger LOG = Logger.getLogger(UserStatusDAOImpl.class);
 
     /**
      * A constructor that takes a pool of connections.

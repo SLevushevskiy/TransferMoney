@@ -30,7 +30,7 @@ public class PaymentTypeDAOImpl implements PaymentTypeDAO {
     /**
      * The Logger object for logging events of DAO class.
      */
-    private static final Logger LOG = Logger.getLogger(PaymentDAOImpl.class);
+    private static final Logger LOG = Logger.getLogger(PaymentTypeDAOImpl.class);
 
     /**
      * A constructor that takes a pool of connections.

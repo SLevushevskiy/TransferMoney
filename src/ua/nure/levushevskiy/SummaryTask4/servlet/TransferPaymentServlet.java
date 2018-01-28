@@ -26,6 +26,15 @@ import static ua.nure.levushevskiy.SummaryTask4.util.View.PAYMENT_TRANSFER_JSP;
 
 @WebServlet("/transferPayment")
 public class TransferPaymentServlet extends HttpServlet {
+
+    public static final String OPERATION_SUCCESSFUL_NOT_AMOUND = "Операция не может быть выполнена! Недостаточно средств. Платеж отправлен в ожидание.";
+
+    public static final String OPERATION_SUCCESSFUL_FORM = "Ошибка! Проверьте корректность заполнения формы.";
+
+    public static final String OPERATION_SUCCESSFUL_BLOCK = "Операция не может быть выполнена! Карта получателя заблокирована. Платеж отправлен в ожидание.";
+
+    public static final String WINDOW_POP_UP = "#zatemnenie";
+
     /**
      * An object that contains payment business logic.
      */
@@ -62,19 +71,19 @@ public class TransferPaymentServlet extends HttpServlet {
             PaymentDTO paymentDTO = getPaymentFromRequest(req,accountDTO2);
             paymentDTO = paymentService.savePayment(paymentDTO);
             if (!accountDTO2.getAccountStatusDTO().getStatus().equals("active")) {
-                session.setAttribute(EntityConstants.OPERATION_SUCCESSFUL, "Операция не может быть выполнена! Карта получателя заблокирована. Платеж отправлен в ожидание.");
-                resp.sendRedirect(View.Mapping.PAYMENT_TRANSFER + "#zatemnenie");//redirect
+                session.setAttribute(EntityConstants.OPERATION_SUCCESSFUL,  OPERATION_SUCCESSFUL_BLOCK);
+                resp.sendRedirect(View.Mapping.PAYMENT_TRANSFER + WINDOW_POP_UP);//redirect
                 return;
             }
             if (accountDTO.getAmound() + paymentDTO.getTotal() < 0) {
-                session.setAttribute(EntityConstants.OPERATION_SUCCESSFUL, "Операция не может быть выполнена! Недостаточно средств. Платеж отправлен в ожидание.");
-                resp.sendRedirect(View.Mapping.PAYMENT_TRANSFER + "#zatemnenie");//redirect
+                session.setAttribute(EntityConstants.OPERATION_SUCCESSFUL, OPERATION_SUCCESSFUL_NOT_AMOUND);
+                resp.sendRedirect(View.Mapping.PAYMENT_TRANSFER + WINDOW_POP_UP);//redirect
                 return;
             }
             session.setAttribute(EntityConstants.PAYMENT_PARAM, paymentDTO);
         }catch (Exception e){
-            session.setAttribute(EntityConstants.OPERATION_SUCCESSFUL, "Ошибка! Проверьте корректность заполнения формы.");
-            resp.sendRedirect(View.Mapping.PAYMENT_TRANSFER+"#zatemnenie");//redirect
+            session.setAttribute(EntityConstants.OPERATION_SUCCESSFUL, OPERATION_SUCCESSFUL_FORM);
+            resp.sendRedirect(View.Mapping.PAYMENT_TRANSFER + WINDOW_POP_UP);//redirect
             return;
         }
         resp.sendRedirect(View.Mapping.CONFIRM_PAYMENT);//redirect

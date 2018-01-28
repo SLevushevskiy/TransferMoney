@@ -16,8 +16,9 @@
     border: 3px solid rgba(144, 60, 235, 0.45);
     border-radius: 10px;
     color: #0000cc;
-    position: absolute;
+    /*position: absolute;*/
     margin: auto;
+    margin-top: 20%;
     background: #fff;
     z-index: 100;
     display: inline-block;
@@ -29,10 +30,11 @@
 #zatemnenie:target {
     display: block;
     z-index: 99;
+    top: 0;
 }
 .close {
     margin-top: 13px;
-    margin-left: 130px;
+    /*margin-left: 130px;*/
     display: inline-block;
     border: 1px solid #0000cc;
     border-radius: 5px;

@@ -28,7 +28,7 @@ public class UserRoleDAOImpl implements UserRoleDAO {
     /**
      * The Logger object for logging events of DAO class.
      */
-    private static final Logger LOG = Logger.getLogger(UserDAOImpl.class);
+    private static final Logger LOG = Logger.getLogger(UserRoleDAOImpl.class);
 
 
     /**

@@ -25,6 +25,10 @@ import static ua.nure.levushevskiy.SummaryTask4.util.View.PAYMENT_RECHARGE_JSP;
 @WebServlet("/rechargePayment")
 public class PaymentRechargeServlet extends HttpServlet {
 
+    public static final String OPERATION_SUCCESSFUL_ERROR = "Ошибка! Повторите операцию.";
+
+    public static final String WINDOW_POP_UP = "#zatemnenie";
+
     /**
      * An object that contains payment business logic.
      */
@@ -53,14 +57,15 @@ public class PaymentRechargeServlet extends HttpServlet {
     protected void doPost(HttpServletRequest req, HttpServletResponse resp) throws ServletException, IOException {
         HttpSession session = req.getSession();//создаем сессию
         session.removeAttribute(EntityConstants.ERROR_CONTAINER_PARAM);
+        session.removeAttribute(EntityConstants.OPERATION_SUCCESSFUL);
         req.setCharacterEncoding("UTF-8");
         try{
         PaymentDTO paymentDTO = getPaymentFromRequest(req);
             paymentDTO = paymentService.savePayment(paymentDTO);
             session.setAttribute(EntityConstants.PAYMENT_PARAM, paymentDTO);
         }catch (Exception e){
-            session.setAttribute(EntityConstants.OPERATION_SUCCESSFUL, "Ошибка! Повторите операцию.");
-            resp.sendRedirect(View.Mapping.PAYMENT_RECHARGE+"#zatemnenie");//redirect
+            session.setAttribute(EntityConstants.OPERATION_SUCCESSFUL, OPERATION_SUCCESSFUL_ERROR);
+            resp.sendRedirect(View.Mapping.PAYMENT_RECHARGE + WINDOW_POP_UP);//redirect
             return;
         }
         resp.sendRedirect(View.Mapping.CONFIRM_PAYMENT);
