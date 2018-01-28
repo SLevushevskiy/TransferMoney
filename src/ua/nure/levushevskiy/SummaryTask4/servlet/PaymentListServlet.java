@@ -48,8 +48,9 @@ public class PaymentListServlet extends HttpServlet {
 
     @Override
     protected void doGet(HttpServletRequest req, HttpServletResponse resp) throws ServletException, IOException {
+        HttpSession session = req.getSession();
         List<PaymentDTO> paymentDTOList = paymentService.getAll();
-        int accountId =  Integer.parseInt(req.getParameter(EntityConstants.ACCOUNT_CHOOSE_PARAM).toString());
+        int accountId =  (int)session.getAttribute(EntityConstants.ACCOUNT_CHOOSE_PARAM);
         paymentDTOList = removePayment(paymentDTOList, accountId);
         if(req.getParameter(EntityConstants.SORT_PAYMENT)!=null){
             switch (req.getParameter(EntityConstants.SORT_PAYMENT)){
@@ -61,7 +62,7 @@ public class PaymentListServlet extends HttpServlet {
                     Collections.reverse(paymentDTOList); break;
             }
         }
-        req.setAttribute(EntityConstants.ACCOUNT_CHOOSE_PARAM, accountId);
+        session.setAttribute(EntityConstants.ACCOUNT_CHOOSE_PARAM, accountId);
         req.setAttribute(EntityConstants.ACCOUNT_NAME_PARAM, accountService.getById(accountId).getAccountNameDTO().getName());
         req.setAttribute(EntityConstants.ACCOUNT_AMOUND_PARAM, accountService.getById(accountId).getAmound());
         req.setAttribute(EntityConstants.PAYMENT_LIST_PARAM, paymentDTOList);
@@ -70,10 +71,11 @@ public class PaymentListServlet extends HttpServlet {
 
     @Override
     protected void doPost(HttpServletRequest req, HttpServletResponse resp) throws ServletException, IOException {
+        HttpSession session = req.getSession();
         List<PaymentDTO> paymentDTOList = paymentService.getAll();
         int accountId =  Integer.parseInt(req.getParameter(EntityConstants.ACCOUNT_CHOOSE_PARAM).toString());
         paymentDTOList = removePayment(paymentDTOList, accountId);
-        req.setAttribute(EntityConstants.ACCOUNT_CHOOSE_PARAM, accountId);
+        session.setAttribute(EntityConstants.ACCOUNT_CHOOSE_PARAM, accountId);
         req.setAttribute(EntityConstants.ACCOUNT_NAME_PARAM, accountService.getById(accountId).getAccountNameDTO().getName());
         req.setAttribute(EntityConstants.ACCOUNT_AMOUND_PARAM, accountService.getById(accountId).getAmound());
         req.setAttribute(EntityConstants.PAYMENT_LIST_PARAM, paymentDTOList);
